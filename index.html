@@ -615,7 +615,7 @@
                 <div class="form-section-pair">
                     <!-- French Content Block -->
                     <div class="text-content-block">
-                        <div style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
+                        <div id="text-block-fr-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
 
                         <div class="form-group">
                             <label for="text-content-title-fr">
@@ -655,7 +655,7 @@
 
                     <!-- English Content Block -->
                     <div class="text-content-block">
-                        <div style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">English / Anglais</div>
+                        <div id="text-block-en-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">English / Anglais</div>
 
                         <div class="form-group">
                             <label for="text-content-title-en">
@@ -784,6 +784,43 @@
         let currentLanguage = 'fr';
         let titleOnlyConfirmed = { fr: false, en: false };
 
+        const uiTranslations = {
+            fr: {
+                sectionTitles: {
+                    'title-section': 'Titre de la demande',
+                    'requester-section': 'Demandeur',
+                    'context-section': 'Contexte & objectif',
+                    'material-section': 'Type de matériel',
+                    'delivery-section': 'Dates',
+                    'priority-section': 'Niveau de priorité',
+                    'content-section': 'Contenu textuel',
+                    'guidelines-section': 'Directives visuelles',
+                    'options-section': 'Options',
+                    'approvers-section': 'Approbateurs'
+                },
+                approverRequesterLabel: 'Demandeur',
+                textBlockFrTitle: 'Français / French',
+                textBlockEnTitle: 'English / Anglais'
+            },
+            en: {
+                sectionTitles: {
+                    'title-section': 'Request title',
+                    'requester-section': 'Requester',
+                    'context-section': 'Context & objective',
+                    'material-section': 'Material type',
+                    'delivery-section': 'Dates',
+                    'priority-section': 'Priority level',
+                    'content-section': 'Text content',
+                    'guidelines-section': 'Visual guidelines',
+                    'options-section': 'Options',
+                    'approvers-section': 'Approvers'
+                },
+                approverRequesterLabel: 'Requester',
+                textBlockFrTitle: 'French / Français',
+                textBlockEnTitle: 'English / Anglais'
+            }
+        };
+
         // Language switching
         langFrBtn.addEventListener('click', () => switchLanguage('fr'));
         langEnBtn.addEventListener('click', () => switchLanguage('en'));
@@ -797,7 +834,20 @@
         }
 
         function updateAllLabels() {
-            // This is handled by CSS display rules, labels update automatically
+            const t = uiTranslations[currentLanguage];
+
+            Object.entries(t.sectionTitles).forEach(([id, text]) => {
+                const sectionTitle = document.getElementById(id);
+                if (sectionTitle) {
+                    sectionTitle.textContent = text;
+                }
+            });
+
+            document.getElementById('approver-requester-label').textContent = t.approverRequesterLabel;
+            document.getElementById('text-block-fr-title').textContent = t.textBlockFrTitle;
+            document.getElementById('text-block-en-title').textContent = t.textBlockEnTitle;
+
+            updateDynamicMaterialLabels();
         }
 
         // Priority banner color change
@@ -854,22 +904,11 @@
                 .map(el => el.value)
                 .filter(val => val !== 'Other');
 
-            const materialLabels = {
-                'TV': 'TV',
-                'Carousel': currentLanguage === 'fr' ? 'Carrousel' : 'Carousel',
-                'Screensaver': 'Screensaver',
-                'Email': currentLanguage === 'fr' ? 'Courriel' : 'Email',
-                'Flash Ads': 'Flash Ads',
-                'Intranet': currentLanguage === 'fr' ? 'Éléments intranet' : 'Intranet elements',
-                'Photo': currentLanguage === 'fr' ? 'Traitement photos' : 'Photo editing',
-                'Modification': currentLanguage === 'fr' ? 'Modification d\'un élément existant' : 'Modification of existing element'
-            };
-
             selectedMaterials.forEach(material => {
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
-                    <label style="font-weight: 600; margin-bottom: 8px; display: block; font-size: 12px;">${materialLabels[material]}</label>
+                    <label class="material-date-title" data-material="${material}" style="font-weight: 600; margin-bottom: 8px; display: block; font-size: 12px;">${getMaterialLabel(material)}</label>
                     <div class="date-range-row">
                         <div>
                             <label for="date-${material}-start" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
@@ -894,6 +933,28 @@
             // Add event listeners for date validation
             document.querySelectorAll('.material-date').forEach(input => {
                 input.addEventListener('change', validateMaterialDateRange);
+            });
+        }
+
+        function getMaterialLabel(material) {
+            const materialLabels = {
+                'TV': { fr: 'TV', en: 'TV' },
+                'Carousel': { fr: 'Carrousel', en: 'Carousel' },
+                'Screensaver': { fr: 'Économiseur d\'écran', en: 'Screensaver' },
+                'Email': { fr: 'Courriel', en: 'Email' },
+                'Flash Ads': { fr: 'Publicités Flash', en: 'Flash Ads' },
+                'Intranet': { fr: 'Éléments intranet', en: 'Intranet elements' },
+                'Photo': { fr: 'Traitement photos', en: 'Photo editing' },
+                'Modification': { fr: 'Modification d\'un élément existant', en: 'Modification of existing element' }
+            };
+
+            return materialLabels[material]?.[currentLanguage] || material;
+        }
+
+        function updateDynamicMaterialLabels() {
+            document.querySelectorAll('.material-date-title').forEach(label => {
+                const material = label.dataset.material;
+                label.textContent = getMaterialLabel(material);
             });
         }
 
@@ -1270,4 +1331,3 @@ ${options === 'single' ? 'Single visual' : 'Propose multiple options'}
     </script>
 </body>
 </html>
-
