@@ -1,1 +1,1189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande de design graphique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .banner {
+            padding: 24px 16px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #9e9e9e;
+        }
+
+        .banner h1 {
+            font-size: 28px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .banner-text-color-light {
+            color: #ffffff;
+        }
+
+        .banner-text-color-dark {
+            color: #1a1a1a;
+        }
+
+        .language-toggle {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .language-toggle button {
+            padding: 8px 16px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .language-toggle button.active {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .language-toggle button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 32px auto;
+            padding: 0 16px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #003078;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        label .required {
+            color: #c62828;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #003078;
+            box-shadow: 0 0 0 3px rgba(0, 48, 120, 0.1);
+        }
+
+        input[type="text"].error,
+        input[type="email"].error,
+        textarea.error {
+            border-color: #c62828;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .char-count {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .char-count.warning {
+            color: #c62828;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #003078;
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .nested-input {
+            margin-left: 28px;
+            margin-top: 8px;
+        }
+
+        .dynamic-section {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #fafafa;
+            border-left: 4px solid #003078;
+            border-radius: 4px;
+        }
+
+        .date-range-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .date-range-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .approver-item {
+            padding: 16px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .approver-item.requester {
+            background-color: #e8f5e9;
+            border-color: #2e7d32;
+        }
+
+        .approver-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .approver-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .approver-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .remove-approver {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .remove-approver:hover {
+            color: #c62828;
+        }
+
+        .add-approver-btn {
+            background-color: #f5f5f5;
+            border: 2px dashed #003078;
+            color: #003078;
+            padding: 12px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .add-approver-btn:hover {
+            background-color: #eff7ff;
+        }
+
+        .info-note {
+            background-color: #e3f2fd;
+            border-left: 4px solid #003078;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1565c0;
+            margin-top: 12px;
+        }
+
+        .title-only-confirm {
+            background-color: #fff3e0;
+            border: 1px solid #ffb74d;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .title-only-confirm button {
+            background-color: #f9a825;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background-color 0.2s;
+        }
+
+        .title-only-confirm button:hover {
+            background-color: #f57f17;
+        }
+
+        .error-message {
+            color: #c62828;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .submit-btn {
+            background-color: #003078;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #001f47;
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Banner color states */
+        .banner.priority-low {
+            background-color: #2e7d32;
+        }
+
+        .banner.priority-medium {
+            background-color: #f9a825;
+        }
+
+        .banner.priority-high {
+            background-color: #e65100;
+        }
+
+        .banner.priority-urgent {
+            background-color: #c62828;
+        }
+
+        /* Language-specific content */
+        .lang-fr {
+            display: none;
+        }
+
+        .lang-en {
+            display: block;
+        }
+
+        html[lang="fr"] .lang-fr {
+            display: block;
+        }
+
+        html[lang="fr"] .lang-en {
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .text-content-block {
+            padding: 16px;
+            background-color: #fafafa;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .text-content-block:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner" id="banner">
+        <h1 id="banner-title">Demande de design graphique</h1>
+        <div class="language-toggle">
+            <button id="lang-fr-btn" class="active">FR</button>
+            <button id="lang-en-btn">EN</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <form id="designForm">
+            <!-- Section 1: Request Title -->
+            <div class="form-section">
+                <div class="section-title" id="title-section">Titre de la demande</div>
+                <div class="form-group">
+                    <label for="request-title">
+                        <span class="lang-fr">Titre de la demande <span class="required">*</span></span>
+                        <span class="lang-en">Request Title <span class="required">*</span></span>
+                    </label>
+                    <input type="text" id="request-title" name="request-title" required>
+                    <div class="error-message" id="request-title-error"></div>
+                </div>
+            </div>
+
+            <!-- Section 2: Requester Info -->
+            <div class="form-section">
+                <div class="section-title" id="requester-section">Infos demandeur</div>
+                <div class="form-group">
+                    <label for="requester-name">
+                        <span class="lang-fr">Nom complet <span class="required">*</span></span>
+                        <span class="lang-en">Full Name <span class="required">*</span></span>
+                    </label>
+                    <input type="text" id="requester-name" name="requester-name" required>
+                    <div class="error-message" id="requester-name-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="requester-email">
+                        <span class="lang-fr">Courriel <span class="required">*</span></span>
+                        <span class="lang-en">Email <span class="required">*</span></span>
+                    </label>
+                    <input type="email" id="requester-email" name="requester-email" required>
+                    <div class="error-message" id="requester-email-error"></div>
+                </div>
+            </div>
+
+            <!-- Section 3: Context & Objective -->
+            <div class="form-section">
+                <div class="section-title" id="context-section">Contexte & objectif</div>
+                <div class="form-group">
+                    <label for="context">
+                        <span class="lang-fr">Contexte & objectif</span>
+                        <span class="lang-en">Context & Objective</span>
+                    </label>
+                    <textarea id="context" name="context" placeholder=""></textarea>
+                </div>
+            </div>
+
+            <!-- Section 4: Material Type -->
+            <div class="form-section">
+                <div class="section-title" id="material-section">Type de matériel</div>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-tv" name="materials" value="TV">
+                        <label for="material-tv">TV</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-carousel" name="materials" value="Carousel">
+                        <label for="material-carousel" class="lang-fr">Carrousel</label>
+                        <label for="material-carousel" class="lang-en">Carousel</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-screensaver" name="materials" value="Screensaver">
+                        <label for="material-screensaver">Screensaver</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-email" name="materials" value="Email">
+                        <label for="material-email" class="lang-fr">Courriel</label>
+                        <label for="material-email" class="lang-en">Email</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-flash" name="materials" value="Flash Ads">
+                        <label for="material-flash">Flash Ads</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-intranet" name="materials" value="Intranet">
+                        <label for="material-intranet" class="lang-fr">Éléments intranet</label>
+                        <label for="material-intranet" class="lang-en">Intranet elements</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-photo" name="materials" value="Photo">
+                        <label for="material-photo" class="lang-fr">Traitement photos</label>
+                        <label for="material-photo" class="lang-en">Photo editing</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-modification" name="materials" value="Modification">
+                        <label for="material-modification" class="lang-fr">Modification d'un élément existant</label>
+                        <label for="material-modification" class="lang-en">Modification of existing element</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="material-other" name="materials" value="Other">
+                        <label for="material-other" class="lang-fr">Autre</label>
+                        <label for="material-other" class="lang-en">Other</label>
+                    </div>
+                    <div class="nested-input hidden" id="material-other-input">
+                        <input type="text" id="material-other-text" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Delivery Date -->
+            <div class="form-section">
+                <div class="section-title" id="delivery-section">Dates</div>
+                <div class="form-group">
+                    <label for="delivery-date">
+                        <span class="lang-fr">Date de livrable <span class="required">*</span></span>
+                        <span class="lang-en">Delivery date <span class="required">*</span></span>
+                    </label>
+                    <input type="date" id="delivery-date" name="delivery-date" required>
+                    <div class="error-message" id="delivery-date-error"></div>
+                </div>
+
+                <!-- Dynamic date ranges for each material -->
+                <div id="dynamic-dates"></div>
+            </div>
+
+            <!-- Section 6: Priority -->
+            <div class="form-section">
+                <div class="section-title" id="priority-section">Niveau de priorité</div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="priority-low" name="priority" value="low">
+                        <label for="priority-low" class="lang-fr">Faible</label>
+                        <label for="priority-low" class="lang-en">Low</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-medium" name="priority" value="medium">
+                        <label for="priority-medium" class="lang-fr">Moyenne</label>
+                        <label for="priority-medium" class="lang-en">Medium</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-high" name="priority" value="high">
+                        <label for="priority-high" class="lang-fr">Élevée</label>
+                        <label for="priority-high" class="lang-en">High</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-urgent" name="priority" value="urgent">
+                        <label for="priority-urgent" class="lang-fr">Très urgent</label>
+                        <label for="priority-urgent" class="lang-en">Very urgent</label>
+                    </div>
+                </div>
+                <div class="error-message" id="priority-error"></div>
+            </div>
+
+            <!-- Section 7: Text Content -->
+            <div class="form-section">
+                <div class="section-title" id="content-section">Contenu textuel</div>
+
+                <!-- French Content Block -->
+                <div class="text-content-block">
+                    <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #003078;">Français / French</div>
+
+                    <div class="form-group">
+                        <label for="text-content-title-fr">
+                            <span class="lang-fr">Titre <span class="required">*</span></span>
+                            <span class="lang-en">Title <span class="required">*</span></span>
+                        </label>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                            <span class="lang-fr">Max 100 caractères</span>
+                            <span class="lang-en">Max 100 characters</span>
+                        </div>
+                        <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
+                        <div class="char-count" id="char-count-title-fr">0/100</div>
+                        <div class="error-message" id="text-content-title-fr-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-content-text-fr">
+                            <span class="lang-fr">Texte</span>
+                            <span class="lang-en">Text</span>
+                        </label>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                            <span class="lang-fr">Max 150 caractères</span>
+                            <span class="lang-en">Max 150 characters</span>
+                        </div>
+                        <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
+                        <div class="char-count" id="char-count-text-fr">0/150</div>
+                        <div id="title-only-confirm-fr" class="hidden title-only-confirm">
+                            <span class="lang-fr">Ce visuel ne contient qu'un titre</span>
+                            <span class="lang-en">This visual contains a title only</span>
+                            <button type="button" class="title-only-confirm-btn" data-lang="fr">
+                                <span class="lang-fr">Confirmer</span>
+                                <span class="lang-en">Confirm</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- English Content Block -->
+                <div class="text-content-block">
+                    <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #003078;">English / Anglais</div>
+
+                    <div class="form-group">
+                        <label for="text-content-title-en">
+                            <span class="lang-fr">Titre <span class="required">*</span></span>
+                            <span class="lang-en">Title <span class="required">*</span></span>
+                        </label>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                            <span class="lang-fr">Max 100 caractères</span>
+                            <span class="lang-en">Max 100 characters</span>
+                        </div>
+                        <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
+                        <div class="char-count" id="char-count-title-en">0/100</div>
+                        <div class="error-message" id="text-content-title-en-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="text-content-text-en">
+                            <span class="lang-fr">Texte</span>
+                            <span class="lang-en">Text</span>
+                        </label>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
+                            <span class="lang-fr">Max 150 caractères</span>
+                            <span class="lang-en">Max 150 characters</span>
+                        </div>
+                        <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
+                        <div class="char-count" id="char-count-text-en">0/150</div>
+                        <div id="title-only-confirm-en" class="hidden title-only-confirm">
+                            <span class="lang-fr">Ce visuel ne contient qu'un titre</span>
+                            <span class="lang-en">This visual contains a title only</span>
+                            <button type="button" class="title-only-confirm-btn" data-lang="en">
+                                <span class="lang-fr">Confirmer</span>
+                                <span class="lang-en">Confirm</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Visual Guidelines -->
+            <div class="form-section">
+                <div class="section-title" id="guidelines-section">Directives visuelles & références</div>
+                <div class="form-group">
+                    <label for="visual-guidelines">
+                        <span class="lang-fr">Directives visuelles & références</span>
+                        <span class="lang-en">Visual Guidelines & References</span>
+                    </label>
+                    <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
+                </div>
+            </div>
+
+            <!-- Section 9: Options -->
+            <div class="form-section">
+                <div class="section-title" id="options-section">Options / variations</div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="option-single" name="options" value="single">
+                        <label for="option-single" class="lang-fr">Un seul visuel</label>
+                        <label for="option-single" class="lang-en">Single visual</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="option-multiple" name="options" value="multiple">
+                        <label for="option-multiple" class="lang-fr">Proposer plusieurs options</label>
+                        <label for="option-multiple" class="lang-en">Propose multiple options</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 10: Approvers -->
+            <div class="form-section">
+                <div class="section-title" id="approvers-section">Approbateurs</div>
+
+                <!-- Requester as first approver -->
+                <div class="approver-item requester">
+                    <div class="approver-label" id="approver-requester-label">Demandeur / Requester</div>
+                    <div class="approver-fields">
+                        <div>
+                            <label style="font-size: 13px; margin-bottom: 4px;">
+                                <span class="lang-fr">Nom</span>
+                                <span class="lang-en">Name</span>
+                            </label>
+                            <input type="text" id="approver-requester-name" readonly style="background-color: #fff;">
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; margin-bottom: 4px;">
+                                <span class="lang-fr">Courriel</span>
+                                <span class="lang-en">Email</span>
+                            </label>
+                            <input type="email" id="approver-requester-email" readonly style="background-color: #fff;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional approvers container -->
+                <div id="additional-approvers"></div>
+
+                <!-- Add approver button -->
+                <button type="button" id="add-approver-btn" class="add-approver-btn">
+                    <span class="lang-fr">+ Ajouter un approbateur</span>
+                    <span class="lang-en">+ Add approver</span>
+                </button>
+
+                <!-- Info note -->
+                <div class="info-note">
+                    <span class="lang-fr">Les approbateurs supplémentaires recevront une copie de cette demande. Si aucun courriel n'est fourni, aucune copie ne sera envoyée.</span>
+                    <span class="lang-en">Additional approvers will receive a copy of this request. If no email is provided, no copy will be sent.</span>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-section">
+                <button type="submit" class="submit-btn" id="submit-btn">
+                    <span class="lang-fr">Soumettre</span>
+                    <span class="lang-en">Submit</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('designForm');
+        const banner = document.getElementById('banner');
+        const langFrBtn = document.getElementById('lang-fr-btn');
+        const langEnBtn = document.getElementById('lang-en-btn');
+        let currentLanguage = 'fr';
+        let titleOnlyConfirmed = { fr: false, en: false };
+
+        // Language switching
+        langFrBtn.addEventListener('click', () => switchLanguage('fr'));
+        langEnBtn.addEventListener('click', () => switchLanguage('en'));
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            langFrBtn.classList.toggle('active', lang === 'fr');
+            langEnBtn.classList.toggle('active', lang === 'en');
+            updateAllLabels();
+        }
+
+        function updateAllLabels() {
+            // This is handled by CSS display rules, labels update automatically
+        }
+
+        // Priority banner color change
+        const priorityInputs = document.querySelectorAll('input[name="priority"]');
+        priorityInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                banner.className = 'banner';
+                const value = document.querySelector('input[name="priority"]:checked').value;
+                if (value === 'low') {
+                    banner.classList.add('priority-low');
+                } else if (value === 'medium') {
+                    banner.classList.add('priority-medium');
+                } else if (value === 'high') {
+                    banner.classList.add('priority-high');
+                } else if (value === 'urgent') {
+                    banner.classList.add('priority-urgent');
+                }
+                updateBannerTextColor();
+            });
+        });
+
+        function updateBannerTextColor() {
+            const bannerTitle = document.getElementById('banner-title');
+            const langToggle = document.querySelector('.language-toggle');
+            const bannerClasses = banner.classList;
+
+            if (bannerClasses.contains('priority-medium')) {
+                bannerTitle.classList.add('banner-text-color-dark');
+                bannerTitle.classList.remove('banner-text-color-light');
+                langToggle.style.color = '#1a1a1a';
+            } else {
+                bannerTitle.classList.remove('banner-text-color-dark');
+                bannerTitle.classList.add('banner-text-color-light');
+                langToggle.style.color = '#ffffff';
+            }
+        }
+
+        // Material type changes - dynamic date ranges
+        const materialCheckboxes = document.querySelectorAll('input[name="materials"]');
+        const materialOtherCheckbox = document.getElementById('material-other');
+        const dynamicDatesContainer = document.getElementById('dynamic-dates');
+
+        materialCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateDynamicDates);
+        });
+
+        materialOtherCheckbox.addEventListener('change', () => {
+            document.getElementById('material-other-input').classList.toggle('hidden');
+        });
+
+        function updateDynamicDates() {
+            dynamicDatesContainer.innerHTML = '';
+            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
+                .map(el => el.value)
+                .filter(val => val !== 'Other');
+
+            const materialLabels = {
+                'TV': 'TV',
+                'Carousel': currentLanguage === 'fr' ? 'Carrousel' : 'Carousel',
+                'Screensaver': 'Screensaver',
+                'Email': currentLanguage === 'fr' ? 'Courriel' : 'Email',
+                'Flash Ads': 'Flash Ads',
+                'Intranet': currentLanguage === 'fr' ? 'Éléments intranet' : 'Intranet elements',
+                'Photo': currentLanguage === 'fr' ? 'Traitement photos' : 'Photo editing',
+                'Modification': currentLanguage === 'fr' ? 'Modification d\'un élément existant' : 'Modification of existing element'
+            };
+
+            selectedMaterials.forEach(material => {
+                const div = document.createElement('div');
+                div.className = 'dynamic-section';
+                div.innerHTML = `
+                    <label style="font-weight: 600; margin-bottom: 12px; display: block;">${materialLabels[material]}</label>
+                    <div class="date-range-row">
+                        <div>
+                            <label for="date-${material}-start" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                                <span class="lang-fr">Date de début</span>
+                                <span class="lang-en">Start date</span>
+                            </label>
+                            <input type="date" id="date-${material}-start" class="material-date" data-material="${material}" data-type="start" required>
+                        </div>
+                        <div>
+                            <label for="date-${material}-end" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                                <span class="lang-fr">Date de fin</span>
+                                <span class="lang-en">End date</span>
+                            </label>
+                            <input type="date" id="date-${material}-end" class="material-date" data-material="${material}" data-type="end" required>
+                        </div>
+                    </div>
+                    <div class="error-message" id="error-${material}"></div>
+                `;
+                dynamicDatesContainer.appendChild(div);
+            });
+
+            // Add event listeners for date validation
+            document.querySelectorAll('.material-date').forEach(input => {
+                input.addEventListener('change', validateMaterialDateRange);
+            });
+        }
+
+        function validateMaterialDateRange(e) {
+            const material = e.target.dataset.material;
+            const startInput = document.querySelector(`#date-${material}-start`);
+            const endInput = document.querySelector(`#date-${material}-end`);
+            const errorDiv = document.querySelector(`#error-${material}`);
+
+            if (startInput.value && endInput.value) {
+                const startDate = new Date(startInput.value);
+                const endDate = new Date(endInput.value);
+                if (startDate > endDate) {
+                    errorDiv.textContent = currentLanguage === 'fr' ?
+                        'La date de début doit être avant la date de fin' :
+                        'Start date must be before end date';
+                    endInput.classList.add('error');
+                } else {
+                    errorDiv.textContent = '';
+                    endInput.classList.remove('error');
+                }
+            }
+        }
+
+        // Character counters
+        const titleFrInput = document.getElementById('text-content-title-fr');
+        const titleEnInput = document.getElementById('text-content-title-en');
+        const textFrInput = document.getElementById('text-content-text-fr');
+        const textEnInput = document.getElementById('text-content-text-en');
+
+        titleFrInput.addEventListener('input', () => updateCharCounter('fr', 'title'));
+        titleEnInput.addEventListener('input', () => updateCharCounter('en', 'title'));
+        textFrInput.addEventListener('input', () => updateCharCounter('fr', 'text'));
+        textEnInput.addEventListener('input', () => updateCharCounter('en', 'text'));
+
+        function updateCharCounter(lang, type) {
+            const input = type === 'title' ?
+                (lang === 'fr' ? titleFrInput : titleEnInput) :
+                (lang === 'fr' ? textFrInput : textEnInput);
+            const countDiv = document.getElementById(`char-count-${type}-${lang}`);
+            const maxChars = type === 'title' ? 100 : 150;
+            const currentLength = input.value.length;
+
+            countDiv.textContent = `${currentLength}/${maxChars}`;
+            countDiv.classList.toggle('warning', currentLength > maxChars);
+            input.classList.toggle('error', currentLength > maxChars);
+
+            // Show/hide title-only confirm button
+            if (type === 'text') {
+                const confirmDiv = document.getElementById(`title-only-confirm-${lang}`);
+                confirmDiv.classList.toggle('hidden', textFrInput.value.length > 0 || textEnInput.value.length > 0);
+            }
+        }
+
+        // Title-only confirmation buttons
+        document.querySelectorAll('.title-only-confirm-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.dataset.lang;
+                titleOnlyConfirmed[lang] = true;
+                btn.parentElement.classList.add('hidden');
+            });
+        });
+
+        // Requester info auto-fill
+        const requesterNameInput = document.getElementById('requester-name');
+        const requesterEmailInput = document.getElementById('requester-email');
+        const approverRequesterName = document.getElementById('approver-requester-name');
+        const approverRequesterEmail = document.getElementById('approver-requester-email');
+
+        requesterNameInput.addEventListener('change', () => {
+            approverRequesterName.value = requesterNameInput.value;
+        });
+
+        requesterEmailInput.addEventListener('change', () => {
+            approverRequesterEmail.value = requesterEmailInput.value;
+        });
+
+        // Add approver functionality
+        let approverCount = 0;
+        document.getElementById('add-approver-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            approverCount++;
+            const container = document.getElementById('additional-approvers');
+            const approverDiv = document.createElement('div');
+            approverDiv.className = 'approver-item';
+            approverDiv.id = `approver-${approverCount}`;
+            approverDiv.innerHTML = `
+                <button type="button" class="remove-approver" onclick="document.getElementById('approver-${approverCount}').remove()">×</button>
+                <div class="approver-fields">
+                    <div>
+                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                            <span class="lang-fr">Nom</span>
+                            <span class="lang-en">Name</span>
+                        </label>
+                        <input type="text" class="approver-name" placeholder="">
+                    </div>
+                    <div>
+                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                            <span class="lang-fr">Courriel</span>
+                            <span class="lang-en">Email</span>
+                        </label>
+                        <input type="email" class="approver-email" placeholder="">
+                    </div>
+                </div>
+            `;
+            container.appendChild(approverDiv);
+        });
+
+        // Form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateForm()) {
+                generateAndSendEmail();
+            }
+        });
+
+        function validateForm() {
+            let isValid = true;
+            const errors = {};
+
+            // Clear all previous errors
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+
+            // Required fields
+            const requiredFields = [
+                'request-title',
+                'requester-name',
+                'requester-email',
+                'delivery-date',
+                'text-content-title-fr',
+                'text-content-title-en'
+            ];
+
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('error');
+                    const errorDiv = document.getElementById(`${field}-error`);
+                    if (errorDiv) {
+                        errorDiv.textContent = currentLanguage === 'fr' ? 'Ce champ est obligatoire' : 'This field is required';
+                    }
+                }
+            });
+
+            // Email validation
+            const emailInput = document.getElementById('requester-email');
+            if (emailInput.value && !isValidEmail(emailInput.value)) {
+                isValid = false;
+                emailInput.classList.add('error');
+                document.getElementById('requester-email-error').textContent =
+                    currentLanguage === 'fr' ? 'Format de courriel invalide' : 'Invalid email format';
+            }
+
+            // Priority validation
+            if (!document.querySelector('input[name="priority"]:checked')) {
+                isValid = false;
+                document.getElementById('priority-error').textContent =
+                    currentLanguage === 'fr' ? 'Veuillez sélectionner un niveau de priorité' : 'Please select a priority level';
+            }
+
+            // Character limit validation
+            if (document.getElementById('text-content-title-fr').value.length > 100 ||
+                document.getElementById('text-content-title-en').value.length > 100 ||
+                document.getElementById('text-content-text-fr').value.length > 150 ||
+                document.getElementById('text-content-text-en').value.length > 150) {
+                isValid = false;
+                const msg = currentLanguage === 'fr' ? 'Dépassement de la limite de caractères' : 'Character limit exceeded';
+                if (document.getElementById('text-content-title-fr').value.length > 100) {
+                    document.getElementById('text-content-title-fr-error').textContent = msg;
+                }
+                if (document.getElementById('text-content-title-en').value.length > 100) {
+                    document.getElementById('text-content-title-en-error').textContent = msg;
+                }
+            }
+
+            // Material date validation
+            document.querySelectorAll('.material-date').forEach(input => {
+                if (!input.value) {
+                    isValid = false;
+                    input.classList.add('error');
+                }
+            });
+
+            // Validate text content - if text is empty, must have confirmation
+            if (!textFrInput.value.trim() && !titleOnlyConfirmed.fr) {
+                // Only valid if title is filled and user confirmed
+                const titleOnlyConfirmFr = document.getElementById('title-only-confirm-fr');
+                if (!titleOnlyConfirmFr.classList.contains('hidden')) {
+                    isValid = false;
+                }
+            }
+            if (!textEnInput.value.trim() && !titleOnlyConfirmed.en) {
+                const titleOnlyConfirmEn = document.getElementById('title-only-confirm-en');
+                if (!titleOnlyConfirmEn.classList.contains('hidden')) {
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function generateAndSendEmail() {
+            const title = document.getElementById('request-title').value;
+            const requesterName = document.getElementById('requester-name').value;
+            const requesterEmail = document.getElementById('requester-email').value;
+            const context = document.getElementById('context').value;
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const options = document.querySelector('input[name="options"]:checked').value;
+            const guidelines = document.getElementById('visual-guidelines').value;
+
+            // Get material dates
+            let materialDates = {};
+            document.querySelectorAll('.material-date').forEach(input => {
+                const material = input.dataset.material;
+                const type = input.dataset.type;
+                if (!materialDates[material]) materialDates[material] = {};
+                materialDates[material][type] = input.value;
+            });
+
+            // Get selected materials
+            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
+                .map(el => el.value === 'Other' ? document.getElementById('material-other-text').value : el.value)
+                .filter(val => val);
+
+            // Get approvers
+            const ccEmails = [];
+            document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
+                if (input.value.trim()) {
+                    ccEmails.push(input.value.trim());
+                }
+            });
+
+            // Build email body based on current language
+            let emailBody = '';
+            if (currentLanguage === 'fr') {
+                emailBody = `Demande de design graphique
+
+Titre de la demande
+${title}
+
+Demandeur
+Nom: ${requesterName}
+Courriel: ${requesterEmail}
+
+Contexte & objectif
+${context || '(Non fourni)'}
+
+Type de matériel
+${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
+
+Dates
+Date de livrable: ${formatDate(deliveryDate)}
+${Object.entries(materialDates).map(([material, dates]) =>
+    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
+).join('\n') || ''}
+
+Niveau de priorité
+${getPriorityLabel(priority, 'fr')}
+
+Contenu textuel
+Français:
+Titre: ${document.getElementById('text-content-title-fr').value}
+Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
+
+English:
+Titre: ${document.getElementById('text-content-title-en').value}
+Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+
+Directives visuelles & références
+${guidelines || '(Non fourni)'}
+
+Options / variations
+${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
+`;
+            } else {
+                emailBody = `Graphic Design Request
+
+Request Title
+${title}
+
+Requester
+Name: ${requesterName}
+Email: ${requesterEmail}
+
+Context & Objective
+${context || '(Not provided)'}
+
+Material Type
+${selectedMaterials.join(', ') || '(None selected)'}
+
+Dates
+Delivery date: ${formatDate(deliveryDate)}
+${Object.entries(materialDates).map(([material, dates]) =>
+    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
+).join('\n') || ''}
+
+Priority Level
+${getPriorityLabel(priority, 'en')}
+
+Text Content
+French:
+Title: ${document.getElementById('text-content-title-fr').value}
+Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
+
+English:
+Title: ${document.getElementById('text-content-title-en').value}
+Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+
+Visual Guidelines & References
+${guidelines || '(Not provided)'}
+
+Options / Variations
+${options === 'single' ? 'Single visual' : 'Propose multiple options'}
+`;
+            }
+
+            // Build mailto link
+            const subject = currentLanguage === 'fr' ?
+                `Demande de design graphique — ${title}` :
+                `Graphic Design Request — ${title}`;
+
+            let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+            if (ccEmails.length > 0) {
+                mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
+            }
+
+            window.location.href = mailtoLink;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString + 'T00:00:00');
+            return currentLanguage === 'fr' ?
+                date.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' }) :
+                date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function getPriorityLabel(value, lang) {
+            const labels = {
+                'low': { fr: 'Faible', en: 'Low' },
+                'medium': { fr: 'Moyenne', en: 'Medium' },
+                'high': { fr: 'Élevée', en: 'High' },
+                'urgent': { fr: 'Très urgent', en: 'Very urgent' }
+            };
+            return labels[value][lang];
+        }
+
+        // Initialize
+        updateBannerTextColor();
+    </script>
+</body>
+</html>
 
