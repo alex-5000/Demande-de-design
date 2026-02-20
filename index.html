@@ -448,6 +448,197 @@
             background-color: white;
             border: 1px solid #e0e0e0;
         }
+
+
+        /* ===== Redesign inspired by provided reference ===== */
+        :root {
+            --page-bg: #eff1f6;
+            --panel-bg: #ffffff;
+            --panel-border: #d9deea;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --blue: #2e5fb9;
+            --blue-dark: #1e4ea8;
+        }
+
+        body {
+            background: var(--page-bg);
+            color: var(--text-main);
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 14px;
+        }
+
+        .banner {
+            max-width: 980px;
+            margin: 0 auto 14px;
+            padding: 12px 14px;
+            background: #e7eaf3;
+            border: 1px solid var(--panel-border);
+            border-radius: 10px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+            position: static;
+        }
+
+        .banner h1 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .banner-text-color-light,
+        .banner-text-color-dark {
+            color: var(--text-main);
+        }
+
+        .language-toggle button {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #374151;
+            border-radius: 6px;
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .language-toggle button.active {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: #fff;
+        }
+
+        .language-toggle button:hover {
+            background: #f8fafc;
+        }
+
+        .language-toggle button.active:hover {
+            background: var(--blue-dark);
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .form-section,
+        .text-content-block,
+        .approver-item,
+        .dynamic-section {
+            border-radius: 10px;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+        }
+
+        .form-section {
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .form-section-pair {
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            color: #24344d;
+            font-size: 18px;
+            font-weight: 700;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        textarea {
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            border-radius: 7px;
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        textarea {
+            min-height: 82px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(46, 95, 185, 0.15);
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            font-size: 12px;
+            color: #374151;
+        }
+
+        .dynamic-section {
+            background: #f8faff;
+            border-left: 3px solid #aabce4;
+        }
+
+        .add-approver-btn,
+        .submit-btn,
+        .title-only-confirm button {
+            border-radius: 7px;
+        }
+
+        .submit-btn {
+            background: var(--blue);
+            font-size: 13px;
+            padding: 10px 14px;
+        }
+
+        .submit-btn:hover {
+            background: var(--blue-dark);
+        }
+
+        .add-approver-btn {
+            background: #f8fafc;
+            border: 1px dashed #9fb2d9;
+            color: #2b4c8f;
+        }
+
+        .info-note {
+            background: #f6f8fd;
+            border-left: 3px solid #9fb2d9;
+            color: #4b5f86;
+            border-radius: 8px;
+        }
+
+        .title-only-confirm {
+            background: #fff8e9;
+            border: 1px solid #f7d89a;
+        }
+
+        .approver-item.requester {
+            background: #f6f8fd;
+            border-color: #c7d5f1;
+        }
+
+        .approver-label,
+        .char-count {
+            color: var(--text-muted);
+        }
+
+        .banner.priority-low,
+        .banner.priority-medium,
+        .banner.priority-high,
+        .banner.priority-urgent {
+            background: #e7eaf3;
+        }
+
     </style>
 </head>
 <body>
@@ -872,17 +1063,10 @@
         function updateBannerTextColor() {
             const bannerTitle = document.getElementById('banner-title');
             const langToggle = document.querySelector('.language-toggle');
-            const bannerClasses = banner.classList;
 
-            if (bannerClasses.contains('priority-medium')) {
-                bannerTitle.classList.add('banner-text-color-dark');
-                bannerTitle.classList.remove('banner-text-color-light');
-                langToggle.style.color = '#1a1a1a';
-            } else {
-                bannerTitle.classList.remove('banner-text-color-dark');
-                bannerTitle.classList.add('banner-text-color-light');
-                langToggle.style.color = '#ffffff';
-            }
+            bannerTitle.classList.add('banner-text-color-dark');
+            bannerTitle.classList.remove('banner-text-color-light');
+            langToggle.style.color = '#1f2937';
         }
 
         // Material type changes - dynamic date ranges
