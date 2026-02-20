@@ -19,17 +19,21 @@
         }
 
         .banner {
-            padding: 24px 16px;
+            padding: 12px 16px;
             text-align: center;
             transition: background-color 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #9e9e9e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .banner h1 {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 600;
             flex: 1;
         }
@@ -44,16 +48,16 @@
 
         .language-toggle {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
         }
 
         .language-toggle button {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
             color: inherit;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             border-radius: 4px;
@@ -69,30 +73,47 @@
         }
 
         .container {
-            max-width: 900px;
-            margin: 32px auto;
-            padding: 0 16px;
+            max-width: 1300px;
+            margin: 12px auto;
+            padding: 0 10px;
+        }
+
+        .form-section-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-section-pair .form-section {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 900px) {
+            .form-section-pair {
+                grid-template-columns: 1fr;
+            }
         }
 
         .form-section {
             background: white;
-            padding: 24px;
-            margin-bottom: 24px;
+            padding: 16px;
+            margin-bottom: 16px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .section-title {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 600;
             color: #003078;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 2px solid #e0e0e0;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .form-group:last-child {
@@ -102,8 +123,9 @@
         label {
             display: block;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             color: #333;
+            font-size: 13px;
         }
 
         label .required {
@@ -115,11 +137,11 @@
         input[type="date"],
         textarea {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
 
@@ -140,12 +162,12 @@
 
         textarea {
             resize: vertical;
-            min-height: 100px;
+            min-height: 70px;
         }
 
         .char-count {
-            font-size: 12px;
-            margin-top: 4px;
+            font-size: 11px;
+            margin-top: 2px;
             color: #666;
         }
 
@@ -157,22 +179,23 @@
         .radio-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .checkbox-item,
         .radio-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         input[type="checkbox"],
         input[type="radio"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             accent-color: #003078;
+            flex-shrink: 0;
         }
 
         .checkbox-item label,
@@ -180,26 +203,36 @@
             margin: 0;
             cursor: pointer;
             font-weight: 400;
+            font-size: 13px;
         }
 
         .nested-input {
-            margin-left: 28px;
-            margin-top: 8px;
+            margin-left: 24px;
+            margin-top: 6px;
+        }
+
+        .nested-input input {
+            font-size: 13px;
         }
 
         .dynamic-section {
-            margin-top: 16px;
-            padding: 16px;
+            margin-top: 8px;
+            padding: 12px;
             background-color: #fafafa;
             border-left: 4px solid #003078;
             border-radius: 4px;
         }
 
+        .dynamic-section label {
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
         .date-range-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
         @media (max-width: 600px) {
@@ -208,12 +241,28 @@
             }
         }
 
+        .two-column-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .two-column-section .form-section {
+            margin-bottom: 0;
+        }
+
         .approver-item {
-            padding: 16px;
+            padding: 12px;
             background-color: #fafafa;
             border: 1px solid #e0e0e0;
             border-radius: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             position: relative;
         }
 
@@ -223,17 +272,17 @@
         }
 
         .approver-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #666;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .approver-fields {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 8px;
         }
 
         @media (max-width: 600px) {
@@ -262,8 +311,9 @@
             background-color: #f5f5f5;
             border: 2px dashed #003078;
             color: #003078;
-            padding: 12px 16px;
+            padding: 8px 12px;
             font-weight: 600;
+            font-size: 13px;
             cursor: pointer;
             border-radius: 4px;
             transition: background-color 0.2s;
@@ -276,34 +326,36 @@
         .info-note {
             background-color: #e3f2fd;
             border-left: 4px solid #003078;
-            padding: 12px;
+            padding: 8px 10px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 11px;
             color: #1565c0;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .title-only-confirm {
             background-color: #fff3e0;
             border: 1px solid #ffb74d;
-            padding: 12px;
+            padding: 8px 10px;
             border-radius: 4px;
-            margin-top: 8px;
+            margin-top: 6px;
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
+            font-size: 12px;
         }
 
         .title-only-confirm button {
             background-color: #f9a825;
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             transition: background-color 0.2s;
+            white-space: nowrap;
         }
 
         .title-only-confirm button:hover {
@@ -319,10 +371,10 @@
         .submit-btn {
             background-color: #003078;
             color: white;
-            padding: 14px 28px;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
@@ -377,20 +429,33 @@
         }
 
         .text-content-block {
-            padding: 16px;
+            padding: 12px;
             background-color: #fafafa;
             border-radius: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .text-content-block:last-child {
             margin-bottom: 0;
         }
+
+        .text-content-block > div:first-child {
+            font-size: 12px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .form-section-pair .text-content-block {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+        }
     </style>
 </head>
 <body>
     <div class="banner" id="banner">
-        <h1 id="banner-title">Demande de design graphique</h1>
+        <h1 id="banner-title">
+            <span class="lang-fr">Demande de design graphique</span>
+            <span class="lang-en">Graphic Design Request</span>
+        </h1>
         <div class="language-toggle">
             <button id="lang-fr-btn" class="active">FR</button>
             <button id="lang-en-btn">EN</button>
@@ -404,116 +469,118 @@
                 <div class="section-title" id="title-section">Titre de la demande</div>
                 <div class="form-group">
                     <label for="request-title">
-                        <span class="lang-fr">Titre de la demande <span class="required">*</span></span>
-                        <span class="lang-en">Request Title <span class="required">*</span></span>
+                        <span class="lang-fr">Titre <span class="required">*</span></span>
+                        <span class="lang-en">Title <span class="required">*</span></span>
                     </label>
                     <input type="text" id="request-title" name="request-title" required>
                     <div class="error-message" id="request-title-error"></div>
                 </div>
             </div>
 
-            <!-- Section 2: Requester Info -->
-            <div class="form-section">
-                <div class="section-title" id="requester-section">Infos demandeur</div>
-                <div class="form-group">
-                    <label for="requester-name">
-                        <span class="lang-fr">Nom complet <span class="required">*</span></span>
-                        <span class="lang-en">Full Name <span class="required">*</span></span>
-                    </label>
-                    <input type="text" id="requester-name" name="requester-name" required>
-                    <div class="error-message" id="requester-name-error"></div>
+            <!-- Section 2: Requester Info & Context (Side by side) -->
+            <div class="form-section-pair">
+                <div class="form-section">
+                    <div class="section-title" id="requester-section">Demandeur</div>
+                    <div class="form-group">
+                        <label for="requester-name">
+                            <span class="lang-fr">Nom <span class="required">*</span></span>
+                            <span class="lang-en">Name <span class="required">*</span></span>
+                        </label>
+                        <input type="text" id="requester-name" name="requester-name" required>
+                        <div class="error-message" id="requester-name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="requester-email">
+                            <span class="lang-fr">Courriel <span class="required">*</span></span>
+                            <span class="lang-en">Email <span class="required">*</span></span>
+                        </label>
+                        <input type="email" id="requester-email" name="requester-email" required>
+                        <div class="error-message" id="requester-email-error"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="requester-email">
-                        <span class="lang-fr">Courriel <span class="required">*</span></span>
-                        <span class="lang-en">Email <span class="required">*</span></span>
-                    </label>
-                    <input type="email" id="requester-email" name="requester-email" required>
-                    <div class="error-message" id="requester-email-error"></div>
-                </div>
-            </div>
 
-            <!-- Section 3: Context & Objective -->
-            <div class="form-section">
-                <div class="section-title" id="context-section">Contexte & objectif</div>
-                <div class="form-group">
-                    <label for="context">
-                        <span class="lang-fr">Contexte & objectif</span>
-                        <span class="lang-en">Context & Objective</span>
-                    </label>
-                    <textarea id="context" name="context" placeholder=""></textarea>
-                </div>
-            </div>
-
-            <!-- Section 4: Material Type -->
-            <div class="form-section">
-                <div class="section-title" id="material-section">Type de matériel</div>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-tv" name="materials" value="TV">
-                        <label for="material-tv">TV</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-carousel" name="materials" value="Carousel">
-                        <label for="material-carousel" class="lang-fr">Carrousel</label>
-                        <label for="material-carousel" class="lang-en">Carousel</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-screensaver" name="materials" value="Screensaver">
-                        <label for="material-screensaver">Screensaver</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-email" name="materials" value="Email">
-                        <label for="material-email" class="lang-fr">Courriel</label>
-                        <label for="material-email" class="lang-en">Email</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-flash" name="materials" value="Flash Ads">
-                        <label for="material-flash">Flash Ads</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-intranet" name="materials" value="Intranet">
-                        <label for="material-intranet" class="lang-fr">Éléments intranet</label>
-                        <label for="material-intranet" class="lang-en">Intranet elements</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-photo" name="materials" value="Photo">
-                        <label for="material-photo" class="lang-fr">Traitement photos</label>
-                        <label for="material-photo" class="lang-en">Photo editing</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-modification" name="materials" value="Modification">
-                        <label for="material-modification" class="lang-fr">Modification d'un élément existant</label>
-                        <label for="material-modification" class="lang-en">Modification of existing element</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="material-other" name="materials" value="Other">
-                        <label for="material-other" class="lang-fr">Autre</label>
-                        <label for="material-other" class="lang-en">Other</label>
-                    </div>
-                    <div class="nested-input hidden" id="material-other-input">
-                        <input type="text" id="material-other-text" placeholder="">
+                <div class="form-section">
+                    <div class="section-title" id="context-section">Contexte & objectif</div>
+                    <div class="form-group">
+                        <label for="context">
+                            <span class="lang-fr">Contexte & objectif</span>
+                            <span class="lang-en">Context & Objective</span>
+                        </label>
+                        <textarea id="context" name="context" placeholder=""></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- Section 5: Delivery Date -->
-            <div class="form-section">
-                <div class="section-title" id="delivery-section">Dates</div>
-                <div class="form-group">
-                    <label for="delivery-date">
-                        <span class="lang-fr">Date de livrable <span class="required">*</span></span>
-                        <span class="lang-en">Delivery date <span class="required">*</span></span>
-                    </label>
-                    <input type="date" id="delivery-date" name="delivery-date" required>
-                    <div class="error-message" id="delivery-date-error"></div>
+            <!-- Section 4: Material Type & Delivery (Side by side) -->
+            <div class="form-section-pair">
+                <div class="form-section">
+                    <div class="section-title" id="material-section">Type de matériel</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-tv" name="materials" value="TV">
+                            <label for="material-tv">TV</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-carousel" name="materials" value="Carousel">
+                            <label for="material-carousel" class="lang-fr">Carrousel</label>
+                            <label for="material-carousel" class="lang-en">Carousel</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-screensaver" name="materials" value="Screensaver">
+                            <label for="material-screensaver">Screensaver</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-email" name="materials" value="Email">
+                            <label for="material-email" class="lang-fr">Courriel</label>
+                            <label for="material-email" class="lang-en">Email</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-flash" name="materials" value="Flash Ads">
+                            <label for="material-flash">Flash Ads</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-intranet" name="materials" value="Intranet">
+                            <label for="material-intranet" class="lang-fr">Éléments intranet</label>
+                            <label for="material-intranet" class="lang-en">Intranet elements</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-photo" name="materials" value="Photo">
+                            <label for="material-photo" class="lang-fr">Traitement photos</label>
+                            <label for="material-photo" class="lang-en">Photo editing</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-modification" name="materials" value="Modification">
+                            <label for="material-modification" class="lang-fr">Modification d'un élément existant</label>
+                            <label for="material-modification" class="lang-en">Modification of existing element</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-other" name="materials" value="Other">
+                            <label for="material-other" class="lang-fr">Autre</label>
+                            <label for="material-other" class="lang-en">Other</label>
+                        </div>
+                        <div class="nested-input hidden" id="material-other-input">
+                            <input type="text" id="material-other-text" placeholder="">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Dynamic date ranges for each material -->
-                <div id="dynamic-dates"></div>
+                <div class="form-section">
+                    <div class="section-title" id="delivery-section">Dates</div>
+                    <div class="form-group">
+                        <label for="delivery-date">
+                            <span class="lang-fr">Livrable <span class="required">*</span></span>
+                            <span class="lang-en">Delivery <span class="required">*</span></span>
+                        </label>
+                        <input type="date" id="delivery-date" name="delivery-date" required>
+                        <div class="error-message" id="delivery-date-error"></div>
+                    </div>
+
+                    <!-- Dynamic date ranges for each material -->
+                    <div id="dynamic-dates"></div>
+                </div>
             </div>
 
-            <!-- Section 6: Priority -->
+            <!-- Section 5: Priority -->
             <div class="form-section">
                 <div class="section-title" id="priority-section">Niveau de priorité</div>
                 <div class="radio-group">
@@ -541,116 +608,119 @@
                 <div class="error-message" id="priority-error"></div>
             </div>
 
-            <!-- Section 7: Text Content -->
+            <!-- Section 6: Text Content (Side by side) -->
             <div class="form-section">
                 <div class="section-title" id="content-section">Contenu textuel</div>
 
-                <!-- French Content Block -->
-                <div class="text-content-block">
-                    <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #003078;">Français / French</div>
+                <div class="form-section-pair">
+                    <!-- French Content Block -->
+                    <div class="text-content-block">
+                        <div style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
 
-                    <div class="form-group">
-                        <label for="text-content-title-fr">
-                            <span class="lang-fr">Titre <span class="required">*</span></span>
-                            <span class="lang-en">Title <span class="required">*</span></span>
-                        </label>
-                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-                            <span class="lang-fr">Max 100 caractères</span>
-                            <span class="lang-en">Max 100 characters</span>
+                        <div class="form-group">
+                            <label for="text-content-title-fr">
+                                <span class="lang-fr">Titre <span class="required">*</span></span>
+                                <span class="lang-en">Title <span class="required">*</span></span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 100</span>
+                                <span class="lang-en">Max 100</span>
+                            </div>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
+                            <div class="char-count" id="char-count-title-fr">0/100</div>
+                            <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
-                        <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
-                        <div class="char-count" id="char-count-title-fr">0/100</div>
-                        <div class="error-message" id="text-content-title-fr-error"></div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="text-content-text-fr">
-                            <span class="lang-fr">Texte</span>
-                            <span class="lang-en">Text</span>
-                        </label>
-                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-                            <span class="lang-fr">Max 150 caractères</span>
-                            <span class="lang-en">Max 150 characters</span>
-                        </div>
-                        <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
-                        <div class="char-count" id="char-count-text-fr">0/150</div>
-                        <div id="title-only-confirm-fr" class="hidden title-only-confirm">
-                            <span class="lang-fr">Ce visuel ne contient qu'un titre</span>
-                            <span class="lang-en">This visual contains a title only</span>
-                            <button type="button" class="title-only-confirm-btn" data-lang="fr">
-                                <span class="lang-fr">Confirmer</span>
-                                <span class="lang-en">Confirm</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- English Content Block -->
-                <div class="text-content-block">
-                    <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #003078;">English / Anglais</div>
-
-                    <div class="form-group">
-                        <label for="text-content-title-en">
-                            <span class="lang-fr">Titre <span class="required">*</span></span>
-                            <span class="lang-en">Title <span class="required">*</span></span>
-                        </label>
-                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-                            <span class="lang-fr">Max 100 caractères</span>
-                            <span class="lang-en">Max 100 characters</span>
-                        </div>
-                        <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
-                        <div class="char-count" id="char-count-title-en">0/100</div>
-                        <div class="error-message" id="text-content-title-en-error"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="text-content-text-en">
-                            <span class="lang-fr">Texte</span>
-                            <span class="lang-en">Text</span>
-                        </label>
-                        <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-                            <span class="lang-fr">Max 150 caractères</span>
-                            <span class="lang-en">Max 150 characters</span>
-                        </div>
-                        <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
-                        <div class="char-count" id="char-count-text-en">0/150</div>
-                        <div id="title-only-confirm-en" class="hidden title-only-confirm">
-                            <span class="lang-fr">Ce visuel ne contient qu'un titre</span>
-                            <span class="lang-en">This visual contains a title only</span>
-                            <button type="button" class="title-only-confirm-btn" data-lang="en">
-                                <span class="lang-fr">Confirmer</span>
-                                <span class="lang-en">Confirm</span>
-                            </button>
+                        <div class="form-group">
+                            <label for="text-content-text-fr">
+                                <span class="lang-fr">Texte</span>
+                                <span class="lang-en">Text</span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 150</span>
+                                <span class="lang-en">Max 150</span>
+                            </div>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
+                            <div class="char-count" id="char-count-text-fr">0/150</div>
+                            <div id="title-only-confirm-fr" class="hidden title-only-confirm">
+                                <span class="lang-fr">Titre uniquement</span>
+                                <span class="lang-en">Title only</span>
+                                <button type="button" class="title-only-confirm-btn" data-lang="fr">
+                                    <span class="lang-fr">OK</span>
+                                    <span class="lang-en">OK</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Section 8: Visual Guidelines -->
-            <div class="form-section">
-                <div class="section-title" id="guidelines-section">Directives visuelles & références</div>
-                <div class="form-group">
-                    <label for="visual-guidelines">
-                        <span class="lang-fr">Directives visuelles & références</span>
-                        <span class="lang-en">Visual Guidelines & References</span>
-                    </label>
-                    <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
+                    <!-- English Content Block -->
+                    <div class="text-content-block">
+                        <div style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">English / Anglais</div>
+
+                        <div class="form-group">
+                            <label for="text-content-title-en">
+                                <span class="lang-fr">Titre <span class="required">*</span></span>
+                                <span class="lang-en">Title <span class="required">*</span></span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 100</span>
+                                <span class="lang-en">Max 100</span>
+                            </div>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
+                            <div class="char-count" id="char-count-title-en">0/100</div>
+                            <div class="error-message" id="text-content-title-en-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text-content-text-en">
+                                <span class="lang-fr">Texte</span>
+                                <span class="lang-en">Text</span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 150</span>
+                                <span class="lang-en">Max 150</span>
+                            </div>
+                            <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
+                            <div class="char-count" id="char-count-text-en">0/150</div>
+                            <div id="title-only-confirm-en" class="hidden title-only-confirm">
+                                <span class="lang-fr">Titre uniquement</span>
+                                <span class="lang-en">Title only</span>
+                                <button type="button" class="title-only-confirm-btn" data-lang="en">
+                                    <span class="lang-fr">OK</span>
+                                    <span class="lang-en">OK</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Section 9: Options -->
-            <div class="form-section">
-                <div class="section-title" id="options-section">Options / variations</div>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="option-single" name="options" value="single">
-                        <label for="option-single" class="lang-fr">Un seul visuel</label>
-                        <label for="option-single" class="lang-en">Single visual</label>
+            <!-- Section 7: Visual Guidelines & Options (Side by side) -->
+            <div class="form-section-pair">
+                <div class="form-section">
+                    <div class="section-title" id="guidelines-section">Directives visuelles</div>
+                    <div class="form-group">
+                        <label for="visual-guidelines">
+                            <span class="lang-fr">Directives & références</span>
+                            <span class="lang-en">Guidelines & References</span>
+                        </label>
+                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
                     </div>
-                    <div class="radio-item">
-                        <input type="radio" id="option-multiple" name="options" value="multiple">
-                        <label for="option-multiple" class="lang-fr">Proposer plusieurs options</label>
-                        <label for="option-multiple" class="lang-en">Propose multiple options</label>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title" id="options-section">Options</div>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="option-single" name="options" value="single">
+                            <label for="option-single" class="lang-fr">Un seul visuel</label>
+                            <label for="option-single" class="lang-en">Single visual</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="option-multiple" name="options" value="multiple">
+                            <label for="option-multiple" class="lang-fr">Plusieurs options</label>
+                            <label for="option-multiple" class="lang-en">Multiple options</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -664,14 +734,14 @@
                     <div class="approver-label" id="approver-requester-label">Demandeur / Requester</div>
                     <div class="approver-fields">
                         <div>
-                            <label style="font-size: 13px; margin-bottom: 4px;">
+                            <label style="font-size: 12px; margin-bottom: 4px;">
                                 <span class="lang-fr">Nom</span>
                                 <span class="lang-en">Name</span>
                             </label>
                             <input type="text" id="approver-requester-name" readonly style="background-color: #fff;">
                         </div>
                         <div>
-                            <label style="font-size: 13px; margin-bottom: 4px;">
+                            <label style="font-size: 12px; margin-bottom: 4px;">
                                 <span class="lang-fr">Courriel</span>
                                 <span class="lang-en">Email</span>
                             </label>
@@ -799,19 +869,19 @@
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
-                    <label style="font-weight: 600; margin-bottom: 12px; display: block;">${materialLabels[material]}</label>
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block; font-size: 12px;">${materialLabels[material]}</label>
                     <div class="date-range-row">
                         <div>
-                            <label for="date-${material}-start" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
-                                <span class="lang-fr">Date de début</span>
-                                <span class="lang-en">Start date</span>
+                            <label for="date-${material}-start" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                                <span class="lang-fr">Début</span>
+                                <span class="lang-en">Start</span>
                             </label>
                             <input type="date" id="date-${material}-start" class="material-date" data-material="${material}" data-type="start" required>
                         </div>
                         <div>
-                            <label for="date-${material}-end" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
-                                <span class="lang-fr">Date de fin</span>
-                                <span class="lang-en">End date</span>
+                            <label for="date-${material}-end" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                                <span class="lang-fr">Fin</span>
+                                <span class="lang-en">End</span>
                             </label>
                             <input type="date" id="date-${material}-end" class="material-date" data-material="${material}" data-type="end" required>
                         </div>
@@ -915,14 +985,14 @@
                 <button type="button" class="remove-approver" onclick="document.getElementById('approver-${approverCount}').remove()">×</button>
                 <div class="approver-fields">
                     <div>
-                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                        <label style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
                             <span class="lang-fr">Nom</span>
                             <span class="lang-en">Name</span>
                         </label>
                         <input type="text" class="approver-name" placeholder="">
                     </div>
                     <div>
-                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                        <label style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
                             <span class="lang-fr">Courriel</span>
                             <span class="lang-en">Email</span>
                         </label>
@@ -1180,6 +1250,20 @@ ${options === 'single' ? 'Single visual' : 'Propose multiple options'}
             };
             return labels[value][lang];
         }
+
+        // Scroll effect for banner color change
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const banner = document.getElementById('banner');
+
+            // Change banner background based on scroll position
+            if (scrolled > 0) {
+                // Lighten the banner slightly when scrolling
+                banner.style.opacity = '0.95';
+            } else {
+                banner.style.opacity = '1';
+            }
+        });
 
         // Initialize
         updateBannerTextColor();
