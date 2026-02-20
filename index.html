@@ -48,16 +48,16 @@
 
         .language-toggle {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
         }
 
         .language-toggle button {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: none;
             background-color: rgba(255, 255, 255, 0.2);
             color: inherit;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             border-radius: 4px;
@@ -174,10 +174,11 @@
 
         input[type="checkbox"],
         input[type="radio"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             accent-color: #003078;
+            flex-shrink: 0;
         }
 
         .checkbox-item label,
@@ -185,11 +186,16 @@
             margin: 0;
             cursor: pointer;
             font-weight: 400;
+            font-size: 13px;
         }
 
         .nested-input {
-            margin-left: 28px;
-            margin-top: 8px;
+            margin-left: 24px;
+            margin-top: 6px;
+        }
+
+        .nested-input input {
+            font-size: 13px;
         }
 
         .dynamic-section {
@@ -701,14 +707,14 @@
                     <div class="approver-label" id="approver-requester-label">Demandeur / Requester</div>
                     <div class="approver-fields">
                         <div>
-                            <label style="font-size: 13px; margin-bottom: 4px;">
+                            <label style="font-size: 12px; margin-bottom: 4px;">
                                 <span class="lang-fr">Nom</span>
                                 <span class="lang-en">Name</span>
                             </label>
                             <input type="text" id="approver-requester-name" readonly style="background-color: #fff;">
                         </div>
                         <div>
-                            <label style="font-size: 13px; margin-bottom: 4px;">
+                            <label style="font-size: 12px; margin-bottom: 4px;">
                                 <span class="lang-fr">Courriel</span>
                                 <span class="lang-en">Email</span>
                             </label>
@@ -836,19 +842,19 @@
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
-                    <label style="font-weight: 600; margin-bottom: 12px; display: block;">${materialLabels[material]}</label>
+                    <label style="font-weight: 600; margin-bottom: 8px; display: block; font-size: 12px;">${materialLabels[material]}</label>
                     <div class="date-range-row">
                         <div>
-                            <label for="date-${material}-start" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
-                                <span class="lang-fr">Date de début</span>
-                                <span class="lang-en">Start date</span>
+                            <label for="date-${material}-start" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                                <span class="lang-fr">Début</span>
+                                <span class="lang-en">Start</span>
                             </label>
                             <input type="date" id="date-${material}-start" class="material-date" data-material="${material}" data-type="start" required>
                         </div>
                         <div>
-                            <label for="date-${material}-end" style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
-                                <span class="lang-fr">Date de fin</span>
-                                <span class="lang-en">End date</span>
+                            <label for="date-${material}-end" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                                <span class="lang-fr">Fin</span>
+                                <span class="lang-en">End</span>
                             </label>
                             <input type="date" id="date-${material}-end" class="material-date" data-material="${material}" data-type="end" required>
                         </div>
@@ -952,14 +958,14 @@
                 <button type="button" class="remove-approver" onclick="document.getElementById('approver-${approverCount}').remove()">×</button>
                 <div class="approver-fields">
                     <div>
-                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                        <label style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
                             <span class="lang-fr">Nom</span>
                             <span class="lang-en">Name</span>
                         </label>
                         <input type="text" class="approver-name" placeholder="">
                     </div>
                     <div>
-                        <label style="font-size: 13px; font-weight: 500; margin-bottom: 6px; display: block;">
+                        <label style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
                             <span class="lang-fr">Courriel</span>
                             <span class="lang-en">Email</span>
                         </label>
