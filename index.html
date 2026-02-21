@@ -417,19 +417,11 @@
         }
 
         html[lang="fr"] .lang-fr {
-            display: block !important;
+            display: block;
         }
 
         html[lang="fr"] .lang-en {
-            display: none !important;
-        }
-
-        html[lang="en"] .lang-fr {
-            display: none !important;
-        }
-
-        html[lang="en"] .lang-en {
-            display: block !important;
+            display: none;
         }
 
         /* Ensure language-specific labels in radio/checkbox items are hidden */
@@ -858,20 +850,7 @@
             min-height: 44px;
         }
 
-        .radio-item input[type="radio"]:checked + label,
-        .radio-item input[type="radio"]:checked ~ label:not(.lang-fr):not(.lang-en) {
-            border-color: var(--blue);
-            background-color: var(--blue);
-            color: white;
-        }
-
-        html[lang="en"] .radio-item input[type="radio"]:checked ~ label.lang-en {
-            border-color: var(--blue);
-            background-color: var(--blue);
-            color: white;
-        }
-
-        html[lang="fr"] .radio-item input[type="radio"]:checked ~ label.lang-fr {
+        .radio-item input[type="radio"]:checked + label {
             border-color: var(--blue);
             background-color: var(--blue);
             color: white;
@@ -906,9 +885,7 @@
             background-color: #f8fafc;
         }
 
-        .radio-item input[type="radio"]:checked + label:hover,
-        html[lang="en"] .radio-item input[type="radio"]:checked ~ label.lang-en:hover,
-        html[lang="fr"] .radio-item input[type="radio"]:checked ~ label.lang-fr:hover {
+        .radio-item input[type="radio"]:checked + label:hover {
             opacity: 0.85;
         }
 
@@ -1198,7 +1175,7 @@
                 textBlockFrTitle: 'Français / French',
                 textBlockEnTitle: 'English / Anglais',
                 placeholders: {
-                    'request-title': 'Nom pour communications',
+                    'request-title': 'Titre du projet pour communications',
                     'requester-name': 'Nom *',
                     'requester-email': 'Courriel *',
                     'context': 'Contexte & objectif',
@@ -1227,7 +1204,7 @@
                 textBlockFrTitle: 'French / Français',
                 textBlockEnTitle: 'English / Anglais',
                 placeholders: {
-                    'request-title': 'Name for communications',
+                    'request-title': 'Title of the project for communications',
                     'requester-name': 'Name *',
                     'requester-email': 'Email *',
                     'context': 'Context & objective',
