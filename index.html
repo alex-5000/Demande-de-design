@@ -417,11 +417,19 @@
         }
 
         html[lang="fr"] .lang-fr {
-            display: block;
+            display: block !important;
         }
 
         html[lang="fr"] .lang-en {
-            display: none;
+            display: none !important;
+        }
+
+        html[lang="en"] .lang-fr {
+            display: none !important;
+        }
+
+        html[lang="en"] .lang-en {
+            display: block !important;
         }
 
         /* Ensure language-specific labels in radio/checkbox items are hidden */
@@ -850,7 +858,20 @@
             min-height: 44px;
         }
 
-        .radio-item input[type="radio"]:checked + label {
+        .radio-item input[type="radio"]:checked + label,
+        .radio-item input[type="radio"]:checked ~ label:not(.lang-fr):not(.lang-en) {
+            border-color: var(--blue);
+            background-color: var(--blue);
+            color: white;
+        }
+
+        html[lang="en"] .radio-item input[type="radio"]:checked ~ label.lang-en {
+            border-color: var(--blue);
+            background-color: var(--blue);
+            color: white;
+        }
+
+        html[lang="fr"] .radio-item input[type="radio"]:checked ~ label.lang-fr {
             border-color: var(--blue);
             background-color: var(--blue);
             color: white;
@@ -885,7 +906,9 @@
             background-color: #f8fafc;
         }
 
-        .radio-item input[type="radio"]:checked + label:hover {
+        .radio-item input[type="radio"]:checked + label:hover,
+        html[lang="en"] .radio-item input[type="radio"]:checked ~ label.lang-en:hover,
+        html[lang="fr"] .radio-item input[type="radio"]:checked ~ label.lang-fr:hover {
             opacity: 0.85;
         }
 
