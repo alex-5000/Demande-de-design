@@ -946,24 +946,21 @@
                     <div class="section-title" id="material-section">Type de matériel <span class="required">*</span></div>
                     <div class="form-group">
                         <select id="materials-dropdown">
-                            <option value="">
-                                <span class="lang-fr">Sélectionner un type de matériel...</span>
-                                <span class="lang-en">Select a material type...</span>
-                            </option>
-                            <option value="TV">TV</option>
-                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carousel</option>
-                            <option value="Screensaver">Screensaver</option>
-                            <option value="Email" data-fr="Courriel" data-en="Email">Email</option>
-                            <option value="Flash Ads">Flash Ads</option>
-                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Intranet</option>
-                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Photo</option>
-                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification</option>
-                            <option value="Other" data-fr="Autre" data-en="Other">Other</option>
+                            <option value="" data-fr="Sélectionner un type de matériel..." data-en="Select a material type...">Sélectionner un type de matériel...</option>
+                            <option value="TV" data-fr="TV" data-en="TV">TV</option>
+                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carrousel</option>
+                            <option value="Screensaver" data-fr="Économiseur d'écran" data-en="Screensaver">Économiseur d'écran</option>
+                            <option value="Email" data-fr="Courriel" data-en="Email">Courriel</option>
+                            <option value="Flash Ads" data-fr="Publicités Flash" data-en="Flash Ads">Publicités Flash</option>
+                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Éléments intranet</option>
+                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Traitement photos</option>
+                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification d'un élément existant</option>
+                            <option value="Other" data-fr="Autre" data-en="Other">Autre</option>
                         </select>
                     </div>
                     <div id="selected-materials" class="selected-materials-container"></div>
                     <div class="nested-input hidden" id="material-other-input">
-                        <input type="text" id="material-other-text" placeholder="Specify the type">
+                        <input type="text" id="material-other-text" placeholder="Spécifier le type">
                     </div>
                 </div>
 
@@ -1250,6 +1247,7 @@
 
             updatePlaceholders();
             updateDynamicMaterialLabels();
+            updateMaterialDropdownLabels();
         }
 
         function updatePlaceholders() {
@@ -1418,6 +1416,17 @@
             document.querySelectorAll('.material-date-title').forEach(label => {
                 const material = label.dataset.material;
                 label.textContent = getMaterialLabel(material);
+            });
+        }
+
+        function updateMaterialDropdownLabels() {
+            const dropdown = document.getElementById('materials-dropdown');
+            dropdown.querySelectorAll('option').forEach(option => {
+                const dataAttr = currentLanguage === 'fr' ? 'data-fr' : 'data-en';
+                const translatedText = option.getAttribute(dataAttr);
+                if (translatedText) {
+                    option.textContent = translatedText;
+                }
             });
         }
 
