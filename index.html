@@ -1706,113 +1706,87 @@
             return re.test(email);
         }
 
-        async function generateAndSendEmail() {
-            const submitBtn = document.getElementById('submit-btn');
-            const originalBtnText = submitBtn.innerHTML;
+        function generateAndSendEmail() {
+            const title = document.getElementById('request-title').value;
+            const requesterName = document.getElementById('requester-name').value;
+            const requesterEmail = document.getElementById('requester-email').value;
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const guidelines = document.getElementById('visual-guidelines').value;
+            const context = document.getElementById('context').value;
 
-            try {
-                const title = document.getElementById('request-title').value;
-                const requesterName = document.getElementById('requester-name').value;
-                const requesterEmail = document.getElementById('requester-email').value;
-                const context = document.getElementById('context').value;
-                const deliveryDate = document.getElementById('delivery-date').value;
-                const priority = document.querySelector('input[name="priority"]:checked').value;
-                const options = document.querySelector('input[name="options"]:checked').value;
-                const guidelines = document.getElementById('visual-guidelines').value;
+            // Get selected materials
+            const materialsList = selectedMaterials.map(val =>
+                val === 'Other' ? document.getElementById('material-other-text').value : val
+            ).filter(val => val).join(', ');
 
-                console.log('Form data retrieved successfully');
+            // Build email body - keep it concise (under 2000 chars for mailto)
+            let emailBody = '';
+            if (currentLanguage === 'fr') {
+                emailBody = `DEMANDE DE DESIGN
 
-                // Get material dates
-                let materialDates = {};
-                document.querySelectorAll('.material-date').forEach(input => {
-                    const material = input.dataset.material;
-                    const type = input.dataset.type;
-                    if (!materialDates[material]) materialDates[material] = {};
-                    materialDates[material][type] = input.value;
-                });
+Titre: ${title}
+Demandeur: ${requesterName} (${requesterEmail})
+Contexte: ${context || '(non fourni)'}
 
-                // Get selected materials (map 'Other' to actual input value)
-                const materialsList = selectedMaterials.map(val =>
-                    val === 'Other' ? document.getElementById('material-other-text').value : val
-                ).filter(val => val);
+Livrable: ${formatDate(deliveryDate)}
+Priorité: ${getPriorityLabel(priority, 'fr')}
+Matériaux: ${materialsList}
 
-                // Get approvers
-                const ccEmails = [];
-                document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
-                    if (input.value.trim()) {
-                        ccEmails.push(input.value.trim());
-                    }
-                });
+Contenu FR:
+• Titre: ${document.getElementById('text-content-title-fr').value}
+• Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
 
-                // Get text content
-                const textContent = {
-                    titleFr: document.getElementById('text-content-title-fr').value,
-                    textFr: document.getElementById('text-content-text-fr').value,
-                    titleEn: document.getElementById('text-content-title-en').value,
-                    textEn: document.getElementById('text-content-text-en').value
-                };
+Contenu EN:
+• Titre: ${document.getElementById('text-content-title-en').value}
+• Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
 
-                // Prepare form data
-                const formData = {
-                    title,
-                    requesterName,
-                    requesterEmail,
-                    context,
-                    deliveryDate,
-                    priority,
-                    options,
-                    guidelines,
-                    language: currentLanguage,
-                    materialDates,
-                    materialsList,
-                    textContent,
-                    ccEmails
-                };
+Directives visuelles:
+${guidelines}`;
+            } else {
+                emailBody = `GRAPHIC DESIGN REQUEST
 
-                console.log('Sending form data to server...');
+Title: ${title}
+Requester: ${requesterName} (${requesterEmail})
+Context: ${context || '(not provided)'}
 
-                // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.textContent = currentLanguage === 'fr' ? 'En attente...' : 'Submitting...';
+Delivery Date: ${formatDate(deliveryDate)}
+Priority: ${getPriorityLabel(priority, 'en')}
+Materials: ${materialsList}
 
-                // Send to backend
-                const response = await fetch('/api/submit-form', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
+French Content:
+• Title: ${document.getElementById('text-content-title-fr').value}
+• Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
 
-                const result = await response.json();
+English Content:
+• Title: ${document.getElementById('text-content-title-en').value}
+• Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
 
-                if (result.success) {
-                    console.log('Form submitted successfully');
-                    alert(result.message);
-
-                    // Reset form
-                    form.reset();
-                    selectedMaterials = [];
-                    renderSelectedMaterials();
-                    updateDynamicDates();
-                    titleOnlyConfirmed = { fr: false, en: false };
-                } else {
-                    console.error('Form submission failed:', result.message);
-                    alert(result.message || (currentLanguage === 'fr'
-                        ? 'Une erreur s\'est produite lors de la soumission du formulaire.'
-                        : 'An error occurred while submitting the form.'));
-                }
-
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert(currentLanguage === 'fr'
-                    ? 'Une erreur s\'est produite lors de la soumission du formulaire. Vérifiez votre connexion.'
-                    : 'An error occurred while submitting the form. Please check your connection.');
-            } finally {
-                // Restore button state
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
+Visual Guidelines:
+${guidelines}`;
             }
+
+            // Create mailto link
+            const mailtoSubject = currentLanguage === 'fr'
+                ? `Demande de design — ${title}`
+                : `Design Request — ${title}`;
+            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+
+            // Show confirmation and reset form
+            const msg = currentLanguage === 'fr'
+                ? 'Votre formulaire a été soumis. Un email s\'ouvrira dans votre client mail.'
+                : 'Your form has been submitted. An email will open in your mail client.';
+            alert(msg);
+
+            // Reset form
+            form.reset();
+            selectedMaterials = [];
+            renderSelectedMaterials();
+            updateDynamicDates();
+            titleOnlyConfirmed = { fr: false, en: false };
         }
 
         function formatDate(dateString) {
