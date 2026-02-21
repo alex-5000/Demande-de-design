@@ -675,6 +675,142 @@
             background: #7f1d1d;
         }
 
+        /* Material Type Dropdown Styles */
+        select#materials-dropdown {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            border-radius: 7px;
+            font-size: 13px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        select#materials-dropdown:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(46, 95, 185, 0.15);
+        }
+
+        /* Selected Materials Container */
+        .selected-materials-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            min-height: 0;
+        }
+
+        .material-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background-color: #e8f1ff;
+            border: 1px solid #aabce4;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #2b4c8f;
+        }
+
+        .material-badge .remove-material {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background-color: transparent;
+            border: none;
+            color: #2b4c8f;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .material-badge .remove-material:hover {
+            color: #c62828;
+        }
+
+        /* Priority Horizontal Layout */
+        .radio-group {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            position: relative;
+            flex: 0 1 auto;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .radio-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-item label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .radio-item input[type="radio"]:checked + label {
+            border-color: var(--blue);
+            background-color: var(--blue);
+            color: white;
+        }
+
+        #priority-low:checked + label {
+            background: linear-gradient(135deg, #2f9e44 0%, #1b6e1e 100%);
+            border-color: #2f9e44;
+            color: white;
+        }
+
+        #priority-medium:checked + label {
+            background: linear-gradient(135deg, #f08c00 0%, #d97700 100%);
+            border-color: #f08c00;
+            color: white;
+        }
+
+        #priority-high:checked + label {
+            background: linear-gradient(135deg, #d9480f 0%, #a63200 100%);
+            border-color: #d9480f;
+            color: white;
+        }
+
+        #priority-urgent:checked + label {
+            background: linear-gradient(135deg, #7f1d1d 0%, #4c0a0a 100%);
+            border-color: #7f1d1d;
+            color: white;
+        }
+
+        .radio-item label:hover {
+            border-color: var(--blue);
+            background-color: #f8fafc;
+        }
+
+        .radio-item input[type="radio"]:checked + label:hover {
+            opacity: 0.85;
+        }
+
     </style>
 </head>
 <body>
@@ -742,52 +878,26 @@
             <div class="form-section-pair">
                 <div class="form-section">
                     <div class="section-title" id="material-section">Type de matériel</div>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-tv" name="materials" value="TV">
-                            <label for="material-tv">TV</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-carousel" name="materials" value="Carousel">
-                            <label for="material-carousel" class="lang-fr">Carrousel</label>
-                            <label for="material-carousel" class="lang-en">Carousel</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-screensaver" name="materials" value="Screensaver">
-                            <label for="material-screensaver">Screensaver</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-email" name="materials" value="Email">
-                            <label for="material-email" class="lang-fr">Courriel</label>
-                            <label for="material-email" class="lang-en">Email</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-flash" name="materials" value="Flash Ads">
-                            <label for="material-flash">Flash Ads</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-intranet" name="materials" value="Intranet">
-                            <label for="material-intranet" class="lang-fr">Éléments intranet</label>
-                            <label for="material-intranet" class="lang-en">Intranet elements</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-photo" name="materials" value="Photo">
-                            <label for="material-photo" class="lang-fr">Traitement photos</label>
-                            <label for="material-photo" class="lang-en">Photo editing</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-modification" name="materials" value="Modification">
-                            <label for="material-modification" class="lang-fr">Modification d'un élément existant</label>
-                            <label for="material-modification" class="lang-en">Modification of existing element</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="material-other" name="materials" value="Other">
-                            <label for="material-other" class="lang-fr">Autre</label>
-                            <label for="material-other" class="lang-en">Other</label>
-                        </div>
-                        <div class="nested-input hidden" id="material-other-input">
-                            <input type="text" id="material-other-text" placeholder="">
-                        </div>
+                    <div class="form-group">
+                        <select id="materials-dropdown">
+                            <option value="">
+                                <span class="lang-fr">Sélectionner un type de matériel...</span>
+                                <span class="lang-en">Select a material type...</span>
+                            </option>
+                            <option value="TV">TV</option>
+                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carousel</option>
+                            <option value="Screensaver">Screensaver</option>
+                            <option value="Email" data-fr="Courriel" data-en="Email">Email</option>
+                            <option value="Flash Ads">Flash Ads</option>
+                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Intranet</option>
+                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Photo</option>
+                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification</option>
+                            <option value="Other" data-fr="Autre" data-en="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="selected-materials" class="selected-materials-container"></div>
+                    <div class="nested-input hidden" id="material-other-input">
+                        <input type="text" id="material-other-text" placeholder="">
                     </div>
                 </div>
 
@@ -853,7 +963,7 @@
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" required>
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
@@ -867,7 +977,7 @@
                                 <span class="lang-fr">Max 150</span>
                                 <span class="lang-en">Max 150</span>
                             </div>
-                            <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -893,7 +1003,7 @@
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en" required>
                             <div class="char-count" id="char-count-title-en">0/100</div>
                             <div class="error-message" id="text-content-title-en-error"></div>
                         </div>
@@ -907,7 +1017,7 @@
                                 <span class="lang-fr">Max 150</span>
                                 <span class="lang-en">Max 150</span>
                             </div>
-                            <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
+                            <textarea id="text-content-text-en" name="text-content-text-en"></textarea>
                             <div class="char-count" id="char-count-text-en">0/150</div>
                             <div id="title-only-confirm-en" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -1107,26 +1217,68 @@
             langToggle.style.color = useLightText ? '#ffffff' : '#1f2937';
         }
 
-        // Material type changes - dynamic date ranges
-        const materialCheckboxes = document.querySelectorAll('input[name="materials"]');
-        const materialOtherCheckbox = document.getElementById('material-other');
+        // Material type changes - dynamic date ranges and dropdown
+        const materialsDropdown = document.getElementById('materials-dropdown');
+        const selectedMaterialsContainer = document.getElementById('selected-materials');
         const dynamicDatesContainer = document.getElementById('dynamic-dates');
+        let selectedMaterials = [];
 
-        materialCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateDynamicDates);
+        materialsDropdown.addEventListener('change', (e) => {
+            if (e.target.value) {
+                const value = e.target.value;
+                if (!selectedMaterials.includes(value)) {
+                    selectedMaterials.push(value);
+                    renderSelectedMaterials();
+                    updateDynamicDates();
+                }
+                e.target.value = '';
+            }
         });
 
-        materialOtherCheckbox.addEventListener('change', () => {
-            document.getElementById('material-other-input').classList.toggle('hidden');
-        });
+        function renderSelectedMaterials() {
+            selectedMaterialsContainer.innerHTML = '';
+            selectedMaterials.forEach(material => {
+                const badge = document.createElement('div');
+                badge.className = 'material-badge';
+                const label = getMaterialLabel(material);
+                badge.innerHTML = `
+                    <span>${label}</span>
+                    <button type="button" class="remove-material" data-material="${material}">×</button>
+                `;
+                badge.querySelector('.remove-material').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    removeMaterial(material);
+                });
+                selectedMaterialsContainer.appendChild(badge);
+            });
+        }
+
+        function removeMaterial(material) {
+            selectedMaterials = selectedMaterials.filter(m => m !== material);
+            renderSelectedMaterials();
+            updateDynamicDates();
+            if (material === 'Other') {
+                document.getElementById('material-other-input').classList.add('hidden');
+                document.getElementById('material-other-text').value = '';
+            }
+        }
+
+        // Handle "Other" material option - show input field when selected
+        const originalRenderSelectedMaterials = renderSelectedMaterials;
+        renderSelectedMaterials = function() {
+            originalRenderSelectedMaterials();
+            if (selectedMaterials.includes('Other')) {
+                document.getElementById('material-other-input').classList.remove('hidden');
+            } else {
+                document.getElementById('material-other-input').classList.add('hidden');
+            }
+        };
 
         function updateDynamicDates() {
             dynamicDatesContainer.innerHTML = '';
-            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
-                .map(el => el.value)
-                .filter(val => val !== 'Other');
+            const materialsForDates = selectedMaterials.filter(val => val !== 'Other');
 
-            selectedMaterials.forEach(material => {
+            materialsForDates.forEach(material => {
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
@@ -1220,9 +1372,16 @@
             const maxChars = type === 'title' ? 100 : 150;
             const currentLength = input.value.length;
 
-            countDiv.textContent = `${currentLength}/${maxChars}`;
-            countDiv.classList.toggle('warning', currentLength > maxChars);
-            input.classList.toggle('error', currentLength > maxChars);
+            if (currentLength > maxChars) {
+                const overflow = currentLength - maxChars;
+                countDiv.textContent = `${currentLength}/${maxChars} (+${overflow})`;
+                countDiv.classList.add('warning');
+                input.classList.add('error');
+            } else {
+                countDiv.textContent = `${currentLength}/${maxChars}`;
+                countDiv.classList.remove('warning');
+                input.classList.remove('error');
+            }
 
             // Show/hide title-only confirm button
             if (type === 'text') {
@@ -1405,10 +1564,10 @@
                 materialDates[material][type] = input.value;
             });
 
-            // Get selected materials
-            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
-                .map(el => el.value === 'Other' ? document.getElementById('material-other-text').value : el.value)
-                .filter(val => val);
+            // Get selected materials (map 'Other' to actual input value)
+            const materialsList = selectedMaterials.map(val =>
+                val === 'Other' ? document.getElementById('material-other-text').value : val
+            ).filter(val => val);
 
             // Get approvers
             const ccEmails = [];
@@ -1434,7 +1593,7 @@ Contexte & objectif
 ${context || '(Non fourni)'}
 
 Type de matériel
-${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
+${materialsList.join(', ') || '(Aucun sélectionné)'}
 
 Dates
 Date de livrable: ${formatDate(deliveryDate)}
@@ -1474,7 +1633,7 @@ Context & Objective
 ${context || '(Not provided)'}
 
 Material Type
-${selectedMaterials.join(', ') || '(None selected)'}
+${materialsList.join(', ') || '(None selected)'}
 
 Dates
 Delivery date: ${formatDate(deliveryDate)}
