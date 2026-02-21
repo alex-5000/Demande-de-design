@@ -1708,85 +1708,36 @@
 
         function generateAndSendEmail() {
             const title = document.getElementById('request-title').value;
-            const requesterName = document.getElementById('requester-name').value;
-            const requesterEmail = document.getElementById('requester-email').value;
-            const deliveryDate = document.getElementById('delivery-date').value;
-            const priority = document.querySelector('input[name="priority"]:checked').value;
-            const guidelines = document.getElementById('visual-guidelines').value;
-            const context = document.getElementById('context').value;
 
-            // Get selected materials
-            const materialsList = selectedMaterials.map(val =>
-                val === 'Other' ? document.getElementById('material-other-text').value : val
-            ).filter(val => val).join(', ');
-
-            // Build email body - keep it concise (under 2000 chars for mailto)
-            let emailBody = '';
-            if (currentLanguage === 'fr') {
-                emailBody = `DEMANDE DE DESIGN
-
-Titre: ${title}
-Demandeur: ${requesterName} (${requesterEmail})
-Contexte: ${context || '(non fourni)'}
-
-Livrable: ${formatDate(deliveryDate)}
-Priorité: ${getPriorityLabel(priority, 'fr')}
-Matériaux: ${materialsList}
-
-Contenu FR:
-• Titre: ${document.getElementById('text-content-title-fr').value}
-• Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
-
-Contenu EN:
-• Titre: ${document.getElementById('text-content-title-en').value}
-• Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Directives visuelles:
-${guidelines}`;
-            } else {
-                emailBody = `GRAPHIC DESIGN REQUEST
-
-Title: ${title}
-Requester: ${requesterName} (${requesterEmail})
-Context: ${context || '(not provided)'}
-
-Delivery Date: ${formatDate(deliveryDate)}
-Priority: ${getPriorityLabel(priority, 'en')}
-Materials: ${materialsList}
-
-French Content:
-• Title: ${document.getElementById('text-content-title-fr').value}
-• Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
-
-English Content:
-• Title: ${document.getElementById('text-content-title-en').value}
-• Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Visual Guidelines:
-${guidelines}`;
-            }
-
-            // Create mailto link
+            // Keep mailto intentionally simple so the mail client opens reliably
             const mailtoSubject = currentLanguage === 'fr'
                 ? `Demande de design — ${title}`
                 : `Design Request — ${title}`;
-            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(emailBody)}`;
+            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}`;
 
-            // Open email client
-            window.location.href = mailtoLink;
+            // Trigger mail client via a temporary anchor (more reliable across browsers)
+            const mailtoAnchor = document.createElement('a');
+            mailtoAnchor.href = mailtoLink;
+            mailtoAnchor.style.display = 'none';
+            document.body.appendChild(mailtoAnchor);
+            mailtoAnchor.click();
+            document.body.removeChild(mailtoAnchor);
 
-            // Show confirmation and reset form
             const msg = currentLanguage === 'fr'
-                ? 'Votre formulaire a été soumis. Un email s\'ouvrira dans votre client mail.'
-                : 'Your form has been submitted. An email will open in your mail client.';
-            alert(msg);
+                ? 'Si aucun client courriel ne s\'ouvre, vérifiez votre application de courriel par défaut puis réessayez.'
+                : 'If no email client opens, verify your default mail app and try again.';
 
-            // Reset form
-            form.reset();
-            selectedMaterials = [];
-            renderSelectedMaterials();
-            updateDynamicDates();
-            titleOnlyConfirmed = { fr: false, en: false };
+            const shouldReset = confirm(msg + (currentLanguage === 'fr'
+                ? '\n\nCliquez OK pour vider le formulaire, ou Annuler pour conserver les données.'
+                : '\n\nClick OK to clear the form, or Cancel to keep your data.'));
+
+            if (shouldReset) {
+                form.reset();
+                selectedMaterials = [];
+                renderSelectedMaterials();
+                updateDynamicDates();
+                titleOnlyConfirmed = { fr: false, en: false };
+            }
         }
 
         function formatDate(dateString) {
