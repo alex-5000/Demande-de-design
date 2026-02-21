@@ -1706,7 +1706,10 @@
             return re.test(email);
         }
 
-        function generateAndSendEmail() {
+        async function generateAndSendEmail() {
+            const submitBtn = document.getElementById('submit-btn');
+            const originalBtnText = submitBtn.innerHTML;
+
             try {
                 const title = document.getElementById('request-title').value;
                 const requesterName = document.getElementById('requester-name').value;
@@ -1719,141 +1722,96 @@
 
                 console.log('Form data retrieved successfully');
 
-            // Get material dates
-            let materialDates = {};
-            document.querySelectorAll('.material-date').forEach(input => {
-                const material = input.dataset.material;
-                const type = input.dataset.type;
-                if (!materialDates[material]) materialDates[material] = {};
-                materialDates[material][type] = input.value;
-            });
+                // Get material dates
+                let materialDates = {};
+                document.querySelectorAll('.material-date').forEach(input => {
+                    const material = input.dataset.material;
+                    const type = input.dataset.type;
+                    if (!materialDates[material]) materialDates[material] = {};
+                    materialDates[material][type] = input.value;
+                });
 
-            // Get selected materials (map 'Other' to actual input value)
-            const materialsList = selectedMaterials.map(val =>
-                val === 'Other' ? document.getElementById('material-other-text').value : val
-            ).filter(val => val);
+                // Get selected materials (map 'Other' to actual input value)
+                const materialsList = selectedMaterials.map(val =>
+                    val === 'Other' ? document.getElementById('material-other-text').value : val
+                ).filter(val => val);
 
-            // Get approvers
-            const ccEmails = [];
-            document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
-                if (input.value.trim()) {
-                    ccEmails.push(input.value.trim());
+                // Get approvers
+                const ccEmails = [];
+                document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
+                    if (input.value.trim()) {
+                        ccEmails.push(input.value.trim());
+                    }
+                });
+
+                // Get text content
+                const textContent = {
+                    titleFr: document.getElementById('text-content-title-fr').value,
+                    textFr: document.getElementById('text-content-text-fr').value,
+                    titleEn: document.getElementById('text-content-title-en').value,
+                    textEn: document.getElementById('text-content-text-en').value
+                };
+
+                // Prepare form data
+                const formData = {
+                    title,
+                    requesterName,
+                    requesterEmail,
+                    context,
+                    deliveryDate,
+                    priority,
+                    options,
+                    guidelines,
+                    language: currentLanguage,
+                    materialDates,
+                    materialsList,
+                    textContent,
+                    ccEmails
+                };
+
+                console.log('Sending form data to server...');
+
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = currentLanguage === 'fr' ? 'En attente...' : 'Submitting...';
+
+                // Send to backend
+                const response = await fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('Form submitted successfully');
+                    alert(result.message);
+
+                    // Reset form
+                    form.reset();
+                    selectedMaterials = [];
+                    renderSelectedMaterials();
+                    updateDynamicDates();
+                    titleOnlyConfirmed = { fr: false, en: false };
+                } else {
+                    console.error('Form submission failed:', result.message);
+                    alert(result.message || (currentLanguage === 'fr'
+                        ? 'Une erreur s\'est produite lors de la soumission du formulaire.'
+                        : 'An error occurred while submitting the form.'));
                 }
-            });
-
-            // Build email body based on current language
-            let emailBody = '';
-            if (currentLanguage === 'fr') {
-                emailBody = `Demande de design graphique
-
-Titre de la demande
-${title}
-
-Demandeur
-Nom: ${requesterName}
-Courriel: ${requesterEmail}
-
-Contexte & objectif
-${context || '(Non fourni)'}
-
-Type de matériel
-${materialsList.join(', ') || '(Aucun sélectionné)'}
-
-Dates
-Date de livrable: ${formatDate(deliveryDate)}
-${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Niveau de priorité
-${getPriorityLabel(priority, 'fr')}
-
-Contenu textuel
-Français:
-Titre: ${document.getElementById('text-content-title-fr').value}
-Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
-
-English:
-Titre: ${document.getElementById('text-content-title-en').value}
-Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Directives visuelles & références
-${guidelines || '(Non fourni)'}
-
-Options / variations
-${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
-`;
-            } else {
-                emailBody = `Graphic Design Request
-
-Request Title
-${title}
-
-Requester
-Name: ${requesterName}
-Email: ${requesterEmail}
-
-Context & Objective
-${context || '(Not provided)'}
-
-Material Type
-${materialsList.join(', ') || '(None selected)'}
-
-Dates
-Delivery date: ${formatDate(deliveryDate)}
-${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Priority Level
-${getPriorityLabel(priority, 'en')}
-
-Text Content
-French:
-Title: ${document.getElementById('text-content-title-fr').value}
-Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
-
-English:
-Title: ${document.getElementById('text-content-title-en').value}
-Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Visual Guidelines & References
-${guidelines || '(Not provided)'}
-
-Options / Variations
-${options === 'single' ? 'Single visual' : 'Propose multiple options'}
-`;
-            }
-
-                // Build mailto link
-                const subject = currentLanguage === 'fr' ?
-                    `Demande de design graphique — ${title}` :
-                    `Graphic Design Request — ${title}`;
-
-                let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-
-                if (ccEmails.length > 0) {
-                    mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
-                }
-
-                console.log('Opening email client with mailto link...');
-                console.log('Subject:', subject);
-                console.log('CC emails:', ccEmails);
-
-                // Trigger email client
-                window.location.href = mailtoLink;
-
-                // Show success message
-                console.log('Email client opened successfully');
-                alert(currentLanguage === 'fr'
-                    ? 'Votre formulaire a été compilé. Un courriel devrait s\'ouvrir dans votre client email.'
-                    : 'Your form has been compiled. An email should open in your email client.');
 
             } catch (error) {
-                console.error('Error generating email:', error);
+                console.error('Error submitting form:', error);
                 alert(currentLanguage === 'fr'
-                    ? 'Une erreur s\'est produite lors de la génération du courriel.'
-                    : 'An error occurred while generating the email.');
+                    ? 'Une erreur s\'est produite lors de la soumission du formulaire. Vérifiez votre connexion.'
+                    : 'An error occurred while submitting the form. Please check your connection.');
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
             }
         }
 
