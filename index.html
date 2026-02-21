@@ -1549,8 +1549,17 @@
         // Form submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            console.log('Form submission triggered');
             if (validateForm()) {
+                console.log('Form validation passed, generating email...');
                 generateAndSendEmail();
+            } else {
+                console.log('Form validation failed');
+                // Scroll to first error
+                const firstError = document.querySelector('.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
         });
 
@@ -1658,22 +1667,26 @@
                 if (!input.value) {
                     isValid = false;
                     input.classList.add('error');
+                    const material = input.dataset.material;
+                    const errorDiv = document.querySelector(`#error-${material}`);
+                    if (errorDiv && !errorDiv.textContent) {
+                        errorDiv.textContent = currentLanguage === 'fr'
+                            ? 'Les dates de distribution sont obligatoires'
+                            : 'Distribution dates are required';
+                    }
                 }
             });
 
             // Validate text content - if text is empty, must have confirmation
+            // French text content validation
             if (!textFrInput.value.trim() && !titleOnlyConfirmed.fr) {
-                // Only valid if title is filled and user confirmed
-                const titleOnlyConfirmFr = document.getElementById('title-only-confirm-fr');
-                if (!titleOnlyConfirmFr.classList.contains('hidden')) {
-                    isValid = false;
-                }
+                isValid = false;
+                console.warn('French text content is empty and not confirmed');
             }
+            // English text content validation
             if (!textEnInput.value.trim() && !titleOnlyConfirmed.en) {
-                const titleOnlyConfirmEn = document.getElementById('title-only-confirm-en');
-                if (!titleOnlyConfirmEn.classList.contains('hidden')) {
-                    isValid = false;
-                }
+                isValid = false;
+                console.warn('English text content is empty and not confirmed');
             }
 
             return isValid;
@@ -1685,14 +1698,17 @@
         }
 
         function generateAndSendEmail() {
-            const title = document.getElementById('request-title').value;
-            const requesterName = document.getElementById('requester-name').value;
-            const requesterEmail = document.getElementById('requester-email').value;
-            const context = document.getElementById('context').value;
-            const deliveryDate = document.getElementById('delivery-date').value;
-            const priority = document.querySelector('input[name="priority"]:checked').value;
-            const options = document.querySelector('input[name="options"]:checked').value;
-            const guidelines = document.getElementById('visual-guidelines').value;
+            try {
+                const title = document.getElementById('request-title').value;
+                const requesterName = document.getElementById('requester-name').value;
+                const requesterEmail = document.getElementById('requester-email').value;
+                const context = document.getElementById('context').value;
+                const deliveryDate = document.getElementById('delivery-date').value;
+                const priority = document.querySelector('input[name="priority"]:checked').value;
+                const options = document.querySelector('input[name="options"]:checked').value;
+                const guidelines = document.getElementById('visual-guidelines').value;
+
+                console.log('Form data retrieved successfully');
 
             // Get material dates
             let materialDates = {};
@@ -1800,18 +1816,36 @@ ${options === 'single' ? 'Single visual' : 'Propose multiple options'}
 `;
             }
 
-            // Build mailto link
-            const subject = currentLanguage === 'fr' ?
-                `Demande de design graphique — ${title}` :
-                `Graphic Design Request — ${title}`;
+                // Build mailto link
+                const subject = currentLanguage === 'fr' ?
+                    `Demande de design graphique — ${title}` :
+                    `Graphic Design Request — ${title}`;
 
-            let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
-            if (ccEmails.length > 0) {
-                mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
+                if (ccEmails.length > 0) {
+                    mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
+                }
+
+                console.log('Opening email client with mailto link...');
+                console.log('Subject:', subject);
+                console.log('CC emails:', ccEmails);
+
+                // Trigger email client
+                window.location.href = mailtoLink;
+
+                // Show success message
+                console.log('Email client opened successfully');
+                alert(currentLanguage === 'fr'
+                    ? 'Votre formulaire a été compilé. Un courriel devrait s\'ouvrir dans votre client email.'
+                    : 'Your form has been compiled. An email should open in your email client.');
+
+            } catch (error) {
+                console.error('Error generating email:', error);
+                alert(currentLanguage === 'fr'
+                    ? 'Une erreur s\'est produite lors de la génération du courriel.'
+                    : 'An error occurred while generating the email.');
             }
-
-            window.location.href = mailtoLink;
         }
 
         function formatDate(dateString) {
