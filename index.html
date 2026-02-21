@@ -473,11 +473,13 @@
             max-width: 980px;
             margin: 0 auto 14px;
             padding: 12px 14px;
-            background: #e7eaf3;
+            background: #2f9e44;
             border: 1px solid var(--panel-border);
             border-radius: 10px;
             box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
-            position: static;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .banner h1 {
@@ -586,6 +588,31 @@
         .dynamic-section {
             background: #f8faff;
             border-left: 3px solid #aabce4;
+            margin-top: 6px;
+            padding: 8px 10px;
+        }
+
+        .material-date-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+            font-size: 11px;
+            line-height: 1.25;
+        }
+
+        .material-date-field label {
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .dynamic-section .date-range-row {
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .dynamic-section .material-date {
+            padding: 5px 8px;
+            font-size: 12px;
         }
 
         .add-approver-btn,
@@ -632,11 +659,20 @@
             color: var(--text-muted);
         }
 
-        .banner.priority-low,
-        .banner.priority-medium,
-        .banner.priority-high,
+        .banner.priority-low {
+            background: #2f9e44;
+        }
+
+        .banner.priority-medium {
+            background: #f08c00;
+        }
+
+        .banner.priority-high {
+            background: #d9480f;
+        }
+
         .banner.priority-urgent {
-            background: #e7eaf3;
+            background: #7f1d1d;
         }
 
     </style>
@@ -1063,10 +1099,12 @@
         function updateBannerTextColor() {
             const bannerTitle = document.getElementById('banner-title');
             const langToggle = document.querySelector('.language-toggle');
+            const selectedPriority = document.querySelector('input[name="priority"]:checked')?.value;
+            const useLightText = selectedPriority === 'high' || selectedPriority === 'urgent';
 
-            bannerTitle.classList.add('banner-text-color-dark');
-            bannerTitle.classList.remove('banner-text-color-light');
-            langToggle.style.color = '#1f2937';
+            bannerTitle.classList.toggle('banner-text-color-light', useLightText);
+            bannerTitle.classList.toggle('banner-text-color-dark', !useLightText);
+            langToggle.style.color = useLightText ? '#ffffff' : '#1f2937';
         }
 
         // Material type changes - dynamic date ranges
@@ -1092,17 +1130,17 @@
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
-                    <label class="material-date-title" data-material="${material}" style="font-weight: 600; margin-bottom: 8px; display: block; font-size: 12px;">${getMaterialLabel(material)}</label>
+                    <label class="material-date-title" data-material="${material}">${getMaterialLabel(material)}</label>
                     <div class="date-range-row">
-                        <div>
-                            <label for="date-${material}-start" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                        <div class="material-date-field">
+                            <label for="date-${material}-start">
                                 <span class="lang-fr">Début</span>
                                 <span class="lang-en">Start</span>
                             </label>
                             <input type="date" id="date-${material}-start" class="material-date" data-material="${material}" data-type="start" required>
                         </div>
-                        <div>
-                            <label for="date-${material}-end" style="font-size: 12px; font-weight: 500; margin-bottom: 4px; display: block;">
+                        <div class="material-date-field">
+                            <label for="date-${material}-end">
                                 <span class="lang-fr">Fin</span>
                                 <span class="lang-en">End</span>
                             </label>
