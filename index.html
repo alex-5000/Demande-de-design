@@ -1741,94 +1741,62 @@
                 }
             });
 
-            // Build email body based on current language
+            // Build COMPACT email body to stay under 2000 characters
             let emailBody = '';
             if (currentLanguage === 'fr') {
-                emailBody = `Demande de design graphique
+                const contextShort = context ? context.substring(0, 120) : '';
+                const guidelinesShort = guidelines ? guidelines.substring(0, 120) : '';
 
-Titre de la demande
-${title}
+                emailBody = `DEMANDE DE DESIGN GRAPHIQUE
 
-Demandeur
-Nom: ${requesterName}
-Courriel: ${requesterEmail}
+Titre: ${title}
+Demandeur: ${requesterName} (${requesterEmail})
+Priorité: ${getPriorityLabel(priority, 'fr')}
+Livrable: ${formatDate(deliveryDate)}
+Matériel: ${materialsList.join(', ') || '-'}
 
-Contexte & objectif
-${context || '(Non fourni)'}
+CONTENU
+FR - Titre: ${document.getElementById('text-content-title-fr').value}
+FR - Texte: ${document.getElementById('text-content-text-fr').value || '-'}
+EN - Titre: ${document.getElementById('text-content-title-en').value}
+EN - Texte: ${document.getElementById('text-content-text-en').value || '-'}
 
-Type de matériel
-${materialsList.join(', ') || '(Aucun sélectionné)'}
+Contexte: ${contextShort}
+Directives: ${guidelinesShort}
+Options: ${options === 'single' ? 'Un seul' : 'Plusieurs'}
 
-Dates
-Date de livrable: ${formatDate(deliveryDate)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Niveau de priorité
-${getPriorityLabel(priority, 'fr')}
-
-Contenu textuel
-Français:
-Titre: ${document.getElementById('text-content-title-fr').value}
-Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
-
-English:
-Titre: ${document.getElementById('text-content-title-en').value}
-Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Directives visuelles & références
-${guidelines || '(Non fourni)'}
-
-Options / variations
-${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
-`;
+    `${material}: ${dates.start} à ${dates.end}`
+).join('\n')}`;
             } else {
-                emailBody = `Graphic Design Request
+                const contextShort = context ? context.substring(0, 120) : '';
+                const guidelinesShort = guidelines ? guidelines.substring(0, 120) : '';
 
-Request Title
-${title}
+                emailBody = `GRAPHIC DESIGN REQUEST
 
-Requester
-Name: ${requesterName}
-Email: ${requesterEmail}
+Title: ${title}
+Requester: ${requesterName} (${requesterEmail})
+Priority: ${getPriorityLabel(priority, 'en')}
+Delivery: ${formatDate(deliveryDate)}
+Material: ${materialsList.join(', ') || '-'}
 
-Context & Objective
-${context || '(Not provided)'}
+CONTENT
+FR - Title: ${document.getElementById('text-content-title-fr').value}
+FR - Text: ${document.getElementById('text-content-text-fr').value || '-'}
+EN - Title: ${document.getElementById('text-content-title-en').value}
+EN - Text: ${document.getElementById('text-content-text-en').value || '-'}
 
-Material Type
-${materialsList.join(', ') || '(None selected)'}
+Context: ${contextShort}
+Guidelines: ${guidelinesShort}
+Options: ${options === 'single' ? 'Single' : 'Multiple'}
 
-Dates
-Delivery date: ${formatDate(deliveryDate)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Priority Level
-${getPriorityLabel(priority, 'en')}
-
-Text Content
-French:
-Title: ${document.getElementById('text-content-title-fr').value}
-Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
-
-English:
-Title: ${document.getElementById('text-content-title-en').value}
-Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Visual Guidelines & References
-${guidelines || '(Not provided)'}
-
-Options / Variations
-${options === 'single' ? 'Single visual' : 'Propose multiple options'}
-`;
+    `${material}: ${dates.start} to ${dates.end}`
+).join('\n')}`;
             }
 
-                // Build mailto link
-                const subject = currentLanguage === 'fr' ?
-                    `Demande de design graphique — ${title}` :
-                    `Graphic Design Request — ${title}`;
+                // Build mailto link with length check
+                const subject = `Design: ${title.substring(0, 40)}${title.length > 40 ? '...' : ''}`;
 
                 let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
@@ -1836,7 +1804,19 @@ ${options === 'single' ? 'Single visual' : 'Propose multiple options'}
                     mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
                 }
 
-                console.log('Opening email client with mailto link...');
+                console.log('mailto link length:', mailtoLink.length);
+
+                // Fallback: if link is still too long, remove context/guidelines
+                if (mailtoLink.length > 2000) {
+                    console.warn('mailto link exceeds 2000 characters, removing optional fields...');
+                    emailBody = emailBody.replace(/Contexte: .+\nDirectives: .+/i, 'Contexte/Directives: See form details');
+                    mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                    if (ccEmails.length > 0) {
+                        mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
+                    }
+                }
+
+                console.log('Opening email client...');
                 console.log('Subject:', subject);
                 console.log('CC emails:', ccEmails);
 
