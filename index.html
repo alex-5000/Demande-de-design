@@ -585,33 +585,84 @@
             color: #374151;
         }
 
+        /* Delivery Date Section */
+        .delivery-date-group {
+            background: #f6f8fd;
+            border: 1px solid #d9e2f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .delivery-date-group .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5f86;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .delivery-date-group .form-group {
+            margin-bottom: 0;
+        }
+
+        /* Material Distribution Dates Section */
+        .material-dates-container {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .material-dates-container.empty {
+            display: none;
+        }
+
+        .material-dates-header {
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5f86;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
         .dynamic-section {
             background: #f8faff;
             border-left: 3px solid #aabce4;
-            margin-top: 6px;
-            padding: 8px 10px;
+            margin-bottom: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+        }
+
+        .dynamic-section:last-child {
+            margin-bottom: 0;
         }
 
         .material-date-title {
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: block;
-            font-size: 11px;
-            line-height: 1.25;
+            font-size: 12px;
+            line-height: 1.3;
+            color: #2b4c8f;
         }
 
         .material-date-field label {
-            font-size: 11px;
-            margin-bottom: 3px;
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: 500;
         }
 
         .dynamic-section .date-range-row {
-            gap: 6px;
-            margin-bottom: 4px;
+            gap: 8px;
+            margin-bottom: 0;
         }
 
         .dynamic-section .material-date {
-            padding: 5px 8px;
+            padding: 6px 10px;
             font-size: 12px;
         }
 
@@ -736,25 +787,31 @@
 
         /* Priority Horizontal Layout */
         .radio-group {
-            display: flex;
-            flex-direction: row;
-            gap: 12px;
-            flex-wrap: nowrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             .radio-group {
-                flex-wrap: wrap;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .radio-group {
+                grid-template-columns: 1fr;
             }
         }
 
         .radio-item {
             position: relative;
-            flex: 1;
             display: flex;
             align-items: center;
             gap: 0;
-            min-width: 0;
+            width: 100%;
         }
 
         .radio-item input[type="radio"] {
@@ -768,7 +825,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 14px;
+            padding: 10px 12px;
             border: 2px solid #cbd5e1;
             border-radius: 6px;
             cursor: pointer;
@@ -776,7 +833,10 @@
             font-weight: 500;
             background-color: #fff;
             transition: all 0.3s ease;
-            white-space: nowrap;
+            white-space: normal;
+            width: 100%;
+            text-align: center;
+            min-height: 44px;
         }
 
         .radio-item input[type="radio"]:checked + label {
@@ -894,17 +954,27 @@
 
                 <div class="form-section">
                     <div class="section-title" id="delivery-section">Dates</div>
-                    <div class="form-group">
-                        <label for="delivery-date">
-                            <span class="lang-fr">Livrable <span class="required">*</span></span>
-                            <span class="lang-en">Delivery <span class="required">*</span></span>
-                        </label>
-                        <input type="date" id="delivery-date" name="delivery-date" required>
-                        <div class="error-message" id="delivery-date-error"></div>
+
+                    <!-- Project Delivery Date -->
+                    <div class="delivery-date-group">
+                        <span class="section-label lang-fr">Date de livrable du projet</span>
+                        <span class="section-label lang-en">Project delivery date</span>
+                        <div class="form-group">
+                            <label for="delivery-date">
+                                <span class="lang-fr">Livrable <span class="required">*</span></span>
+                                <span class="lang-en">Delivery <span class="required">*</span></span>
+                            </label>
+                            <input type="date" id="delivery-date" name="delivery-date" required>
+                            <div class="error-message" id="delivery-date-error"></div>
+                        </div>
                     </div>
 
-                    <!-- Dynamic date ranges for each material -->
-                    <div id="dynamic-dates"></div>
+                    <!-- Material Distribution Dates -->
+                    <div class="material-dates-container">
+                        <span class="material-dates-header lang-fr">Dates de diffusion par type de matériel</span>
+                        <span class="material-dates-header lang-en">Distribution dates by material type</span>
+                        <div id="dynamic-dates"></div>
+                    </div>
                 </div>
             </div>
 
@@ -1274,6 +1344,13 @@
         function updateDynamicDates() {
             dynamicDatesContainer.innerHTML = '';
             const materialsForDates = selectedMaterials.filter(val => val !== 'Other');
+            const materialDatesContainer = dynamicDatesContainer.parentElement;
+
+            if (materialsForDates.length === 0) {
+                materialDatesContainer.classList.add('empty');
+            } else {
+                materialDatesContainer.classList.remove('empty');
+            }
 
             materialsForDates.forEach(material => {
                 const div = document.createElement('div');
