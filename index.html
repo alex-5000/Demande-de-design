@@ -424,6 +424,10 @@
             display: none;
         }
 
+        html[lang="en"] .lang-fr {
+            display: none !important;
+        }
+
         /* Ensure language-specific labels in radio/checkbox items are hidden */
         html[lang="fr"] .radio-item .lang-en,
         html[lang="fr"] .checkbox-item .lang-en {
@@ -850,31 +854,31 @@
             min-height: 44px;
         }
 
-        .radio-item input[type="radio"]:checked + label {
+        .radio-item input[type="radio"]:checked ~ label {
             border-color: var(--blue);
             background-color: var(--blue);
             color: white;
         }
 
-        #priority-low:checked + label {
+        #priority-low:checked ~ label {
             background: linear-gradient(135deg, #2f9e44 0%, #1b6e1e 100%);
             border-color: #2f9e44;
             color: white;
         }
 
-        #priority-medium:checked + label {
+        #priority-medium:checked ~ label {
             background: linear-gradient(135deg, #f08c00 0%, #d97700 100%);
             border-color: #f08c00;
             color: white;
         }
 
-        #priority-high:checked + label {
+        #priority-high:checked ~ label {
             background: linear-gradient(135deg, #d9480f 0%, #a63200 100%);
             border-color: #d9480f;
             color: white;
         }
 
-        #priority-urgent:checked + label {
+        #priority-urgent:checked ~ label {
             background: linear-gradient(135deg, #7f1d1d 0%, #4c0a0a 100%);
             border-color: #7f1d1d;
             color: white;
@@ -885,7 +889,7 @@
             background-color: #f8fafc;
         }
 
-        .radio-item input[type="radio"]:checked + label:hover {
+        .radio-item input[type="radio"]:checked ~ label:hover {
             opacity: 0.85;
         }
 
