@@ -424,6 +424,17 @@
             display: none;
         }
 
+        /* Ensure language-specific labels in radio/checkbox items are hidden */
+        html[lang="fr"] .radio-item .lang-en,
+        html[lang="fr"] .checkbox-item .lang-en {
+            display: none !important;
+        }
+
+        html[lang="en"] .radio-item .lang-fr,
+        html[lang="en"] .checkbox-item .lang-fr {
+            display: none !important;
+        }
+
         .hidden {
             display: none;
         }
