@@ -996,23 +996,31 @@
                 <div class="radio-group">
                     <div class="radio-item">
                         <input type="radio" id="priority-low" name="priority" value="low">
-                        <label for="priority-low" class="lang-fr">Faible</label>
-                        <label for="priority-low" class="lang-en">Low</label>
+                        <label for="priority-low">
+                            <span class="lang-fr">Faible</span>
+                            <span class="lang-en">Low</span>
+                        </label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-medium" name="priority" value="medium">
-                        <label for="priority-medium" class="lang-fr">Moyenne</label>
-                        <label for="priority-medium" class="lang-en">Medium</label>
+                        <label for="priority-medium">
+                            <span class="lang-fr">Moyenne</span>
+                            <span class="lang-en">Medium</span>
+                        </label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-high" name="priority" value="high">
-                        <label for="priority-high" class="lang-fr">Élevée</label>
-                        <label for="priority-high" class="lang-en">High</label>
+                        <label for="priority-high">
+                            <span class="lang-fr">Élevée</span>
+                            <span class="lang-en">High</span>
+                        </label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-urgent" name="priority" value="urgent">
-                        <label for="priority-urgent" class="lang-fr">Très urgent</label>
-                        <label for="priority-urgent" class="lang-en">Very urgent</label>
+                        <label for="priority-urgent">
+                            <span class="lang-fr">Très urgent</span>
+                            <span class="lang-en">Very urgent</span>
+                        </label>
                     </div>
                 </div>
                 <div class="error-message" id="priority-error"></div>
@@ -1087,13 +1095,17 @@
                     <div class="radio-group">
                         <div class="radio-item">
                             <input type="radio" id="option-single" name="options" value="single">
-                            <label for="option-single" class="lang-fr">Un seul visuel</label>
-                            <label for="option-single" class="lang-en">Single visual</label>
+                            <label for="option-single">
+                                <span class="lang-fr">Un seul visuel</span>
+                                <span class="lang-en">Single visual</span>
+                            </label>
                         </div>
                         <div class="radio-item">
                             <input type="radio" id="option-multiple" name="options" value="multiple">
-                            <label for="option-multiple" class="lang-fr">Plusieurs options</label>
-                            <label for="option-multiple" class="lang-en">Multiple options</label>
+                            <label for="option-multiple">
+                                <span class="lang-fr">Plusieurs options</span>
+                                <span class="lang-en">Multiple options</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -1715,29 +1727,20 @@
                 : `Design Request — ${title}`;
             const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}`;
 
-            // Trigger mail client via a temporary anchor (more reliable across browsers)
-            const mailtoAnchor = document.createElement('a');
-            mailtoAnchor.href = mailtoLink;
-            mailtoAnchor.style.display = 'none';
-            document.body.appendChild(mailtoAnchor);
-            mailtoAnchor.click();
-            document.body.removeChild(mailtoAnchor);
+            // Open email client from direct user action
+            window.location.assign(mailtoLink);
 
             const msg = currentLanguage === 'fr'
-                ? 'Si aucun client courriel ne s\'ouvre, vérifiez votre application de courriel par défaut puis réessayez.'
-                : 'If no email client opens, verify your default mail app and try again.';
+                ? 'Le client courriel devrait s\'ouvrir maintenant avec un nouveau message.'
+                : 'Your email client should open now with a new message.';
+            alert(msg);
 
-            const shouldReset = confirm(msg + (currentLanguage === 'fr'
-                ? '\n\nCliquez OK pour vider le formulaire, ou Annuler pour conserver les données.'
-                : '\n\nClick OK to clear the form, or Cancel to keep your data.'));
-
-            if (shouldReset) {
-                form.reset();
-                selectedMaterials = [];
-                renderSelectedMaterials();
-                updateDynamicDates();
-                titleOnlyConfirmed = { fr: false, en: false };
-            }
+            // Reset form
+            form.reset();
+            selectedMaterials = [];
+            renderSelectedMaterials();
+            updateDynamicDates();
+            titleOnlyConfirmed = { fr: false, en: false };
         }
 
         function formatDate(dateString) {
