@@ -485,7 +485,7 @@
         .banner h1 {
             font-size: 17px;
             font-weight: 700;
-            color: var(--text-main);
+            color: #ffffff;
         }
 
         .banner-text-color-light,
@@ -831,11 +831,7 @@
             <div class="form-section">
                 <div class="section-title" id="title-section">Titre de la demande</div>
                 <div class="form-group">
-                    <label for="request-title">
-                        <span class="lang-fr">Titre <span class="required">*</span></span>
-                        <span class="lang-en">Title <span class="required">*</span></span>
-                    </label>
-                    <input type="text" id="request-title" name="request-title" required>
+                    <input type="text" id="request-title" name="request-title" placeholder="Nom pour communications" required>
                     <div class="error-message" id="request-title-error"></div>
                 </div>
             </div>
@@ -845,19 +841,11 @@
                 <div class="form-section">
                     <div class="section-title" id="requester-section">Demandeur</div>
                     <div class="form-group">
-                        <label for="requester-name">
-                            <span class="lang-fr">Nom <span class="required">*</span></span>
-                            <span class="lang-en">Name <span class="required">*</span></span>
-                        </label>
-                        <input type="text" id="requester-name" name="requester-name" required>
+                        <input type="text" id="requester-name" name="requester-name" placeholder="Nom *" required>
                         <div class="error-message" id="requester-name-error"></div>
                     </div>
                     <div class="form-group">
-                        <label for="requester-email">
-                            <span class="lang-fr">Courriel <span class="required">*</span></span>
-                            <span class="lang-en">Email <span class="required">*</span></span>
-                        </label>
-                        <input type="email" id="requester-email" name="requester-email" required>
+                        <input type="email" id="requester-email" name="requester-email" placeholder="Courriel *" required>
                         <div class="error-message" id="requester-email-error"></div>
                     </div>
                 </div>
@@ -865,11 +853,7 @@
                 <div class="form-section">
                     <div class="section-title" id="context-section">Contexte & objectif</div>
                     <div class="form-group">
-                        <label for="context">
-                            <span class="lang-fr">Contexte & objectif</span>
-                            <span class="lang-en">Context & Objective</span>
-                        </label>
-                        <textarea id="context" name="context" placeholder=""></textarea>
+                        <textarea id="context" name="context" placeholder="Contexte & objectif"></textarea>
                     </div>
                 </div>
             </div>
@@ -955,29 +939,13 @@
                         <div id="text-block-fr-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
 
                         <div class="form-group">
-                            <label for="text-content-title-fr">
-                                <span class="lang-fr">Titre <span class="required">*</span></span>
-                                <span class="lang-en">Title <span class="required">*</span></span>
-                            </label>
-                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
-                                <span class="lang-fr">Max 100</span>
-                                <span class="lang-en">Max 100</span>
-                            </div>
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" required>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" placeholder="Titre *" required>
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
 
                         <div class="form-group">
-                            <label for="text-content-text-fr">
-                                <span class="lang-fr">Texte</span>
-                                <span class="lang-en">Text</span>
-                            </label>
-                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
-                                <span class="lang-fr">Max 150</span>
-                                <span class="lang-en">Max 150</span>
-                            </div>
-                            <textarea id="text-content-text-fr" name="text-content-text-fr"></textarea>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr" placeholder="Texte"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -995,29 +963,13 @@
                         <div id="text-block-en-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">English / Anglais</div>
 
                         <div class="form-group">
-                            <label for="text-content-title-en">
-                                <span class="lang-fr">Titre <span class="required">*</span></span>
-                                <span class="lang-en">Title <span class="required">*</span></span>
-                            </label>
-                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
-                                <span class="lang-fr">Max 100</span>
-                                <span class="lang-en">Max 100</span>
-                            </div>
-                            <input type="text" id="text-content-title-en" name="text-content-title-en" required>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en" placeholder="Title *" required>
                             <div class="char-count" id="char-count-title-en">0/100</div>
                             <div class="error-message" id="text-content-title-en-error"></div>
                         </div>
 
                         <div class="form-group">
-                            <label for="text-content-text-en">
-                                <span class="lang-fr">Texte</span>
-                                <span class="lang-en">Text</span>
-                            </label>
-                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
-                                <span class="lang-fr">Max 150</span>
-                                <span class="lang-en">Max 150</span>
-                            </div>
-                            <textarea id="text-content-text-en" name="text-content-text-en"></textarea>
+                            <textarea id="text-content-text-en" name="text-content-text-en" placeholder="Text"></textarea>
                             <div class="char-count" id="char-count-text-en">0/150</div>
                             <div id="title-only-confirm-en" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -1037,11 +989,7 @@
                 <div class="form-section">
                     <div class="section-title" id="guidelines-section">Directives visuelles</div>
                     <div class="form-group">
-                        <label for="visual-guidelines">
-                            <span class="lang-fr">Directives & références</span>
-                            <span class="lang-en">Guidelines & References</span>
-                        </label>
-                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
+                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder="Directives & références"></textarea>
                     </div>
                 </div>
 
@@ -1203,6 +1151,8 @@
                     banner.classList.add('priority-urgent');
                 }
                 updateBannerTextColor();
+                // Clear priority error when priority is selected
+                document.getElementById('priority-error').textContent = '';
             });
         });
 
@@ -1251,6 +1201,11 @@
                 });
                 selectedMaterialsContainer.appendChild(badge);
             });
+            // Clear materials error when materials are selected
+            const materialsError = selectedMaterialsContainer.parentElement.querySelector('.error-message');
+            if (materialsError && selectedMaterials.length > 0) {
+                materialsError.textContent = '';
+            }
         }
 
         function removeMaterial(material) {
@@ -1445,6 +1400,18 @@
             container.appendChild(approverDiv);
         });
 
+        // Clear options error when an option is selected
+        const optionsInputs = document.querySelectorAll('input[name="options"]');
+        optionsInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                const optionsSection = document.getElementById('options-section').parentElement;
+                const optionsError = optionsSection.querySelector('.error-message');
+                if (optionsError) {
+                    optionsError.textContent = '';
+                }
+            });
+        });
+
         // Form submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1497,6 +1464,29 @@
                 isValid = false;
                 document.getElementById('priority-error').textContent =
                     currentLanguage === 'fr' ? 'Veuillez sélectionner un niveau de priorité' : 'Please select a priority level';
+            }
+
+            // Material type validation - at least one must be selected
+            if (selectedMaterials.length === 0) {
+                isValid = false;
+                const materialsSection = document.getElementById('selected-materials');
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = currentLanguage === 'fr' ? 'Veuillez sélectionner au moins un type de matériel' : 'Please select at least one material type';
+                materialsSection.parentElement.appendChild(errorMsg);
+            }
+
+            // Options validation - one must be selected
+            if (!document.querySelector('input[name="options"]:checked')) {
+                isValid = false;
+                const optionsSection = document.getElementById('options-section').parentElement;
+                let optionsError = optionsSection.querySelector('.error-message');
+                if (!optionsError) {
+                    optionsError = document.createElement('div');
+                    optionsError.className = 'error-message';
+                    optionsSection.appendChild(optionsError);
+                }
+                optionsError.textContent = currentLanguage === 'fr' ? 'Veuillez sélectionner une option' : 'Please select an option';
             }
 
             // Character limit validation
