@@ -417,19 +417,15 @@
         }
 
         html[lang="fr"] .lang-fr {
-            display: block !important;
+            display: block;
         }
 
         html[lang="fr"] .lang-en {
-            display: none !important;
+            display: none;
         }
 
         html[lang="en"] .lang-fr {
             display: none !important;
-        }
-
-        html[lang="en"] .lang-en {
-            display: block !important;
         }
 
         /* Ensure language-specific labels in radio/checkbox items are hidden */
@@ -858,31 +854,31 @@
             min-height: 44px;
         }
 
-        .radio-item input[type="radio"]:checked + label {
+        .radio-item input[type="radio"]:checked ~ label {
             border-color: var(--blue);
             background-color: var(--blue);
             color: white;
         }
 
-        #priority-low:checked + label {
+        #priority-low:checked ~ label {
             background: linear-gradient(135deg, #2f9e44 0%, #1b6e1e 100%);
             border-color: #2f9e44;
             color: white;
         }
 
-        #priority-medium:checked + label {
+        #priority-medium:checked ~ label {
             background: linear-gradient(135deg, #f08c00 0%, #d97700 100%);
             border-color: #f08c00;
             color: white;
         }
 
-        #priority-high:checked + label {
+        #priority-high:checked ~ label {
             background: linear-gradient(135deg, #d9480f 0%, #a63200 100%);
             border-color: #d9480f;
             color: white;
         }
 
-        #priority-urgent:checked + label {
+        #priority-urgent:checked ~ label {
             background: linear-gradient(135deg, #7f1d1d 0%, #4c0a0a 100%);
             border-color: #7f1d1d;
             color: white;
@@ -893,7 +889,7 @@
             background-color: #f8fafc;
         }
 
-        .radio-item input[type="radio"]:checked + label:hover {
+        .radio-item input[type="radio"]:checked ~ label:hover {
             opacity: 0.85;
         }
 
@@ -950,24 +946,21 @@
                     <div class="section-title" id="material-section">Type de matériel <span class="required">*</span></div>
                     <div class="form-group">
                         <select id="materials-dropdown">
-                            <option value="">
-                                <span class="lang-fr">Sélectionner un type de matériel...</span>
-                                <span class="lang-en">Select a material type...</span>
-                            </option>
-                            <option value="TV">TV</option>
-                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carousel</option>
-                            <option value="Screensaver">Screensaver</option>
-                            <option value="Email" data-fr="Courriel" data-en="Email">Email</option>
-                            <option value="Flash Ads">Flash Ads</option>
-                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Intranet</option>
-                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Photo</option>
-                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification</option>
-                            <option value="Other" data-fr="Autre" data-en="Other">Other</option>
+                            <option value="" data-fr="Sélectionner un type de matériel..." data-en="Select a material type...">Sélectionner un type de matériel...</option>
+                            <option value="TV" data-fr="TV" data-en="TV">TV</option>
+                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carrousel</option>
+                            <option value="Screensaver" data-fr="Économiseur d'écran" data-en="Screensaver">Économiseur d'écran</option>
+                            <option value="Email" data-fr="Courriel" data-en="Email">Courriel</option>
+                            <option value="Flash Ads" data-fr="Publicités Flash" data-en="Flash Ads">Publicités Flash</option>
+                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Éléments intranet</option>
+                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Traitement photos</option>
+                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification d'un élément existant</option>
+                            <option value="Other" data-fr="Autre" data-en="Other">Autre</option>
                         </select>
                     </div>
                     <div id="selected-materials" class="selected-materials-container"></div>
                     <div class="nested-input hidden" id="material-other-input">
-                        <input type="text" id="material-other-text" placeholder="Specify the type">
+                        <input type="text" id="material-other-text" placeholder="Spécifier le type">
                     </div>
                 </div>
 
@@ -1195,7 +1188,7 @@
                 textBlockFrTitle: 'Français / French',
                 textBlockEnTitle: 'English / Anglais',
                 placeholders: {
-                    'request-title': 'Nom pour communications',
+                    'request-title': 'Titre du projet pour communications',
                     'requester-name': 'Nom *',
                     'requester-email': 'Courriel *',
                     'context': 'Contexte & objectif',
@@ -1224,7 +1217,7 @@
                 textBlockFrTitle: 'French / Français',
                 textBlockEnTitle: 'English / Anglais',
                 placeholders: {
-                    'request-title': 'Name for communications',
+                    'request-title': 'Title of the project for communications',
                     'requester-name': 'Name *',
                     'requester-email': 'Email *',
                     'context': 'Context & objective',
@@ -1266,6 +1259,7 @@
 
             updatePlaceholders();
             updateDynamicMaterialLabels();
+            updateMaterialDropdownLabels();
         }
 
         function updatePlaceholders() {
@@ -1437,6 +1431,17 @@
             });
         }
 
+        function updateMaterialDropdownLabels() {
+            const dropdown = document.getElementById('materials-dropdown');
+            dropdown.querySelectorAll('option').forEach(option => {
+                const dataAttr = currentLanguage === 'fr' ? 'data-fr' : 'data-en';
+                const translatedText = option.getAttribute(dataAttr);
+                if (translatedText) {
+                    option.textContent = translatedText;
+                }
+            });
+        }
+
         function validateMaterialDateRange(e) {
             const material = e.target.dataset.material;
             const startInput = document.querySelector(`#date-${material}-start`);
@@ -1565,8 +1570,17 @@
         // Form submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            console.log('Form submission triggered');
             if (validateForm()) {
+                console.log('Form validation passed, generating email...');
                 generateAndSendEmail();
+            } else {
+                console.log('Form validation failed');
+                // Scroll to first error
+                const firstError = document.querySelector('.error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
             }
         });
 
@@ -1674,22 +1688,26 @@
                 if (!input.value) {
                     isValid = false;
                     input.classList.add('error');
+                    const material = input.dataset.material;
+                    const errorDiv = document.querySelector(`#error-${material}`);
+                    if (errorDiv && !errorDiv.textContent) {
+                        errorDiv.textContent = currentLanguage === 'fr'
+                            ? 'Les dates de distribution sont obligatoires'
+                            : 'Distribution dates are required';
+                    }
                 }
             });
 
             // Validate text content - if text is empty, must have confirmation
+            // French text content validation
             if (!textFrInput.value.trim() && !titleOnlyConfirmed.fr) {
-                // Only valid if title is filled and user confirmed
-                const titleOnlyConfirmFr = document.getElementById('title-only-confirm-fr');
-                if (!titleOnlyConfirmFr.classList.contains('hidden')) {
-                    isValid = false;
-                }
+                isValid = false;
+                console.warn('French text content is empty and not confirmed');
             }
+            // English text content validation
             if (!textEnInput.value.trim() && !titleOnlyConfirmed.en) {
-                const titleOnlyConfirmEn = document.getElementById('title-only-confirm-en');
-                if (!titleOnlyConfirmEn.classList.contains('hidden')) {
-                    isValid = false;
-                }
+                isValid = false;
+                console.warn('English text content is empty and not confirmed');
             }
 
             return isValid;
@@ -1702,132 +1720,28 @@
 
         function generateAndSendEmail() {
             const title = document.getElementById('request-title').value;
-            const requesterName = document.getElementById('requester-name').value;
-            const requesterEmail = document.getElementById('requester-email').value;
-            const context = document.getElementById('context').value;
-            const deliveryDate = document.getElementById('delivery-date').value;
-            const priority = document.querySelector('input[name="priority"]:checked').value;
-            const options = document.querySelector('input[name="options"]:checked').value;
-            const guidelines = document.getElementById('visual-guidelines').value;
 
-            // Get material dates
-            let materialDates = {};
-            document.querySelectorAll('.material-date').forEach(input => {
-                const material = input.dataset.material;
-                const type = input.dataset.type;
-                if (!materialDates[material]) materialDates[material] = {};
-                materialDates[material][type] = input.value;
-            });
+            // Keep mailto intentionally simple so the mail client opens reliably
+            const mailtoSubject = currentLanguage === 'fr'
+                ? `Demande de design — ${title}`
+                : `Design Request — ${title}`;
+            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}`;
 
-            // Get selected materials (map 'Other' to actual input value)
-            const materialsList = selectedMaterials.map(val =>
-                val === 'Other' ? document.getElementById('material-other-text').value : val
-            ).filter(val => val);
+            // Open email client from direct user action
+            window.location.assign(mailtoLink);
 
-            // Get approvers
-            const ccEmails = [];
-            document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
-                if (input.value.trim()) {
-                    ccEmails.push(input.value.trim());
-                }
-            });
+            // Show confirmation and reset form
+            const msg = currentLanguage === 'fr'
+                ? 'Le client courriel devrait s\'ouvrir maintenant avec un nouveau message.'
+                : 'Your email client should open now with a new message.';
+            alert(msg);
 
-            // Build email body based on current language
-            let emailBody = '';
-            if (currentLanguage === 'fr') {
-                emailBody = `Demande de design graphique
-
-Titre de la demande
-${title}
-
-Demandeur
-Nom: ${requesterName}
-Courriel: ${requesterEmail}
-
-Contexte & objectif
-${context || '(Non fourni)'}
-
-Type de matériel
-${materialsList.join(', ') || '(Aucun sélectionné)'}
-
-Dates
-Date de livrable: ${formatDate(deliveryDate)}
-${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Niveau de priorité
-${getPriorityLabel(priority, 'fr')}
-
-Contenu textuel
-Français:
-Titre: ${document.getElementById('text-content-title-fr').value}
-Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
-
-English:
-Titre: ${document.getElementById('text-content-title-en').value}
-Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Directives visuelles & références
-${guidelines || '(Non fourni)'}
-
-Options / variations
-${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
-`;
-            } else {
-                emailBody = `Graphic Design Request
-
-Request Title
-${title}
-
-Requester
-Name: ${requesterName}
-Email: ${requesterEmail}
-
-Context & Objective
-${context || '(Not provided)'}
-
-Material Type
-${materialsList.join(', ') || '(None selected)'}
-
-Dates
-Delivery date: ${formatDate(deliveryDate)}
-${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
-).join('\n') || ''}
-
-Priority Level
-${getPriorityLabel(priority, 'en')}
-
-Text Content
-French:
-Title: ${document.getElementById('text-content-title-fr').value}
-Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
-
-English:
-Title: ${document.getElementById('text-content-title-en').value}
-Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
-
-Visual Guidelines & References
-${guidelines || '(Not provided)'}
-
-Options / Variations
-${options === 'single' ? 'Single visual' : 'Propose multiple options'}
-`;
-            }
-
-            // Build mailto link
-            const subject = currentLanguage === 'fr' ?
-                `Demande de design graphique — ${title}` :
-                `Graphic Design Request — ${title}`;
-
-            let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-
-            if (ccEmails.length > 0) {
-                mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
-            }
-
-            window.location.href = mailtoLink;
+            // Reset form
+            form.reset();
+            selectedMaterials = [];
+            renderSelectedMaterials();
+            updateDynamicDates();
+            titleOnlyConfirmed = { fr: false, en: false };
         }
 
         function formatDate(dateString) {
