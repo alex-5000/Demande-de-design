@@ -739,15 +739,22 @@
             display: flex;
             flex-direction: row;
             gap: 12px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .radio-group {
+                flex-wrap: wrap;
+            }
         }
 
         .radio-item {
             position: relative;
-            flex: 0 1 auto;
+            flex: 1;
             display: flex;
             align-items: center;
             gap: 0;
+            min-width: 0;
         }
 
         .radio-item input[type="radio"] {
@@ -831,7 +838,7 @@
             <div class="form-section">
                 <div class="section-title" id="title-section">Titre de la demande</div>
                 <div class="form-group">
-                    <input type="text" id="request-title" name="request-title" placeholder="Nom pour communications" required>
+                    <input type="text" id="request-title" name="request-title" placeholder="Name for communications" required>
                     <div class="error-message" id="request-title-error"></div>
                 </div>
             </div>
@@ -841,11 +848,11 @@
                 <div class="form-section">
                     <div class="section-title" id="requester-section">Demandeur</div>
                     <div class="form-group">
-                        <input type="text" id="requester-name" name="requester-name" placeholder="Nom *" required>
+                        <input type="text" id="requester-name" name="requester-name" placeholder="Name *" required>
                         <div class="error-message" id="requester-name-error"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="requester-email" name="requester-email" placeholder="Courriel *" required>
+                        <input type="email" id="requester-email" name="requester-email" placeholder="Email *" required>
                         <div class="error-message" id="requester-email-error"></div>
                     </div>
                 </div>
@@ -853,7 +860,7 @@
                 <div class="form-section">
                     <div class="section-title" id="context-section">Contexte & objectif</div>
                     <div class="form-group">
-                        <textarea id="context" name="context" placeholder="Contexte & objectif"></textarea>
+                        <textarea id="context" name="context" placeholder="Context & objective"></textarea>
                     </div>
                 </div>
             </div>
@@ -881,7 +888,7 @@
                     </div>
                     <div id="selected-materials" class="selected-materials-container"></div>
                     <div class="nested-input hidden" id="material-other-input">
-                        <input type="text" id="material-other-text" placeholder="">
+                        <input type="text" id="material-other-text" placeholder="Specify the type">
                     </div>
                 </div>
 
@@ -939,13 +946,13 @@
                         <div id="text-block-fr-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
 
                         <div class="form-group">
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" placeholder="Titre *" required>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" placeholder="Title *" required>
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
 
                         <div class="form-group">
-                            <textarea id="text-content-text-fr" name="text-content-text-fr" placeholder="Texte"></textarea>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr" placeholder="Text"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -989,7 +996,7 @@
                 <div class="form-section">
                     <div class="section-title" id="guidelines-section">Directives visuelles</div>
                     <div class="form-group">
-                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder="Directives & références"></textarea>
+                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder="Guidelines & references"></textarea>
                     </div>
                 </div>
 
@@ -1085,7 +1092,19 @@
                 },
                 approverRequesterLabel: 'Demandeur',
                 textBlockFrTitle: 'Français / French',
-                textBlockEnTitle: 'English / Anglais'
+                textBlockEnTitle: 'English / Anglais',
+                placeholders: {
+                    'request-title': 'Nom pour communications',
+                    'requester-name': 'Nom *',
+                    'requester-email': 'Courriel *',
+                    'context': 'Contexte & objectif',
+                    'text-content-title-fr': 'Titre *',
+                    'text-content-text-fr': 'Texte',
+                    'text-content-title-en': 'Titre *',
+                    'text-content-text-en': 'Text',
+                    'visual-guidelines': 'Directives & références',
+                    'material-other-text': 'Spécifier le type'
+                }
             },
             en: {
                 sectionTitles: {
@@ -1102,7 +1121,19 @@
                 },
                 approverRequesterLabel: 'Requester',
                 textBlockFrTitle: 'French / Français',
-                textBlockEnTitle: 'English / Anglais'
+                textBlockEnTitle: 'English / Anglais',
+                placeholders: {
+                    'request-title': 'Name for communications',
+                    'requester-name': 'Name *',
+                    'requester-email': 'Email *',
+                    'context': 'Context & objective',
+                    'text-content-title-fr': 'Title *',
+                    'text-content-text-fr': 'Text',
+                    'text-content-title-en': 'Title *',
+                    'text-content-text-en': 'Text',
+                    'visual-guidelines': 'Guidelines & references',
+                    'material-other-text': 'Specify the type'
+                }
             }
         };
 
@@ -1132,7 +1163,18 @@
             document.getElementById('text-block-fr-title').textContent = t.textBlockFrTitle;
             document.getElementById('text-block-en-title').textContent = t.textBlockEnTitle;
 
+            updatePlaceholders();
             updateDynamicMaterialLabels();
+        }
+
+        function updatePlaceholders() {
+            const t = uiTranslations[currentLanguage];
+            Object.entries(t.placeholders).forEach(([id, placeholder]) => {
+                const element = document.getElementById(id);
+                if (element && element.placeholder !== undefined) {
+                    element.placeholder = placeholder;
+                }
+            });
         }
 
         // Priority banner color change
