@@ -424,21 +424,6 @@
             display: none;
         }
 
-        html[lang="en"] .lang-fr {
-            display: none !important;
-        }
-
-        /* Ensure language-specific labels in radio/checkbox items are hidden */
-        html[lang="fr"] .radio-item .lang-en,
-        html[lang="fr"] .checkbox-item .lang-en {
-            display: none !important;
-        }
-
-        html[lang="en"] .radio-item .lang-fr,
-        html[lang="en"] .checkbox-item .lang-fr {
-            display: none !important;
-        }
-
         .hidden {
             display: none;
         }
@@ -500,7 +485,7 @@
         .banner h1 {
             font-size: 17px;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-main);
         }
 
         .banner-text-color-light,
@@ -600,84 +585,33 @@
             color: #374151;
         }
 
-        /* Delivery Date Section */
-        .delivery-date-group {
-            background: #f6f8fd;
-            border: 1px solid #d9e2f0;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-
-        .delivery-date-group .section-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #4b5f86;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .delivery-date-group .form-group {
-            margin-bottom: 0;
-        }
-
-        /* Material Distribution Dates Section */
-        .material-dates-container {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .material-dates-container.empty {
-            display: none;
-        }
-
-        .material-dates-header {
-            font-size: 11px;
-            font-weight: 600;
-            color: #4b5f86;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
         .dynamic-section {
             background: #f8faff;
             border-left: 3px solid #aabce4;
-            margin-bottom: 10px;
-            padding: 10px 12px;
-            border-radius: 6px;
-        }
-
-        .dynamic-section:last-child {
-            margin-bottom: 0;
+            margin-top: 6px;
+            padding: 8px 10px;
         }
 
         .material-date-title {
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: block;
-            font-size: 12px;
-            line-height: 1.3;
-            color: #2b4c8f;
+            font-size: 11px;
+            line-height: 1.25;
         }
 
         .material-date-field label {
-            font-size: 12px;
-            margin-bottom: 4px;
-            font-weight: 500;
+            font-size: 11px;
+            margin-bottom: 3px;
         }
 
         .dynamic-section .date-range-row {
-            gap: 8px;
-            margin-bottom: 0;
+            gap: 6px;
+            margin-bottom: 4px;
         }
 
         .dynamic-section .material-date {
-            padding: 6px 10px;
+            padding: 5px 8px;
             font-size: 12px;
         }
 
@@ -741,158 +675,6 @@
             background: #7f1d1d;
         }
 
-        /* Material Type Dropdown Styles */
-        select#materials-dropdown {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #cbd5e1;
-            background: #fff;
-            border-radius: 7px;
-            font-size: 13px;
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        select#materials-dropdown:focus {
-            outline: none;
-            border-color: var(--blue);
-            box-shadow: 0 0 0 3px rgba(46, 95, 185, 0.15);
-        }
-
-        /* Selected Materials Container */
-        .selected-materials-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-            min-height: 0;
-        }
-
-        .material-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            background-color: #e8f1ff;
-            border: 1px solid #aabce4;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #2b4c8f;
-        }
-
-        .material-badge .remove-material {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            background-color: transparent;
-            border: none;
-            color: #2b4c8f;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 0;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-
-        .material-badge .remove-material:hover {
-            color: #c62828;
-        }
-
-        /* Priority Horizontal Layout */
-        .radio-group {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            width: 100%;
-        }
-
-        @media (max-width: 768px) {
-            .radio-group {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .radio-group {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .radio-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 0;
-            width: 100%;
-        }
-
-        .radio-item input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .radio-item label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 12px;
-            border: 2px solid #cbd5e1;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            background-color: #fff;
-            transition: all 0.3s ease;
-            white-space: normal;
-            width: 100%;
-            text-align: center;
-            min-height: 44px;
-        }
-
-        .radio-item input[type="radio"]:checked ~ label {
-            border-color: var(--blue);
-            background-color: var(--blue);
-            color: white;
-        }
-
-        #priority-low:checked ~ label {
-            background: linear-gradient(135deg, #2f9e44 0%, #1b6e1e 100%);
-            border-color: #2f9e44;
-            color: white;
-        }
-
-        #priority-medium:checked ~ label {
-            background: linear-gradient(135deg, #f08c00 0%, #d97700 100%);
-            border-color: #f08c00;
-            color: white;
-        }
-
-        #priority-high:checked ~ label {
-            background: linear-gradient(135deg, #d9480f 0%, #a63200 100%);
-            border-color: #d9480f;
-            color: white;
-        }
-
-        #priority-urgent:checked ~ label {
-            background: linear-gradient(135deg, #7f1d1d 0%, #4c0a0a 100%);
-            border-color: #7f1d1d;
-            color: white;
-        }
-
-        .radio-item label:hover {
-            border-color: var(--blue);
-            background-color: #f8fafc;
-        }
-
-        .radio-item input[type="radio"]:checked ~ label:hover {
-            opacity: 0.85;
-        }
-
     </style>
 </head>
 <body>
@@ -913,7 +695,11 @@
             <div class="form-section">
                 <div class="section-title" id="title-section">Titre de la demande</div>
                 <div class="form-group">
-                    <input type="text" id="request-title" name="request-title" placeholder="Name for communications" required>
+                    <label for="request-title">
+                        <span class="lang-fr">Titre <span class="required">*</span></span>
+                        <span class="lang-en">Title <span class="required">*</span></span>
+                    </label>
+                    <input type="text" id="request-title" name="request-title" required>
                     <div class="error-message" id="request-title-error"></div>
                 </div>
             </div>
@@ -923,11 +709,19 @@
                 <div class="form-section">
                     <div class="section-title" id="requester-section">Demandeur</div>
                     <div class="form-group">
-                        <input type="text" id="requester-name" name="requester-name" placeholder="Name *" required>
+                        <label for="requester-name">
+                            <span class="lang-fr">Nom <span class="required">*</span></span>
+                            <span class="lang-en">Name <span class="required">*</span></span>
+                        </label>
+                        <input type="text" id="requester-name" name="requester-name" required>
                         <div class="error-message" id="requester-name-error"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="requester-email" name="requester-email" placeholder="Email *" required>
+                        <label for="requester-email">
+                            <span class="lang-fr">Courriel <span class="required">*</span></span>
+                            <span class="lang-en">Email <span class="required">*</span></span>
+                        </label>
+                        <input type="email" id="requester-email" name="requester-email" required>
                         <div class="error-message" id="requester-email-error"></div>
                     </div>
                 </div>
@@ -935,7 +729,11 @@
                 <div class="form-section">
                     <div class="section-title" id="context-section">Contexte & objectif</div>
                     <div class="form-group">
-                        <textarea id="context" name="context" placeholder="Context & objective"></textarea>
+                        <label for="context">
+                            <span class="lang-fr">Contexte & objectif</span>
+                            <span class="lang-en">Context & Objective</span>
+                        </label>
+                        <textarea id="context" name="context" placeholder=""></textarea>
                     </div>
                 </div>
             </div>
@@ -943,84 +741,95 @@
             <!-- Section 4: Material Type & Delivery (Side by side) -->
             <div class="form-section-pair">
                 <div class="form-section">
-                    <div class="section-title" id="material-section">Type de matériel <span class="required">*</span></div>
-                    <div class="form-group">
-                        <select id="materials-dropdown">
-                            <option value="" data-fr="Sélectionner un type de matériel..." data-en="Select a material type...">Sélectionner un type de matériel...</option>
-                            <option value="TV" data-fr="TV" data-en="TV">TV</option>
-                            <option value="Carousel" data-fr="Carrousel" data-en="Carousel">Carrousel</option>
-                            <option value="Screensaver" data-fr="Économiseur d'écran" data-en="Screensaver">Économiseur d'écran</option>
-                            <option value="Email" data-fr="Courriel" data-en="Email">Courriel</option>
-                            <option value="Flash Ads" data-fr="Publicités Flash" data-en="Flash Ads">Publicités Flash</option>
-                            <option value="Intranet" data-fr="Éléments intranet" data-en="Intranet elements">Éléments intranet</option>
-                            <option value="Photo" data-fr="Traitement photos" data-en="Photo editing">Traitement photos</option>
-                            <option value="Modification" data-fr="Modification d'un élément existant" data-en="Modification of existing element">Modification d'un élément existant</option>
-                            <option value="Other" data-fr="Autre" data-en="Other">Autre</option>
-                        </select>
-                    </div>
-                    <div id="selected-materials" class="selected-materials-container"></div>
-                    <div class="nested-input hidden" id="material-other-input">
-                        <input type="text" id="material-other-text" placeholder="Spécifier le type">
+                    <div class="section-title" id="material-section">Type de matériel</div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-tv" name="materials" value="TV">
+                            <label for="material-tv">TV</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-carousel" name="materials" value="Carousel">
+                            <label for="material-carousel" class="lang-fr">Carrousel</label>
+                            <label for="material-carousel" class="lang-en">Carousel</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-screensaver" name="materials" value="Screensaver">
+                            <label for="material-screensaver">Screensaver</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-email" name="materials" value="Email">
+                            <label for="material-email" class="lang-fr">Courriel</label>
+                            <label for="material-email" class="lang-en">Email</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-flash" name="materials" value="Flash Ads">
+                            <label for="material-flash">Flash Ads</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-intranet" name="materials" value="Intranet">
+                            <label for="material-intranet" class="lang-fr">Éléments intranet</label>
+                            <label for="material-intranet" class="lang-en">Intranet elements</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-photo" name="materials" value="Photo">
+                            <label for="material-photo" class="lang-fr">Traitement photos</label>
+                            <label for="material-photo" class="lang-en">Photo editing</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-modification" name="materials" value="Modification">
+                            <label for="material-modification" class="lang-fr">Modification d'un élément existant</label>
+                            <label for="material-modification" class="lang-en">Modification of existing element</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="material-other" name="materials" value="Other">
+                            <label for="material-other" class="lang-fr">Autre</label>
+                            <label for="material-other" class="lang-en">Other</label>
+                        </div>
+                        <div class="nested-input hidden" id="material-other-input">
+                            <input type="text" id="material-other-text" placeholder="">
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-section">
                     <div class="section-title" id="delivery-section">Dates</div>
-
-                    <!-- Project Delivery Date -->
-                    <div class="delivery-date-group">
-                        <span class="section-label lang-fr">Date de livrable du projet</span>
-                        <span class="section-label lang-en">Project delivery date</span>
-                        <div class="form-group">
-                            <label for="delivery-date">
-                                <span class="lang-fr">Livrable <span class="required">*</span></span>
-                                <span class="lang-en">Delivery <span class="required">*</span></span>
-                            </label>
-                            <input type="date" id="delivery-date" name="delivery-date" required>
-                            <div class="error-message" id="delivery-date-error"></div>
-                        </div>
+                    <div class="form-group">
+                        <label for="delivery-date">
+                            <span class="lang-fr">Livrable <span class="required">*</span></span>
+                            <span class="lang-en">Delivery <span class="required">*</span></span>
+                        </label>
+                        <input type="date" id="delivery-date" name="delivery-date" required>
+                        <div class="error-message" id="delivery-date-error"></div>
                     </div>
 
-                    <!-- Material Distribution Dates -->
-                    <div class="material-dates-container">
-                        <span class="material-dates-header lang-fr">Dates de diffusion par type de matériel</span>
-                        <span class="material-dates-header lang-en">Distribution dates by material type</span>
-                        <div id="dynamic-dates"></div>
-                    </div>
+                    <!-- Dynamic date ranges for each material -->
+                    <div id="dynamic-dates"></div>
                 </div>
             </div>
 
             <!-- Section 5: Priority -->
             <div class="form-section">
-                <div class="section-title" id="priority-section">Niveau de priorité <span class="required">*</span></div>
+                <div class="section-title" id="priority-section">Niveau de priorité</div>
                 <div class="radio-group">
                     <div class="radio-item">
                         <input type="radio" id="priority-low" name="priority" value="low">
-                        <label for="priority-low">
-                            <span class="lang-fr">Faible</span>
-                            <span class="lang-en">Low</span>
-                        </label>
+                        <label for="priority-low" class="lang-fr">Faible</label>
+                        <label for="priority-low" class="lang-en">Low</label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-medium" name="priority" value="medium">
-                        <label for="priority-medium">
-                            <span class="lang-fr">Moyenne</span>
-                            <span class="lang-en">Medium</span>
-                        </label>
+                        <label for="priority-medium" class="lang-fr">Moyenne</label>
+                        <label for="priority-medium" class="lang-en">Medium</label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-high" name="priority" value="high">
-                        <label for="priority-high">
-                            <span class="lang-fr">Élevée</span>
-                            <span class="lang-en">High</span>
-                        </label>
+                        <label for="priority-high" class="lang-fr">Élevée</label>
+                        <label for="priority-high" class="lang-en">High</label>
                     </div>
                     <div class="radio-item">
                         <input type="radio" id="priority-urgent" name="priority" value="urgent">
-                        <label for="priority-urgent">
-                            <span class="lang-fr">Très urgent</span>
-                            <span class="lang-en">Very urgent</span>
-                        </label>
+                        <label for="priority-urgent" class="lang-fr">Très urgent</label>
+                        <label for="priority-urgent" class="lang-en">Very urgent</label>
                     </div>
                 </div>
                 <div class="error-message" id="priority-error"></div>
@@ -1036,13 +845,29 @@
                         <div id="text-block-fr-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">Français / French</div>
 
                         <div class="form-group">
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" placeholder="Title *" required>
+                            <label for="text-content-title-fr">
+                                <span class="lang-fr">Titre <span class="required">*</span></span>
+                                <span class="lang-en">Title <span class="required">*</span></span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 100</span>
+                                <span class="lang-en">Max 100</span>
+                            </div>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
 
                         <div class="form-group">
-                            <textarea id="text-content-text-fr" name="text-content-text-fr" placeholder="Text"></textarea>
+                            <label for="text-content-text-fr">
+                                <span class="lang-fr">Texte</span>
+                                <span class="lang-en">Text</span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 150</span>
+                                <span class="lang-en">Max 150</span>
+                            </div>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -1060,13 +885,29 @@
                         <div id="text-block-en-title" style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: #003078;">English / Anglais</div>
 
                         <div class="form-group">
-                            <input type="text" id="text-content-title-en" name="text-content-title-en" placeholder="Title *" required>
+                            <label for="text-content-title-en">
+                                <span class="lang-fr">Titre <span class="required">*</span></span>
+                                <span class="lang-en">Title <span class="required">*</span></span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 100</span>
+                                <span class="lang-en">Max 100</span>
+                            </div>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
                             <div class="char-count" id="char-count-title-en">0/100</div>
                             <div class="error-message" id="text-content-title-en-error"></div>
                         </div>
 
                         <div class="form-group">
-                            <textarea id="text-content-text-en" name="text-content-text-en" placeholder="Text"></textarea>
+                            <label for="text-content-text-en">
+                                <span class="lang-fr">Texte</span>
+                                <span class="lang-en">Text</span>
+                            </label>
+                            <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
+                                <span class="lang-fr">Max 150</span>
+                                <span class="lang-en">Max 150</span>
+                            </div>
+                            <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
                             <div class="char-count" id="char-count-text-en">0/150</div>
                             <div id="title-only-confirm-en" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -1084,28 +925,28 @@
             <!-- Section 7: Visual Guidelines & Options (Side by side) -->
             <div class="form-section-pair">
                 <div class="form-section">
-                    <div class="section-title" id="guidelines-section">Directives visuelles <span class="required">*</span></div>
+                    <div class="section-title" id="guidelines-section">Directives visuelles</div>
                     <div class="form-group">
-                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder="Guidelines & references"></textarea>
+                        <label for="visual-guidelines">
+                            <span class="lang-fr">Directives & références</span>
+                            <span class="lang-en">Guidelines & References</span>
+                        </label>
+                        <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <div class="section-title" id="options-section">Options <span class="required">*</span></div>
+                    <div class="section-title" id="options-section">Options</div>
                     <div class="radio-group">
                         <div class="radio-item">
                             <input type="radio" id="option-single" name="options" value="single">
-                            <label for="option-single">
-                                <span class="lang-fr">Un seul visuel</span>
-                                <span class="lang-en">Single visual</span>
-                            </label>
+                            <label for="option-single" class="lang-fr">Un seul visuel</label>
+                            <label for="option-single" class="lang-en">Single visual</label>
                         </div>
                         <div class="radio-item">
                             <input type="radio" id="option-multiple" name="options" value="multiple">
-                            <label for="option-multiple">
-                                <span class="lang-fr">Plusieurs options</span>
-                                <span class="lang-en">Multiple options</span>
-                            </label>
+                            <label for="option-multiple" class="lang-fr">Plusieurs options</label>
+                            <label for="option-multiple" class="lang-en">Multiple options</label>
                         </div>
                     </div>
                 </div>
@@ -1186,19 +1027,7 @@
                 },
                 approverRequesterLabel: 'Demandeur',
                 textBlockFrTitle: 'Français / French',
-                textBlockEnTitle: 'English / Anglais',
-                placeholders: {
-                    'request-title': 'Titre du projet pour communications',
-                    'requester-name': 'Nom *',
-                    'requester-email': 'Courriel *',
-                    'context': 'Contexte & objectif',
-                    'text-content-title-fr': 'Titre *',
-                    'text-content-text-fr': 'Texte',
-                    'text-content-title-en': 'Titre *',
-                    'text-content-text-en': 'Text',
-                    'visual-guidelines': 'Directives & références',
-                    'material-other-text': 'Spécifier le type'
-                }
+                textBlockEnTitle: 'English / Anglais'
             },
             en: {
                 sectionTitles: {
@@ -1215,19 +1044,7 @@
                 },
                 approverRequesterLabel: 'Requester',
                 textBlockFrTitle: 'French / Français',
-                textBlockEnTitle: 'English / Anglais',
-                placeholders: {
-                    'request-title': 'Title of the project for communications',
-                    'requester-name': 'Name *',
-                    'requester-email': 'Email *',
-                    'context': 'Context & objective',
-                    'text-content-title-fr': 'Title *',
-                    'text-content-text-fr': 'Text',
-                    'text-content-title-en': 'Title *',
-                    'text-content-text-en': 'Text',
-                    'visual-guidelines': 'Guidelines & references',
-                    'material-other-text': 'Specify the type'
-                }
+                textBlockEnTitle: 'English / Anglais'
             }
         };
 
@@ -1257,19 +1074,7 @@
             document.getElementById('text-block-fr-title').textContent = t.textBlockFrTitle;
             document.getElementById('text-block-en-title').textContent = t.textBlockEnTitle;
 
-            updatePlaceholders();
             updateDynamicMaterialLabels();
-            updateMaterialDropdownLabels();
-        }
-
-        function updatePlaceholders() {
-            const t = uiTranslations[currentLanguage];
-            Object.entries(t.placeholders).forEach(([id, placeholder]) => {
-                const element = document.getElementById(id);
-                if (element && element.placeholder !== undefined) {
-                    element.placeholder = placeholder;
-                }
-            });
         }
 
         // Priority banner color change
@@ -1288,8 +1093,6 @@
                     banner.classList.add('priority-urgent');
                 }
                 updateBannerTextColor();
-                // Clear priority error when priority is selected
-                document.getElementById('priority-error').textContent = '';
             });
         });
 
@@ -1304,80 +1107,26 @@
             langToggle.style.color = useLightText ? '#ffffff' : '#1f2937';
         }
 
-        // Material type changes - dynamic date ranges and dropdown
-        const materialsDropdown = document.getElementById('materials-dropdown');
-        const selectedMaterialsContainer = document.getElementById('selected-materials');
+        // Material type changes - dynamic date ranges
+        const materialCheckboxes = document.querySelectorAll('input[name="materials"]');
+        const materialOtherCheckbox = document.getElementById('material-other');
         const dynamicDatesContainer = document.getElementById('dynamic-dates');
-        let selectedMaterials = [];
 
-        materialsDropdown.addEventListener('change', (e) => {
-            if (e.target.value) {
-                const value = e.target.value;
-                if (!selectedMaterials.includes(value)) {
-                    selectedMaterials.push(value);
-                    renderSelectedMaterials();
-                    updateDynamicDates();
-                }
-                e.target.value = '';
-            }
+        materialCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateDynamicDates);
         });
 
-        function renderSelectedMaterials() {
-            selectedMaterialsContainer.innerHTML = '';
-            selectedMaterials.forEach(material => {
-                const badge = document.createElement('div');
-                badge.className = 'material-badge';
-                const label = getMaterialLabel(material);
-                badge.innerHTML = `
-                    <span>${label}</span>
-                    <button type="button" class="remove-material" data-material="${material}">×</button>
-                `;
-                badge.querySelector('.remove-material').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    removeMaterial(material);
-                });
-                selectedMaterialsContainer.appendChild(badge);
-            });
-            // Clear materials error when materials are selected
-            const materialsError = selectedMaterialsContainer.parentElement.querySelector('.error-message');
-            if (materialsError && selectedMaterials.length > 0) {
-                materialsError.textContent = '';
-            }
-        }
-
-        function removeMaterial(material) {
-            selectedMaterials = selectedMaterials.filter(m => m !== material);
-            renderSelectedMaterials();
-            updateDynamicDates();
-            if (material === 'Other') {
-                document.getElementById('material-other-input').classList.add('hidden');
-                document.getElementById('material-other-text').value = '';
-            }
-        }
-
-        // Handle "Other" material option - show input field when selected
-        const originalRenderSelectedMaterials = renderSelectedMaterials;
-        renderSelectedMaterials = function() {
-            originalRenderSelectedMaterials();
-            if (selectedMaterials.includes('Other')) {
-                document.getElementById('material-other-input').classList.remove('hidden');
-            } else {
-                document.getElementById('material-other-input').classList.add('hidden');
-            }
-        };
+        materialOtherCheckbox.addEventListener('change', () => {
+            document.getElementById('material-other-input').classList.toggle('hidden');
+        });
 
         function updateDynamicDates() {
             dynamicDatesContainer.innerHTML = '';
-            const materialsForDates = selectedMaterials.filter(val => val !== 'Other');
-            const materialDatesContainer = dynamicDatesContainer.parentElement;
+            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
+                .map(el => el.value)
+                .filter(val => val !== 'Other');
 
-            if (materialsForDates.length === 0) {
-                materialDatesContainer.classList.add('empty');
-            } else {
-                materialDatesContainer.classList.remove('empty');
-            }
-
-            materialsForDates.forEach(material => {
+            selectedMaterials.forEach(material => {
                 const div = document.createElement('div');
                 div.className = 'dynamic-section';
                 div.innerHTML = `
@@ -1431,17 +1180,6 @@
             });
         }
 
-        function updateMaterialDropdownLabels() {
-            const dropdown = document.getElementById('materials-dropdown');
-            dropdown.querySelectorAll('option').forEach(option => {
-                const dataAttr = currentLanguage === 'fr' ? 'data-fr' : 'data-en';
-                const translatedText = option.getAttribute(dataAttr);
-                if (translatedText) {
-                    option.textContent = translatedText;
-                }
-            });
-        }
-
         function validateMaterialDateRange(e) {
             const material = e.target.dataset.material;
             const startInput = document.querySelector(`#date-${material}-start`);
@@ -1482,16 +1220,9 @@
             const maxChars = type === 'title' ? 100 : 150;
             const currentLength = input.value.length;
 
-            if (currentLength > maxChars) {
-                const overflow = currentLength - maxChars;
-                countDiv.textContent = `${currentLength}/${maxChars} (+${overflow})`;
-                countDiv.classList.add('warning');
-                input.classList.add('error');
-            } else {
-                countDiv.textContent = `${currentLength}/${maxChars}`;
-                countDiv.classList.remove('warning');
-                input.classList.remove('error');
-            }
+            countDiv.textContent = `${currentLength}/${maxChars}`;
+            countDiv.classList.toggle('warning', currentLength > maxChars);
+            input.classList.toggle('error', currentLength > maxChars);
 
             // Show/hide title-only confirm button
             if (type === 'text') {
@@ -1555,32 +1286,11 @@
             container.appendChild(approverDiv);
         });
 
-        // Clear options error when an option is selected
-        const optionsInputs = document.querySelectorAll('input[name="options"]');
-        optionsInputs.forEach(input => {
-            input.addEventListener('change', () => {
-                const optionsSection = document.getElementById('options-section').parentElement;
-                const optionsError = optionsSection.querySelector('.error-message');
-                if (optionsError) {
-                    optionsError.textContent = '';
-                }
-            });
-        });
-
         // Form submission
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            console.log('Form submission triggered');
             if (validateForm()) {
-                console.log('Form validation passed, generating email...');
                 generateAndSendEmail();
-            } else {
-                console.log('Form validation failed');
-                // Scroll to first error
-                const firstError = document.querySelector('.error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
             }
         });
 
@@ -1630,44 +1340,6 @@
                     currentLanguage === 'fr' ? 'Veuillez sélectionner un niveau de priorité' : 'Please select a priority level';
             }
 
-            // Material type validation - at least one must be selected
-            if (selectedMaterials.length === 0) {
-                isValid = false;
-                const materialsSection = document.getElementById('selected-materials');
-                const errorMsg = document.createElement('div');
-                errorMsg.className = 'error-message';
-                errorMsg.textContent = currentLanguage === 'fr' ? 'Veuillez sélectionner au moins un type de matériel' : 'Please select at least one material type';
-                materialsSection.parentElement.appendChild(errorMsg);
-            }
-
-            // Options validation - one must be selected
-            if (!document.querySelector('input[name="options"]:checked')) {
-                isValid = false;
-                const optionsSection = document.getElementById('options-section').parentElement;
-                let optionsError = optionsSection.querySelector('.error-message');
-                if (!optionsError) {
-                    optionsError = document.createElement('div');
-                    optionsError.className = 'error-message';
-                    optionsSection.appendChild(optionsError);
-                }
-                optionsError.textContent = currentLanguage === 'fr' ? 'Veuillez sélectionner une option' : 'Please select an option';
-            }
-
-            // Visual Guidelines validation
-            const visualGuidelinesInput = document.getElementById('visual-guidelines');
-            if (!visualGuidelinesInput.value.trim()) {
-                isValid = false;
-                visualGuidelinesInput.classList.add('error');
-                const guidelinesSection = document.getElementById('guidelines-section').parentElement;
-                let guidelinesError = guidelinesSection.querySelector('.error-message');
-                if (!guidelinesError) {
-                    guidelinesError = document.createElement('div');
-                    guidelinesError.className = 'error-message';
-                    guidelinesSection.appendChild(guidelinesError);
-                }
-                guidelinesError.textContent = currentLanguage === 'fr' ? 'Ce champ est obligatoire' : 'This field is required';
-            }
-
             // Character limit validation
             if (document.getElementById('text-content-title-fr').value.length > 100 ||
                 document.getElementById('text-content-title-en').value.length > 100 ||
@@ -1688,26 +1360,22 @@
                 if (!input.value) {
                     isValid = false;
                     input.classList.add('error');
-                    const material = input.dataset.material;
-                    const errorDiv = document.querySelector(`#error-${material}`);
-                    if (errorDiv && !errorDiv.textContent) {
-                        errorDiv.textContent = currentLanguage === 'fr'
-                            ? 'Les dates de distribution sont obligatoires'
-                            : 'Distribution dates are required';
-                    }
                 }
             });
 
             // Validate text content - if text is empty, must have confirmation
-            // French text content validation
             if (!textFrInput.value.trim() && !titleOnlyConfirmed.fr) {
-                isValid = false;
-                console.warn('French text content is empty and not confirmed');
+                // Only valid if title is filled and user confirmed
+                const titleOnlyConfirmFr = document.getElementById('title-only-confirm-fr');
+                if (!titleOnlyConfirmFr.classList.contains('hidden')) {
+                    isValid = false;
+                }
             }
-            // English text content validation
             if (!textEnInput.value.trim() && !titleOnlyConfirmed.en) {
-                isValid = false;
-                console.warn('English text content is empty and not confirmed');
+                const titleOnlyConfirmEn = document.getElementById('title-only-confirm-en');
+                if (!titleOnlyConfirmEn.classList.contains('hidden')) {
+                    isValid = false;
+                }
             }
 
             return isValid;
@@ -1720,27 +1388,132 @@
 
         function generateAndSendEmail() {
             const title = document.getElementById('request-title').value;
+            const requesterName = document.getElementById('requester-name').value;
+            const requesterEmail = document.getElementById('requester-email').value;
+            const context = document.getElementById('context').value;
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const options = document.querySelector('input[name="options"]:checked').value;
+            const guidelines = document.getElementById('visual-guidelines').value;
 
-            // Keep mailto intentionally simple so the mail client opens reliably
-            const mailtoSubject = currentLanguage === 'fr'
-                ? `Demande de design — ${title}`
-                : `Design Request — ${title}`;
-            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}`;
+            // Get material dates
+            let materialDates = {};
+            document.querySelectorAll('.material-date').forEach(input => {
+                const material = input.dataset.material;
+                const type = input.dataset.type;
+                if (!materialDates[material]) materialDates[material] = {};
+                materialDates[material][type] = input.value;
+            });
 
-            // Open email client from direct user action
-            window.location.assign(mailtoLink);
+            // Get selected materials
+            const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
+                .map(el => el.value === 'Other' ? document.getElementById('material-other-text').value : el.value)
+                .filter(val => val);
 
-            const msg = currentLanguage === 'fr'
-                ? 'Le client courriel devrait s\'ouvrir maintenant avec un nouveau message.'
-                : 'Your email client should open now with a new message.';
-            alert(msg);
+            // Get approvers
+            const ccEmails = [];
+            document.querySelectorAll('#additional-approvers .approver-email').forEach(input => {
+                if (input.value.trim()) {
+                    ccEmails.push(input.value.trim());
+                }
+            });
 
-            // Reset form
-            form.reset();
-            selectedMaterials = [];
-            renderSelectedMaterials();
-            updateDynamicDates();
-            titleOnlyConfirmed = { fr: false, en: false };
+            // Build email body based on current language
+            let emailBody = '';
+            if (currentLanguage === 'fr') {
+                emailBody = `Demande de design graphique
+
+Titre de la demande
+${title}
+
+Demandeur
+Nom: ${requesterName}
+Courriel: ${requesterEmail}
+
+Contexte & objectif
+${context || '(Non fourni)'}
+
+Type de matériel
+${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
+
+Dates
+Date de livrable: ${formatDate(deliveryDate)}
+${Object.entries(materialDates).map(([material, dates]) =>
+    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
+).join('\n') || ''}
+
+Niveau de priorité
+${getPriorityLabel(priority, 'fr')}
+
+Contenu textuel
+Français:
+Titre: ${document.getElementById('text-content-title-fr').value}
+Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
+
+English:
+Titre: ${document.getElementById('text-content-title-en').value}
+Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+
+Directives visuelles & références
+${guidelines || '(Non fourni)'}
+
+Options / variations
+${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
+`;
+            } else {
+                emailBody = `Graphic Design Request
+
+Request Title
+${title}
+
+Requester
+Name: ${requesterName}
+Email: ${requesterEmail}
+
+Context & Objective
+${context || '(Not provided)'}
+
+Material Type
+${selectedMaterials.join(', ') || '(None selected)'}
+
+Dates
+Delivery date: ${formatDate(deliveryDate)}
+${Object.entries(materialDates).map(([material, dates]) =>
+    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
+).join('\n') || ''}
+
+Priority Level
+${getPriorityLabel(priority, 'en')}
+
+Text Content
+French:
+Title: ${document.getElementById('text-content-title-fr').value}
+Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
+
+English:
+Title: ${document.getElementById('text-content-title-en').value}
+Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+
+Visual Guidelines & References
+${guidelines || '(Not provided)'}
+
+Options / Variations
+${options === 'single' ? 'Single visual' : 'Propose multiple options'}
+`;
+            }
+
+            // Build mailto link
+            const subject = currentLanguage === 'fr' ?
+                `Demande de design graphique — ${title}` :
+                `Graphic Design Request — ${title}`;
+
+            let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+            if (ccEmails.length > 0) {
+                mailtoLink += `&cc=${encodeURIComponent(ccEmails.join(';'))}`;
+            }
+
+            window.location.href = mailtoLink;
         }
 
         function formatDate(dateString) {
