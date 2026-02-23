@@ -1720,12 +1720,38 @@
 
         function generateAndSendEmail() {
             const title = document.getElementById('request-title').value;
+            const requesterName = document.getElementById('requester-name').value;
+            const requesterEmail = document.getElementById('requester-email').value;
+            const context = document.getElementById('request-context').value.trim() || (currentLanguage === 'fr' ? '(Non fourni)' : '(Not provided)');
+            const deliveryDate = document.getElementById('delivery-date').value;
+            const priority = document.querySelector('input[name="priority"]:checked')?.value || '';
+            const options = document.querySelector('input[name="options"]:checked')?.value || '';
+            const guidelines = document.getElementById('visual-guidelines').value.trim() || (currentLanguage === 'fr' ? '(Non fourni)' : '(Not provided)');
+            const titleFr = document.getElementById('text-content-title-fr').value;
+            const textFr = document.getElementById('text-content-text-fr').value.trim() || (currentLanguage === 'fr' ? '(Titre uniquement)' : '(Title only)');
+            const titleEn = document.getElementById('text-content-title-en').value;
+            const textEn = document.getElementById('text-content-text-en').value.trim() || '(Title only)';
 
-            // Keep mailto intentionally simple so the mail client opens reliably
+            const materialLines = selectedMaterials.map(material => {
+                const start = document.getElementById(`date-${material}-start`)?.value;
+                const end = document.getElementById(`date-${material}-end`)?.value;
+                const range = start && end ? `${formatDate(start)} → ${formatDate(end)}` : (currentLanguage === 'fr' ? '(Dates non fournies)' : '(Dates not provided)');
+                return `- ${getMaterialLabel(material)}: ${range}`;
+            }).join('\n');
+
+            const approverEmails = Array.from(document.querySelectorAll('.approver-email'))
+                .map(input => input.value.trim())
+                .filter(email => email);
+
+            const body = currentLanguage === 'fr'
+                ? `Demande de design graphique\n\nTitre de la demande\n${title}\n\nDemandeur\nNom: ${requesterName}\nCourriel: ${requesterEmail}\n\nContexte et objectif\n${context}\n\nType de matériel\n${selectedMaterials.map(material => getMaterialLabel(material)).join(', ')}\n\nDates\nDate de livrable: ${formatDate(deliveryDate)}\n${materialLines}\n\nNiveau de priorité\n${getPriorityLabel(priority, 'fr')}\n\nContenu textuel\nFrançais\nTitre: ${titleFr}\nTexte: ${textFr}\n\nEnglish\nTitle: ${titleEn}\nText: ${textEn}\n\nDirectives visuelles\n${guidelines}\n\nOptions\n${options === 'single' ? 'Un seul visuel' : 'Plusieurs options'}`
+                : `Graphic Design Request\n\nRequest title\n${title}\n\nRequester\nName: ${requesterName}\nEmail: ${requesterEmail}\n\nContext and objective\n${context}\n\nMaterial type\n${selectedMaterials.map(material => getMaterialLabel(material)).join(', ')}\n\nDates\nDelivery date: ${formatDate(deliveryDate)}\n${materialLines}\n\nPriority\n${getPriorityLabel(priority, 'en')}\n\nText content\nFrench\nTitle: ${titleFr}\nText: ${textFr}\n\nEnglish\nTitle: ${titleEn}\nText: ${textEn}\n\nVisual guidelines\n${guidelines}\n\nOptions\n${options === 'single' ? 'Single visual' : 'Multiple options'}`;
+
             const mailtoSubject = currentLanguage === 'fr'
                 ? `Demande de design — ${title}`
                 : `Design Request — ${title}`;
-            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}`;
+            const ccParam = approverEmails.length > 0 ? `&cc=${encodeURIComponent(approverEmails.join(','))}` : '';
+            const mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(body)}${ccParam}`;
 
             // Open email client from direct user action
             window.location.assign(mailtoLink);
