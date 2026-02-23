@@ -1444,87 +1444,113 @@
                 }
             });
 
+            const formatValue = (value, emptyValue) => {
+                const trimmedValue = typeof value === 'string' ? value.trim() : value;
+                return trimmedValue || emptyValue;
+            };
+
+            const boldMap = {
+                lower: Array.from('𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇'),
+                upper: Array.from('𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭'),
+                digits: Array.from('𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵')
+            };
+
+            const toVisualBold = (label) => {
+                return Array.from(label).map((char) => {
+                    const lowerIndex = char.charCodeAt(0) - 97;
+                    if (lowerIndex >= 0 && lowerIndex < 26) return boldMap.lower[lowerIndex];
+
+                    const upperIndex = char.charCodeAt(0) - 65;
+                    if (upperIndex >= 0 && upperIndex < 26) return boldMap.upper[upperIndex];
+
+                    const digitIndex = char.charCodeAt(0) - 48;
+                    if (digitIndex >= 0 && digitIndex < 10) return boldMap.digits[digitIndex];
+
+                    return char;
+                }).join('');
+            };
+
             // Build email body based on current language
             let emailBody = '';
             if (currentLanguage === 'fr') {
                 emailBody = `Demande de design graphique
 
-Titre de la demande
-${title}
+${toVisualBold('Titre de la demande')}
+${formatValue(title, '(Non fourni)')}
 
-Demandeur
-Nom: ${requesterName}
-Courriel: ${requesterEmail}
+${toVisualBold('Demandeur')}
+${toVisualBold('Nom')}: ${formatValue(requesterName, '(Non fourni)')}
+${toVisualBold('Courriel')}: ${formatValue(requesterEmail, '(Non fourni)')}
 
-Contexte & objectif
-${context || '(Non fourni)'}
+${toVisualBold('Contexte & objectif')}
+${formatValue(context, '(Non fourni)')}
 
-Type de matériel
-${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
+${toVisualBold('Type de matériel')}
+${formatValue(selectedMaterials.join(', '), '(Aucun sélectionné)')}
 
-Dates
-Date de livrable: ${formatDate(deliveryDate)}
+${toVisualBold('Dates')}
+${toVisualBold('Date de livrable')}: ${formatValue(formatDate(deliveryDate), '(Non fourni)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
+    `${toVisualBold(material)}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
-Niveau de priorité
-${getPriorityLabel(priority, 'fr')}
+${toVisualBold('Niveau de priorité')}
+${formatValue(getPriorityLabel(priority, 'fr'), '(Non fourni)')}
 
-Contenu textuel
-Français:
-Titre: ${document.getElementById('text-content-title-fr').value}
-Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
+${toVisualBold('Contenu textuel')}
+${toVisualBold('Français')}:
+${toVisualBold('Titre')}: ${formatValue(document.getElementById('text-content-title-fr').value, '(Non fourni)')}
+${toVisualBold('Texte')}: ${formatValue(document.getElementById('text-content-text-fr').value, '(Titre uniquement)')}
 
-English:
-Titre: ${document.getElementById('text-content-title-en').value}
-Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+${toVisualBold('English')}:
+${toVisualBold('Title')}: ${formatValue(document.getElementById('text-content-title-en').value, '(Not provided)')}
+${toVisualBold('Text')}: ${formatValue(document.getElementById('text-content-text-en').value, '(Title only)')}
 
-Directives visuelles & références
-${guidelines || '(Non fourni)'}
+${toVisualBold('Directives visuelles & références')}
+${formatValue(guidelines, '(Non fourni)')}
 
-Options / variations
-${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
+${toVisualBold('Options / variations')}
+${formatValue(options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options', '(Non fourni)')}
 `;
             } else {
                 emailBody = `Graphic Design Request
 
-Request Title
-${title}
+${toVisualBold('Request Title')}
+${formatValue(title, '(Not provided)')}
 
-Requester
-Name: ${requesterName}
-Email: ${requesterEmail}
+${toVisualBold('Requester')}
+${toVisualBold('Name')}: ${formatValue(requesterName, '(Not provided)')}
+${toVisualBold('Email')}: ${formatValue(requesterEmail, '(Not provided)')}
 
-Context & Objective
-${context || '(Not provided)'}
+${toVisualBold('Context & Objective')}
+${formatValue(context, '(Not provided)')}
 
-Material Type
-${selectedMaterials.join(', ') || '(None selected)'}
+${toVisualBold('Material Type')}
+${formatValue(selectedMaterials.join(', '), '(None selected)')}
 
-Dates
-Delivery date: ${formatDate(deliveryDate)}
+${toVisualBold('Dates')}
+${toVisualBold('Delivery date')}: ${formatValue(formatDate(deliveryDate), '(Not provided)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
+    `${toVisualBold(material)}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
-Priority Level
-${getPriorityLabel(priority, 'en')}
+${toVisualBold('Priority Level')}
+${formatValue(getPriorityLabel(priority, 'en'), '(Not provided)')}
 
-Text Content
-French:
-Title: ${document.getElementById('text-content-title-fr').value}
-Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
+${toVisualBold('Text Content')}
+${toVisualBold('French')}:
+${toVisualBold('Title')}: ${formatValue(document.getElementById('text-content-title-fr').value, '(Not provided)')}
+${toVisualBold('Text')}: ${formatValue(document.getElementById('text-content-text-fr').value, '(Title only)')}
 
-English:
-Title: ${document.getElementById('text-content-title-en').value}
-Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+${toVisualBold('English')}:
+${toVisualBold('Title')}: ${formatValue(document.getElementById('text-content-title-en').value, '(Not provided)')}
+${toVisualBold('Text')}: ${formatValue(document.getElementById('text-content-text-en').value, '(Title only)')}
 
-Visual Guidelines & References
-${guidelines || '(Not provided)'}
+${toVisualBold('Visual Guidelines & References')}
+${formatValue(guidelines, '(Not provided)')}
 
-Options / Variations
-${options === 'single' ? 'Single visual' : 'Propose multiple options'}
+${toVisualBold('Options / Variations')}
+${formatValue(options === 'single' ? 'Single visual' : 'Propose multiple options', '(Not provided)')}
 `;
             }
 
