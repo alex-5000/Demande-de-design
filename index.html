@@ -1470,7 +1470,7 @@ Sélection utilisateur: ${formatValue(selectedMaterials.join(', '), '(Aucun sél
 Dates
 Date de livrable (saisie utilisateur): ${formatValue(formatDate(deliveryDate), '(Non fourni)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
+    `${toVisualBold(material)}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
 Niveau de priorité
@@ -1510,7 +1510,7 @@ User selection: ${formatValue(selectedMaterials.join(', '), '(None selected)')}
 Dates
 Delivery date (user entry): ${formatValue(formatDate(deliveryDate), '(Not provided)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
+    `${toVisualBold(material)}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
 Priority Level
