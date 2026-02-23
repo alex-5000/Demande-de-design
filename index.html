@@ -872,14 +872,14 @@
 
                         <div class="form-group">
                             <label for="text-content-title-fr">
-                                <span class="lang-fr">Titre <span class="required">*</span></span>
-                                <span class="lang-en">Title <span class="required">*</span></span>
+                                <span class="lang-fr">Titre</span>
+                                <span class="lang-en">Title</span>
                             </label>
                             <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" required>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr">
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
@@ -896,8 +896,8 @@
                             <textarea id="text-content-text-fr" name="text-content-text-fr"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
-                                <span class="lang-fr">Aucun texte saisi. Veuillez confirmer que vous souhaitez un design avec le titre seulement.</span>
-                                <span class="lang-en">No text entered. Please confirm that you want the design with title only.</span>
+                                <span class="lang-fr">Aucun titre ni texte saisi. Veuillez confirmer que vous ne souhaitez pas ajouter de contenu textuel à cette demande.</span>
+                                <span class="lang-en">No title or text entered. Please confirm that you do not want to add textual content to this request.</span>
                                 <button type="button" class="title-only-confirm-btn" data-lang="fr">
                                     <span class="lang-fr">OK</span>
                                     <span class="lang-en">OK</span>
@@ -912,14 +912,14 @@
 
                         <div class="form-group">
                             <label for="text-content-title-en">
-                                <span class="lang-fr">Titre <span class="required">*</span></span>
-                                <span class="lang-en">Title <span class="required">*</span></span>
+                                <span class="lang-fr">Titre</span>
+                                <span class="lang-en">Title</span>
                             </label>
                             <div style="font-size: 11px; color: #666; margin-bottom: 2px;">
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-en" name="text-content-title-en" required>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en">
                             <div class="char-count" id="char-count-title-en">0/100</div>
                             <div class="error-message" id="text-content-title-en-error"></div>
                         </div>
@@ -936,8 +936,8 @@
                             <textarea id="text-content-text-en" name="text-content-text-en"></textarea>
                             <div class="char-count" id="char-count-text-en">0/150</div>
                             <div id="title-only-confirm-en" class="hidden title-only-confirm">
-                                <span class="lang-fr">Aucun texte saisi. Veuillez confirmer que vous souhaitez un design avec le titre seulement.</span>
-                                <span class="lang-en">No text entered. Please confirm that you want the design with title only.</span>
+                                <span class="lang-fr">Aucun titre ni texte saisi. Veuillez confirmer que vous ne souhaitez pas ajouter de contenu textuel à cette demande.</span>
+                                <span class="lang-en">No title or text entered. Please confirm that you do not want to add textual content to this request.</span>
                                 <button type="button" class="title-only-confirm-btn" data-lang="en">
                                     <span class="lang-fr">OK</span>
                                     <span class="lang-en">OK</span>
@@ -1051,7 +1051,7 @@
         const langFrBtn = document.getElementById('lang-fr-btn');
         const langEnBtn = document.getElementById('lang-en-btn');
         let currentLanguage = 'fr';
-        let titleOnlyConfirmed = { fr: false, en: false };
+        let emptyContentConfirmed = { fr: false, en: false };
 
         const uiTranslations = {
             fr: {
@@ -1261,10 +1261,22 @@
         const textFrInput = document.getElementById('text-content-text-fr');
         const textEnInput = document.getElementById('text-content-text-en');
 
-        titleFrInput.addEventListener('input', () => updateCharCounter('fr', 'title'));
-        titleEnInput.addEventListener('input', () => updateCharCounter('en', 'title'));
-        textFrInput.addEventListener('input', () => updateCharCounter('fr', 'text'));
-        textEnInput.addEventListener('input', () => updateCharCounter('en', 'text'));
+        titleFrInput.addEventListener('input', () => {
+            updateCharCounter('fr', 'title');
+            updateEmptyContentConfirmation('fr');
+        });
+        titleEnInput.addEventListener('input', () => {
+            updateCharCounter('en', 'title');
+            updateEmptyContentConfirmation('en');
+        });
+        textFrInput.addEventListener('input', () => {
+            updateCharCounter('fr', 'text');
+            updateEmptyContentConfirmation('fr');
+        });
+        textEnInput.addEventListener('input', () => {
+            updateCharCounter('en', 'text');
+            updateEmptyContentConfirmation('en');
+        });
 
         function updateCharCounter(lang, type) {
             const input = type === 'title' ?
@@ -1280,11 +1292,19 @@
                 : `${currentLength}/${maxChars}`;
             countDiv.classList.toggle('warning', currentLength > maxChars);
 
-            // Show/hide title-only confirm button
-            if (type === 'text') {
-                const confirmDiv = document.getElementById(`title-only-confirm-${lang}`);
-                confirmDiv.classList.toggle('hidden', textFrInput.value.length > 0 || textEnInput.value.length > 0);
+        }
+
+        function updateEmptyContentConfirmation(lang) {
+            const titleInput = lang === 'fr' ? titleFrInput : titleEnInput;
+            const textInput = lang === 'fr' ? textFrInput : textEnInput;
+            const confirmDiv = document.getElementById(`title-only-confirm-${lang}`);
+
+            const isEmptyContent = !titleInput.value.trim() && !textInput.value.trim();
+            if (!isEmptyContent) {
+                emptyContentConfirmed[lang] = false;
             }
+
+            confirmDiv.classList.toggle('hidden', !isEmptyContent || emptyContentConfirmed[lang]);
         }
 
         // Title-only confirmation buttons
@@ -1292,10 +1312,13 @@
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = btn.dataset.lang;
-                titleOnlyConfirmed[lang] = true;
+                emptyContentConfirmed[lang] = true;
                 btn.parentElement.classList.add('hidden');
             });
         });
+
+        updateEmptyContentConfirmation('fr');
+        updateEmptyContentConfirmation('en');
 
         // Requester info auto-fill
         const requesterNameInput = document.getElementById('requester-name');
@@ -1363,9 +1386,7 @@
                 'request-title',
                 'requester-name',
                 'requester-email',
-                'delivery-date',
-                'text-content-title-fr',
-                'text-content-title-en'
+                'delivery-date'
             ];
 
             requiredFields.forEach(field => {
@@ -1404,19 +1425,16 @@
                 }
             });
 
-            // Validate text content - if text is empty, must have confirmation
-            if (!textFrInput.value.trim() && !titleOnlyConfirmed.fr) {
-                // Only valid if title is filled and user confirmed
-                const titleOnlyConfirmFr = document.getElementById('title-only-confirm-fr');
-                if (!titleOnlyConfirmFr.classList.contains('hidden')) {
-                    isValid = false;
-                }
+            // Validate text content: if title and text are both empty, confirmation is required
+            updateEmptyContentConfirmation('fr');
+            updateEmptyContentConfirmation('en');
+
+            if (!titleFrInput.value.trim() && !textFrInput.value.trim() && !emptyContentConfirmed.fr) {
+                isValid = false;
             }
-            if (!textEnInput.value.trim() && !titleOnlyConfirmed.en) {
-                const titleOnlyConfirmEn = document.getElementById('title-only-confirm-en');
-                if (!titleOnlyConfirmEn.classList.contains('hidden')) {
-                    isValid = false;
-                }
+
+            if (!titleEnInput.value.trim() && !textEnInput.value.trim() && !emptyContentConfirmed.en) {
+                isValid = false;
             }
 
             return isValid;
