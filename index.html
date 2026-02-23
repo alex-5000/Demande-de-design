@@ -879,7 +879,7 @@
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" maxlength="100" required>
+                            <input type="text" id="text-content-title-fr" name="text-content-title-fr" required>
                             <div class="char-count" id="char-count-title-fr">0/100</div>
                             <div class="error-message" id="text-content-title-fr-error"></div>
                         </div>
@@ -893,7 +893,7 @@
                                 <span class="lang-fr">Max 150</span>
                                 <span class="lang-en">Max 150</span>
                             </div>
-                            <textarea id="text-content-text-fr" name="text-content-text-fr" maxlength="150"></textarea>
+                            <textarea id="text-content-text-fr" name="text-content-text-fr"></textarea>
                             <div class="char-count" id="char-count-text-fr">0/150</div>
                             <div id="title-only-confirm-fr" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -919,7 +919,7 @@
                                 <span class="lang-fr">Max 100</span>
                                 <span class="lang-en">Max 100</span>
                             </div>
-                            <input type="text" id="text-content-title-en" name="text-content-title-en" maxlength="100" required>
+                            <input type="text" id="text-content-title-en" name="text-content-title-en" required>
                             <div class="char-count" id="char-count-title-en">0/100</div>
                             <div class="error-message" id="text-content-title-en-error"></div>
                         </div>
@@ -933,7 +933,7 @@
                                 <span class="lang-fr">Max 150</span>
                                 <span class="lang-en">Max 150</span>
                             </div>
-                            <textarea id="text-content-text-en" name="text-content-text-en" maxlength="150"></textarea>
+                            <textarea id="text-content-text-en" name="text-content-text-en"></textarea>
                             <div class="char-count" id="char-count-text-en">0/150</div>
                             <div id="title-only-confirm-en" class="hidden title-only-confirm">
                                 <span class="lang-fr">Titre uniquement</span>
@@ -1246,9 +1246,11 @@
             const maxChars = type === 'title' ? 100 : 150;
             const currentLength = input.value.length;
 
-            countDiv.textContent = `${currentLength}/${maxChars}`;
+            const overLimitCount = Math.max(0, currentLength - maxChars);
+            countDiv.textContent = overLimitCount > 0
+                ? `${currentLength}/${maxChars} (+${overLimitCount})`
+                : `${currentLength}/${maxChars}`;
             countDiv.classList.toggle('warning', currentLength > maxChars);
-            input.classList.toggle('error', currentLength > maxChars);
 
             // Show/hide title-only confirm button
             if (type === 'text') {
@@ -1364,21 +1366,6 @@
                 isValid = false;
                 document.getElementById('priority-error').textContent =
                     currentLanguage === 'fr' ? 'Veuillez sélectionner un niveau de priorité' : 'Please select a priority level';
-            }
-
-            // Character limit validation
-            if (document.getElementById('text-content-title-fr').value.length > 100 ||
-                document.getElementById('text-content-title-en').value.length > 100 ||
-                document.getElementById('text-content-text-fr').value.length > 150 ||
-                document.getElementById('text-content-text-en').value.length > 150) {
-                isValid = false;
-                const msg = currentLanguage === 'fr' ? 'Dépassement de la limite de caractères' : 'Character limit exceeded';
-                if (document.getElementById('text-content-title-fr').value.length > 100) {
-                    document.getElementById('text-content-title-fr-error').textContent = msg;
-                }
-                if (document.getElementById('text-content-title-en').value.length > 100) {
-                    document.getElementById('text-content-title-en-error').textContent = msg;
-                }
             }
 
             // Material date validation
