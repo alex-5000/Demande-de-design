@@ -1444,87 +1444,92 @@
                 }
             });
 
+            const formatValue = (value, emptyValue) => {
+                const trimmedValue = typeof value === 'string' ? value.trim() : value;
+                return trimmedValue ? `« ${trimmedValue} »` : emptyValue;
+            };
+
             // Build email body based on current language
             let emailBody = '';
             if (currentLanguage === 'fr') {
                 emailBody = `Demande de design graphique
 
 Titre de la demande
-${title}
+Saisie utilisateur: ${formatValue(title, '(Non fourni)')}
 
 Demandeur
-Nom: ${requesterName}
-Courriel: ${requesterEmail}
+Nom (saisie utilisateur): ${formatValue(requesterName, '(Non fourni)')}
+Courriel (saisie utilisateur): ${formatValue(requesterEmail, '(Non fourni)')}
 
 Contexte & objectif
-${context || '(Non fourni)'}
+Saisie utilisateur: ${formatValue(context, '(Non fourni)')}
 
 Type de matériel
-${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
+Sélection utilisateur: ${formatValue(selectedMaterials.join(', '), '(Aucun sélectionné)')}
 
 Dates
-Date de livrable: ${formatDate(deliveryDate)}
+Date de livrable (saisie utilisateur): ${formatValue(formatDate(deliveryDate), '(Non fourni)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
     `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
 Niveau de priorité
-${getPriorityLabel(priority, 'fr')}
+Sélection utilisateur: ${formatValue(getPriorityLabel(priority, 'fr'), '(Non fourni)')}
 
 Contenu textuel
 Français:
-Titre: ${document.getElementById('text-content-title-fr').value}
-Texte: ${document.getElementById('text-content-text-fr').value || '(Titre uniquement)'}
+Titre (saisie utilisateur): ${formatValue(document.getElementById('text-content-title-fr').value, '(Non fourni)')}
+Texte (saisie utilisateur): ${formatValue(document.getElementById('text-content-text-fr').value, '(Titre uniquement)')}
 
 English:
-Titre: ${document.getElementById('text-content-title-en').value}
-Texte: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+Title (user entry): ${formatValue(document.getElementById('text-content-title-en').value, '(Not provided)')}
+Text (user entry): ${formatValue(document.getElementById('text-content-text-en').value, '(Title only)')}
 
 Directives visuelles & références
-${guidelines || '(Non fourni)'}
+Saisie utilisateur: ${formatValue(guidelines, '(Non fourni)')}
 
 Options / variations
-${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
+Sélection utilisateur: ${formatValue(options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options', '(Non fourni)')}
 `;
             } else {
                 emailBody = `Graphic Design Request
 
 Request Title
-${title}
+User entry: ${formatValue(title, '(Not provided)')}
 
 Requester
-Name: ${requesterName}
-Email: ${requesterEmail}
+Name (user entry): ${formatValue(requesterName, '(Not provided)')}
+Email (user entry): ${formatValue(requesterEmail, '(Not provided)')}
 
 Context & Objective
-${context || '(Not provided)'}
+User entry: ${formatValue(context, '(Not provided)')}
 
 Material Type
-${selectedMaterials.join(', ') || '(None selected)'}
+User selection: ${formatValue(selectedMaterials.join(', '), '(None selected)')}
 
 Dates
-Delivery date: ${formatDate(deliveryDate)}
+Delivery date (user entry): ${formatValue(formatDate(deliveryDate), '(Not provided)')}
 ${Object.entries(materialDates).map(([material, dates]) =>
     `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
 ).join('\n') || ''}
 
 Priority Level
-${getPriorityLabel(priority, 'en')}
+User selection: ${formatValue(getPriorityLabel(priority, 'en'), '(Not provided)')}
 
 Text Content
 French:
-Title: ${document.getElementById('text-content-title-fr').value}
-Text: ${document.getElementById('text-content-text-fr').value || '(Title only)'}
+Title (user entry): ${formatValue(document.getElementById('text-content-title-fr').value, '(Not provided)')}
+Text (user entry): ${formatValue(document.getElementById('text-content-text-fr').value, '(Title only)')}
 
 English:
-Title: ${document.getElementById('text-content-title-en').value}
-Text: ${document.getElementById('text-content-text-en').value || '(Title only)'}
+Title (user entry): ${formatValue(document.getElementById('text-content-title-en').value, '(Not provided)')}
+Text (user entry): ${formatValue(document.getElementById('text-content-text-en').value, '(Title only)')}
 
 Visual Guidelines & References
-${guidelines || '(Not provided)'}
+User entry: ${formatValue(guidelines, '(Not provided)')}
 
 Options / Variations
-${options === 'single' ? 'Single visual' : 'Propose multiple options'}
+User selection: ${formatValue(options === 'single' ? 'Single visual' : 'Propose multiple options', '(Not provided)')}
 `;
             }
 
