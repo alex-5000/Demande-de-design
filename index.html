@@ -485,12 +485,38 @@
         .banner h1 {
             font-size: 17px;
             font-weight: 700;
-            color: var(--text-main);
+            color: #ffffff;
         }
 
         .banner-text-color-light,
         .banner-text-color-dark {
-            color: var(--text-main);
+            color: #ffffff;
+        }
+
+        #material-section + .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 16px;
+        }
+
+        #material-section + .checkbox-group .nested-input {
+            grid-column: 1 / -1;
+        }
+
+        #priority-section + .radio-group {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        #priority-section + .radio-group .radio-item {
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            #priority-section + .radio-group {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
         }
 
         .language-toggle button {
