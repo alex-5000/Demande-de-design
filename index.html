@@ -508,9 +508,10 @@
         }
 
         .banner {
+            display: block;
             max-width: 980px;
             margin: 0 auto 14px;
-            padding: 37px 14px;
+            padding: 12px 14px 16px;
             background: #3f3f46;
             border: 1px solid var(--panel-border);
             border-radius: 10px;
@@ -520,7 +521,18 @@
             z-index: 1000;
         }
 
+        .banner-top {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .banner-title-block {
+            text-align: center;
+        }
+
         .banner h1 {
+            margin: 0;
             font-size: 17px;
             font-weight: 700;
             color: #ffffff;
@@ -749,18 +761,22 @@
 </head>
 <body>
     <div class="banner" id="banner">
-        <h1 id="banner-title">
-            <span class="banner-main-title lang-fr">Demande de design graphique</span>
-            <span class="banner-main-title lang-en">Graphic Design Request</span>
-            <span class="banner-meta" id="banner-meta">
-                <span class="banner-meta-item left" id="banner-meta-title"></span>
-                <span class="banner-meta-item center" id="banner-meta-priority"></span>
-                <span class="banner-meta-item right" id="banner-meta-date"></span>
-            </span>
-        </h1>
-        <div class="language-toggle">
-            <button id="lang-fr-btn" class="active">FR</button>
-            <button id="lang-en-btn">EN</button>
+        <div class="banner-top">
+            <div class="language-toggle">
+                <button id="lang-fr-btn" class="active">FR</button>
+                <button id="lang-en-btn">EN</button>
+            </div>
+        </div>
+        <div class="banner-title-block">
+            <h1 id="banner-title">
+                <span class="banner-main-title lang-fr">Demande de design graphique</span>
+                <span class="banner-main-title lang-en">Graphic Design Request</span>
+                <span class="banner-meta" id="banner-meta">
+                    <span class="banner-meta-item left" id="banner-meta-title"></span>
+                    <span class="banner-meta-item center" id="banner-meta-priority"></span>
+                    <span class="banner-meta-item right" id="banner-meta-date"></span>
+                </span>
+            </h1>
         </div>
     </div>
 
