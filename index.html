@@ -978,6 +978,22 @@
                 </div>
             </div>
 
+            <!-- Conditional Section: Material References -->
+            <div class="form-section hidden" id="material-references-section">
+                <div class="section-title" id="material-references-title">Références de matériel</div>
+                <p style="font-size: 12px; color: #555; margin-bottom: 10px; line-height: 1.5;">
+                    <span class="lang-fr">Pour un meilleur résultat, il est utile de proposer des références de matériel qui existe déjà et que vous trouvez adaptées à votre projet, ou des sources d’inspiration. Ajoutez ci-dessous les liens pour y accéder ou incluez-les dans le courriel qui s’ouvrira lorsque vous cliquerez sur «&nbsp;Soumettre&nbsp;».</span>
+                    <span class="lang-en">For better results, it is useful to provide references to existing materials you find suitable for your project, or sources of inspiration. Add the access links below or include them in the email that opens when you click “Submit”.</span>
+                </p>
+                <div class="form-group">
+                    <label for="material-references-links">
+                        <span class="lang-fr">Liens de références (optionnel)</span>
+                        <span class="lang-en">Reference links (optional)</span>
+                    </label>
+                    <textarea id="material-references-links" name="material-references-links" placeholder=""></textarea>
+                </div>
+            </div>
+
             <!-- Section 10: Approvers -->
             <div class="form-section">
                 <div class="section-title" id="approvers-section">Approbateurs</div>
@@ -1049,6 +1065,7 @@
                     'content-section': 'Contenu textuel',
                     'guidelines-section': 'Directives visuelles',
                     'options-section': 'Options',
+                    'material-references-title': 'Références de matériel',
                     'approvers-section': 'Approbateurs'
                 },
                 approverRequesterLabel: 'Demandeur',
@@ -1066,6 +1083,7 @@
                     'content-section': 'Text content',
                     'guidelines-section': 'Visual guidelines',
                     'options-section': 'Options',
+                    'material-references-title': 'Material references',
                     'approvers-section': 'Approvers'
                 },
                 approverRequesterLabel: 'Requester',
@@ -1144,6 +1162,16 @@
 
         materialOtherCheckbox.addEventListener('change', () => {
             document.getElementById('material-other-input').classList.toggle('hidden');
+        });
+
+        // Show material references section after selecting an option
+        const optionsInputs = document.querySelectorAll('input[name="options"]');
+        const materialReferencesSection = document.getElementById('material-references-section');
+
+        optionsInputs.forEach(input => {
+            input.addEventListener('change', () => {
+                materialReferencesSection.classList.remove('hidden');
+            });
         });
 
         function updateDynamicDates() {
@@ -1408,6 +1436,7 @@
             const priority = document.querySelector('input[name="priority"]:checked').value;
             const options = document.querySelector('input[name="options"]:checked').value;
             const guidelines = document.getElementById('visual-guidelines').value;
+            const materialReferencesLinks = document.getElementById('material-references-links').value;
 
             // Get material dates
             let materialDates = {};
@@ -1472,6 +1501,9 @@ ${guidelines || '(Non fourni)'}
 
 Options / variations
 ${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}
+
+Liens de références de matériel
+${materialReferencesLinks || '(Non fourni)'}
 `;
             } else {
                 emailBody = `Graphic Design Request
@@ -1512,6 +1544,9 @@ ${guidelines || '(Not provided)'}
 
 Options / Variations
 ${options === 'single' ? 'Single visual' : 'Propose multiple options'}
+
+Material reference links
+${materialReferencesLinks || '(Not provided)'}
 `;
             }
 
