@@ -38,6 +38,44 @@
             flex: 1;
         }
 
+        .banner-main-title {
+            display: block;
+        }
+
+        .banner-meta {
+            display: none;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .banner-meta.visible {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .banner-meta-item {
+            min-height: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .banner-meta-item.left {
+            text-align: left;
+        }
+
+        .banner-meta-item.center {
+            text-align: center;
+        }
+
+        .banner-meta-item.right {
+            text-align: right;
+        }
+
         .banner-text-color-light {
             color: #ffffff;
         }
@@ -488,6 +526,12 @@
             color: #ffffff;
         }
 
+        .banner-meta {
+            margin-top: 8px;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+
         .banner-text-color-light,
         .banner-text-color-dark {
             color: #ffffff;
@@ -706,8 +750,13 @@
 <body>
     <div class="banner" id="banner">
         <h1 id="banner-title">
-            <span class="lang-fr">Demande de design graphique</span>
-            <span class="lang-en">Graphic Design Request</span>
+            <span class="banner-main-title lang-fr">Demande de design graphique</span>
+            <span class="banner-main-title lang-en">Graphic Design Request</span>
+            <span class="banner-meta" id="banner-meta">
+                <span class="banner-meta-item left" id="banner-meta-title"></span>
+                <span class="banner-meta-item center" id="banner-meta-priority"></span>
+                <span class="banner-meta-item right" id="banner-meta-date"></span>
+            </span>
         </h1>
         <div class="language-toggle">
             <button id="lang-fr-btn" class="active">FR</button>
@@ -1050,6 +1099,12 @@
         const banner = document.getElementById('banner');
         const langFrBtn = document.getElementById('lang-fr-btn');
         const langEnBtn = document.getElementById('lang-en-btn');
+        const requestTitleInput = document.getElementById('request-title');
+        const deliveryDateInput = document.getElementById('delivery-date');
+        const bannerMeta = document.getElementById('banner-meta');
+        const bannerMetaTitle = document.getElementById('banner-meta-title');
+        const bannerMetaPriority = document.getElementById('banner-meta-priority');
+        const bannerMetaDate = document.getElementById('banner-meta-date');
         let currentLanguage = 'fr';
         let emptyContentConfirmed = { fr: false, en: false };
 
@@ -1119,6 +1174,7 @@
             document.getElementById('text-block-en-title').textContent = t.textBlockEnTitle;
 
             updateDynamicMaterialLabels();
+            updateBannerMetadata();
         }
 
         // Priority banner color change
@@ -1137,8 +1193,25 @@
                     banner.classList.add('priority-urgent');
                 }
                 updateBannerTextColor();
+                updateBannerMetadata();
             });
         });
+
+        requestTitleInput.addEventListener('input', updateBannerMetadata);
+        deliveryDateInput.addEventListener('change', updateBannerMetadata);
+
+        function updateBannerMetadata() {
+            const titleValue = requestTitleInput.value.trim();
+            const selectedPriority = document.querySelector('input[name="priority"]:checked')?.value;
+            const deliveryDate = deliveryDateInput.value;
+
+            bannerMetaTitle.textContent = titleValue;
+            bannerMetaPriority.textContent = selectedPriority ? getPriorityLabel(selectedPriority, currentLanguage) : '';
+            bannerMetaDate.textContent = deliveryDate ? formatDate(deliveryDate) : '';
+
+            const hasMetadata = Boolean(titleValue || selectedPriority || deliveryDate);
+            bannerMeta.classList.toggle('visible', hasMetadata);
+        }
 
         function updateBannerTextColor() {
             const bannerTitle = document.getElementById('banner-title');
@@ -1616,6 +1689,7 @@ ${materialReferencesLinks || '(Not provided)'}
 
         // Initialize
         updateBannerTextColor();
+        updateBannerMetadata();
     </script>
 </body>
 </html>
