@@ -702,6 +702,27 @@
             font-size: 12px;
         }
 
+        .date-help-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+
+        .flexible-option {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flexible-option label {
+            margin: 0;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
         .add-approver-btn,
         .submit-btn,
         .title-only-confirm button {
@@ -881,12 +902,23 @@
 
                 <div class="form-section">
                     <div class="section-title" id="delivery-section">Dates</div>
+                    <p class="date-help-text">
+                        <span class="lang-fr">«&nbsp;Livrable&nbsp;» indique la date à laquelle le demandeur souhaite recevoir les designs. Les dates affichées pour chaque produit ci-dessous correspondent aux périodes de diffusion de chaque type de design.</span>
+                        <span class="lang-en">“Delivery” indicates the date when the requester wants to receive the designs. The dates shown for each product below are the publication periods for each design type.</span>
+                    </p>
                     <div class="form-group">
                         <label for="delivery-date">
                             <span class="lang-fr">Livrable <span class="required">*</span></span>
                             <span class="lang-en">Delivery <span class="required">*</span></span>
                         </label>
                         <input type="date" id="delivery-date" name="delivery-date" required>
+                        <div class="flexible-option">
+                            <input type="checkbox" id="delivery-date-flexible" name="delivery-date-flexible">
+                            <label for="delivery-date-flexible">
+                                <span class="lang-fr">Date flexible (± 1 jour)</span>
+                                <span class="lang-en">Flexible date (± 1 day)</span>
+                            </label>
+                        </div>
                         <div class="error-message" id="delivery-date-error"></div>
                     </div>
 
@@ -1283,6 +1315,13 @@
                             <input type="date" id="date-${material}-end" class="material-date" data-material="${material}" data-type="end" required>
                         </div>
                     </div>
+                    <div class="flexible-option">
+                        <input type="checkbox" id="date-${material}-flexible" class="material-flexibility" data-material="${material}">
+                        <label for="date-${material}-flexible">
+                            <span class="lang-fr">Date flexible (± 1 jour)</span>
+                            <span class="lang-en">Flexible date (± 1 day)</span>
+                        </label>
+                    </div>
                     <div class="error-message" id="error-${material}"></div>
                 `;
                 dynamicDatesContainer.appendChild(div);
@@ -1533,6 +1572,7 @@
             const requesterEmail = document.getElementById('requester-email').value;
             const context = document.getElementById('context').value;
             const deliveryDate = document.getElementById('delivery-date').value;
+            const isDeliveryDateFlexible = document.getElementById('delivery-date-flexible').checked;
             const priority = document.querySelector('input[name="priority"]:checked').value;
             const options = document.querySelector('input[name="options"]:checked').value;
             const guidelines = document.getElementById('visual-guidelines').value;
@@ -1545,6 +1585,11 @@
                 const type = input.dataset.type;
                 if (!materialDates[material]) materialDates[material] = {};
                 materialDates[material][type] = input.value;
+            });
+
+            const materialFlexibility = {};
+            document.querySelectorAll('.material-flexibility').forEach(input => {
+                materialFlexibility[input.dataset.material] = input.checked;
             });
 
             // Get selected materials
@@ -1577,9 +1622,9 @@ ${context || '(Non fourni)'}
 Type de matériel
 ${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
 
-Date de livrable: ${formatDate(deliveryDate)}
+Date de livrable: ${formatDate(deliveryDate)}${getFlexibleSuffix(isDeliveryDateFlexible)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
+    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}`
 ).join('\n') || ''}
 
 Niveau de priorité
@@ -1618,9 +1663,9 @@ ${context || '(Not provided)'}
 Material Type
 ${selectedMaterials.join(', ') || '(None selected)'}
 
-Delivery date: ${formatDate(deliveryDate)}
+Delivery date: ${formatDate(deliveryDate)}${getFlexibleSuffix(isDeliveryDateFlexible)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
+    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}`
 ).join('\n') || ''}
 
 Priority Level
@@ -1666,6 +1711,10 @@ ${materialReferencesLinks || '(Not provided)'}
             return currentLanguage === 'fr' ?
                 date.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' }) :
                 date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function getFlexibleSuffix(isFlexible) {
+            return isFlexible ? ' (flexible)' : '';
         }
 
         function getPriorityLabel(value, lang) {
