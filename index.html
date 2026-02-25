@@ -1568,7 +1568,6 @@
 Titre de la demande
 ${title}
 
-Demandeur
 Nom: ${requesterName}
 Courriel: ${requesterEmail}
 
@@ -1578,7 +1577,6 @@ ${context || '(Non fourni)'}
 Type de matériel
 ${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
 
-Dates
 Date de livrable: ${formatDate(deliveryDate)}
 ${Object.entries(materialDates).map(([material, dates]) =>
     `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}`
@@ -1611,7 +1609,6 @@ ${materialReferencesLinks || '(Non fourni)'}
 Request Title
 ${title}
 
-Requester
 Name: ${requesterName}
 Email: ${requesterEmail}
 
@@ -1621,7 +1618,6 @@ ${context || '(Not provided)'}
 Material Type
 ${selectedMaterials.join(', ') || '(None selected)'}
 
-Dates
 Delivery date: ${formatDate(deliveryDate)}
 ${Object.entries(materialDates).map(([material, dates]) =>
     `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}`
