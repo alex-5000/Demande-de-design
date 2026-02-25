@@ -79,7 +79,6 @@ app.post('/api/submit-form', async (req, res) => {
 Titre de la demande
 ${title}
 
-Demandeur
 Nom: ${requesterName}
 Courriel: ${requesterEmail}
 
@@ -89,7 +88,6 @@ ${context || '(Non fourni)'}
 Type de matériel
 ${materialsList.join(', ') || '(Aucun sélectionné)'}
 
-Dates
 Date de livrable: ${formatDate(deliveryDate, 'fr')}
 ${Object.entries(materialDates).map(([material, dates]) =>
   `${material}: ${formatDate(dates.start, 'fr')} à ${formatDate(dates.end, 'fr')}`
@@ -119,7 +117,6 @@ ${options === 'single' ? 'Un seul visuel' : 'Proposer plusieurs options'}`;
 Request Title
 ${title}
 
-Requester
 Name: ${requesterName}
 Email: ${requesterEmail}
 
@@ -129,7 +126,6 @@ ${context || '(Not provided)'}
 Material Type
 ${materialsList.join(', ') || '(None selected)'}
 
-Dates
 Delivery date: ${formatDate(deliveryDate, 'en')}
 ${Object.entries(materialDates).map(([material, dates]) =>
   `${material}: ${formatDate(dates.start, 'en')} to ${formatDate(dates.end, 'en')}`
