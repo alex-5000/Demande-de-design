@@ -150,6 +150,11 @@
             border-bottom: 2px solid #e0e0e0;
         }
 
+        .section-title.required-section::after {
+            content: ' *';
+            color: #c62828;
+        }
+
         .form-group {
             margin-bottom: 12px;
         }
@@ -784,12 +789,8 @@
         <form id="designForm">
             <!-- Section 1: Request Title -->
             <div class="form-section">
-                <div class="section-title" id="title-section">Titre de la demande</div>
+                <div class="section-title required-section" id="title-section">Titre de la demande</div>
                 <div class="form-group">
-                    <label for="request-title">
-                        <span class="lang-fr">Titre <span class="required">*</span></span>
-                        <span class="lang-en">Title <span class="required">*</span></span>
-                    </label>
                     <input type="text" id="request-title" name="request-title" required>
                     <div class="error-message" id="request-title-error"></div>
                 </div>
@@ -820,10 +821,6 @@
                 <div class="form-section">
                     <div class="section-title" id="context-section">Contexte & objectif</div>
                     <div class="form-group">
-                        <label for="context">
-                            <span class="lang-fr">Contexte & objectif</span>
-                            <span class="lang-en">Context & Objective</span>
-                        </label>
                         <textarea id="context" name="context" placeholder=""></textarea>
                     </div>
                 </div>
@@ -1018,10 +1015,6 @@
                 <div class="form-section">
                     <div class="section-title" id="guidelines-section">Directives visuelles</div>
                     <div class="form-group">
-                        <label for="visual-guidelines">
-                            <span class="lang-fr">Directives & références</span>
-                            <span class="lang-en">Guidelines & References</span>
-                        </label>
                         <textarea id="visual-guidelines" name="visual-guidelines" placeholder=""></textarea>
                     </div>
                 </div>
