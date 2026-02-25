@@ -915,8 +915,8 @@
                         <div class="flexible-option">
                             <input type="checkbox" id="delivery-date-flexible" name="delivery-date-flexible">
                             <label for="delivery-date-flexible">
-                                <span class="lang-fr">Date flexible (± 1 jour)</span>
-                                <span class="lang-en">Flexible date (± 1 day)</span>
+                                <span class="lang-fr" id="delivery-date-flexible-label-fr">Date flexible</span>
+                                <span class="lang-en" id="delivery-date-flexible-label-en">Flexible date</span>
                             </label>
                         </div>
                         <div class="error-message" id="delivery-date-error"></div>
@@ -1215,6 +1215,7 @@
             document.getElementById('text-block-en-title').textContent = t.textBlockEnTitle;
 
             updateDynamicMaterialLabels();
+            updateDeliveryFlexibilityLabel();
             updateBannerMetadata();
         }
 
@@ -1235,6 +1236,7 @@
                 }
                 updateBannerTextColor();
                 updateBannerMetadata();
+                updateDeliveryFlexibilityLabel();
             });
         });
 
@@ -1269,6 +1271,8 @@
         const materialCheckboxes = document.querySelectorAll('input[name="materials"]');
         const materialOtherCheckbox = document.getElementById('material-other');
         const dynamicDatesContainer = document.getElementById('dynamic-dates');
+        const deliveryDateFlexibleLabelFr = document.getElementById('delivery-date-flexible-label-fr');
+        const deliveryDateFlexibleLabelEn = document.getElementById('delivery-date-flexible-label-en');
 
         materialCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateDynamicDates);
@@ -1287,6 +1291,45 @@
                 materialReferencesSection.classList.remove('hidden');
             });
         });
+
+        function getDeliveryFlexibilityText(priorityValue, lang) {
+            const deliveryFlexibilityByPriority = {
+                low: { fr: 'Date flexible (± 3 jours)', en: 'Flexible date (± 3 days)' },
+                medium: { fr: 'Date flexible (± 2 jours)', en: 'Flexible date (± 2 days)' },
+                high: { fr: 'Date flexible (± 1 jour)', en: 'Flexible date (± 1 day)' },
+                urgent: { fr: 'Date flexible (± 1 jour)', en: 'Flexible date (± 1 day)' }
+            };
+
+            if (!priorityValue) {
+                return lang === 'fr' ? 'Date flexible' : 'Flexible date';
+            }
+
+            return deliveryFlexibilityByPriority[priorityValue]?.[lang] || (lang === 'fr' ? 'Date flexible' : 'Flexible date');
+        }
+
+        function updateDeliveryFlexibilityLabel() {
+            const selectedPriority = document.querySelector('input[name="priority"]:checked')?.value;
+            deliveryDateFlexibleLabelFr.textContent = getDeliveryFlexibilityText(selectedPriority, 'fr');
+            deliveryDateFlexibleLabelEn.textContent = getDeliveryFlexibilityText(selectedPriority, 'en');
+        }
+
+        function toggleMaterialDetailsInput(checkboxInput) {
+            const material = checkboxInput.dataset.material;
+            const detailsWrapper = document.getElementById(`date-${material}-details-wrapper`);
+            if (!detailsWrapper) {
+                return;
+            }
+            detailsWrapper.classList.toggle('hidden', !checkboxInput.checked);
+        }
+
+        function addMaterialFlexibilityListeners() {
+            document.querySelectorAll('.material-flexibility').forEach(input => {
+                input.addEventListener('change', () => {
+                    toggleMaterialDetailsInput(input);
+                });
+                toggleMaterialDetailsInput(input);
+            });
+        }
 
         function updateDynamicDates() {
             dynamicDatesContainer.innerHTML = '';
@@ -1318,9 +1361,16 @@
                     <div class="flexible-option">
                         <input type="checkbox" id="date-${material}-flexible" class="material-flexibility" data-material="${material}">
                         <label for="date-${material}-flexible">
-                            <span class="lang-fr">Date flexible (± 1 jour)</span>
-                            <span class="lang-en">Flexible date (± 1 day)</span>
+                            <span class="lang-fr">Date flexible</span>
+                            <span class="lang-en">Flexible date</span>
                         </label>
+                    </div>
+                    <div class="nested-input hidden" id="date-${material}-details-wrapper">
+                        <label for="date-${material}-details">
+                            <span class="lang-fr">Précisé</span>
+                            <span class="lang-en">Specified</span>
+                        </label>
+                        <input type="text" id="date-${material}-details" class="material-flexibility-details" data-material="${material}">
                     </div>
                     <div class="error-message" id="error-${material}"></div>
                 `;
@@ -1331,6 +1381,8 @@
             document.querySelectorAll('.material-date').forEach(input => {
                 input.addEventListener('change', validateMaterialDateRange);
             });
+
+            addMaterialFlexibilityListeners();
         }
 
         function getMaterialLabel(material) {
@@ -1592,6 +1644,11 @@
                 materialFlexibility[input.dataset.material] = input.checked;
             });
 
+            const materialFlexibilityDetails = {};
+            document.querySelectorAll('.material-flexibility-details').forEach(input => {
+                materialFlexibilityDetails[input.dataset.material] = input.value.trim();
+            });
+
             // Get selected materials
             const selectedMaterials = Array.from(document.querySelectorAll('input[name="materials"]:checked'))
                 .map(el => el.value === 'Other' ? document.getElementById('material-other-text').value : el.value)
@@ -1624,7 +1681,7 @@ ${selectedMaterials.join(', ') || '(Aucun sélectionné)'}
 
 Date de livrable: ${formatDate(deliveryDate)}${getFlexibleSuffix(isDeliveryDateFlexible)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}`
+    `${material}: ${formatDate(dates.start)} à ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}${getMaterialDetailsSuffix(materialFlexibility[material], materialFlexibilityDetails[material], 'fr')}`
 ).join('\n') || ''}
 
 Niveau de priorité
@@ -1665,7 +1722,7 @@ ${selectedMaterials.join(', ') || '(None selected)'}
 
 Delivery date: ${formatDate(deliveryDate)}${getFlexibleSuffix(isDeliveryDateFlexible)}
 ${Object.entries(materialDates).map(([material, dates]) =>
-    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}`
+    `${material}: ${formatDate(dates.start)} to ${formatDate(dates.end)}${getFlexibleSuffix(materialFlexibility[material])}${getMaterialDetailsSuffix(materialFlexibility[material], materialFlexibilityDetails[material], 'en')}`
 ).join('\n') || ''}
 
 Priority Level
@@ -1717,6 +1774,14 @@ ${materialReferencesLinks || '(Not provided)'}
             return isFlexible ? ' (flexible)' : '';
         }
 
+        function getMaterialDetailsSuffix(isFlexible, details, lang) {
+            if (!isFlexible || !details) {
+                return '';
+            }
+
+            return lang === 'fr' ? ` — Précisé: ${details}` : ` — Specified: ${details}`;
+        }
+
         function getPriorityLabel(value, lang) {
             const labels = {
                 'low': { fr: 'Faible', en: 'Low' },
@@ -1743,6 +1808,7 @@ ${materialReferencesLinks || '(Not provided)'}
 
         // Initialize
         updateBannerTextColor();
+        updateDeliveryFlexibilityLabel();
         updateBannerMetadata();
     </script>
 </body>
