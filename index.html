@@ -847,7 +847,35 @@
                 </div>
             </div>
 
-            <!-- Section 4: Material Type & Delivery (Side by side) -->
+            <!-- Section 4: Priority -->
+            <div class="form-section">
+                <div class="section-title" id="priority-section">Niveau de priorité</div>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="priority-low" name="priority" value="low">
+                        <label for="priority-low" class="lang-fr">Faible</label>
+                        <label for="priority-low" class="lang-en">Low</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-medium" name="priority" value="medium">
+                        <label for="priority-medium" class="lang-fr">Moyenne</label>
+                        <label for="priority-medium" class="lang-en">Medium</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-high" name="priority" value="high">
+                        <label for="priority-high" class="lang-fr">Élevée</label>
+                        <label for="priority-high" class="lang-en">High</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="priority-urgent" name="priority" value="urgent">
+                        <label for="priority-urgent" class="lang-fr">Très urgent</label>
+                        <label for="priority-urgent" class="lang-en">Very urgent</label>
+                    </div>
+                </div>
+                <div class="error-message" id="priority-error"></div>
+            </div>
+
+            <!-- Section 5: Material Type & Delivery (Side by side) -->
             <div class="form-section-pair">
                 <div class="form-section">
                     <div class="section-title" id="material-section">Type de matériel</div>
@@ -925,34 +953,6 @@
                     <!-- Dynamic date ranges for each material -->
                     <div id="dynamic-dates"></div>
                 </div>
-            </div>
-
-            <!-- Section 5: Priority -->
-            <div class="form-section">
-                <div class="section-title" id="priority-section">Niveau de priorité</div>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="priority-low" name="priority" value="low">
-                        <label for="priority-low" class="lang-fr">Faible</label>
-                        <label for="priority-low" class="lang-en">Low</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="priority-medium" name="priority" value="medium">
-                        <label for="priority-medium" class="lang-fr">Moyenne</label>
-                        <label for="priority-medium" class="lang-en">Medium</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="priority-high" name="priority" value="high">
-                        <label for="priority-high" class="lang-fr">Élevée</label>
-                        <label for="priority-high" class="lang-en">High</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="priority-urgent" name="priority" value="urgent">
-                        <label for="priority-urgent" class="lang-fr">Très urgent</label>
-                        <label for="priority-urgent" class="lang-en">Very urgent</label>
-                    </div>
-                </div>
-                <div class="error-message" id="priority-error"></div>
             </div>
 
             <!-- Section 6: Text Content (Side by side) -->
