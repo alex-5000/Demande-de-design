@@ -1749,9 +1749,8 @@ ${materialReferencesLinks || '(Not provided)'}
             }
 
             // Build mailto link
-            const subject = currentLanguage === 'fr' ?
-                `Demande de design graphique — ${title}` :
-                `Graphic Design Request — ${title}`;
+            const requestCode = generateRequestCode();
+            const subject = `${requestCode} - ${title}`;
 
             let mailtoLink = `mailto:alexandre.rochon@cfp-psc.gc.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
@@ -1768,6 +1767,16 @@ ${materialReferencesLinks || '(Not provided)'}
             return currentLanguage === 'fr' ?
                 date.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' }) :
                 date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function generateRequestCode(now = new Date()) {
+            const year = String(now.getFullYear()).slice(-2);
+            const startOfYear = new Date(now.getFullYear(), 0, 1);
+            const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const dayOfYear = String(Math.floor((currentDate - startOfYear) / 86400000) + 1).padStart(3, '0');
+            const hourMinute = `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+
+            return `${year}${dayOfYear}${hourMinute}`;
         }
 
         function getFlexibleSuffix(isFlexible) {
